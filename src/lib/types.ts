@@ -38,3 +38,28 @@ export interface ApiFailure {
 }
 
 export type ApiResponse<T> = ApiSuccess<T> | ApiFailure;
+
+// --- Auth (from API.md · POST /auth/admin/login, GET /auth/me) ---
+
+export type Role = "ADMIN" | "COADMIN" | "DISTRIBUTOR" | "CUSTOMER";
+export type AccountStatus = "PENDING" | "ACTIVE" | "SUSPENDED" | "CLOSED";
+
+export interface AuthAccount {
+  id: string;
+  email: string | null;
+  phone: string | null;
+  name: string | null;
+  avatarUrl: string | null;
+  role: Role;
+  status: AccountStatus;
+}
+
+export interface AdminLoginResponse {
+  token: string;
+  expiresAt: string;
+  account: AuthAccount;
+}
+
+export interface MeResponse {
+  account: AuthAccount;
+}

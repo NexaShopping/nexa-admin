@@ -1,6 +1,7 @@
+import { tokenStore } from "./auth-store";
 import type { ApiErrorCode, ApiResponse } from "./types";
 
-// The ONLY place fetch is called in this app. Base URL, credentials, and error mapping from
+// The ONLY place fetch is called in this app. Base URL, auth header, and error mapping from
 // the response envelope all live here — never call fetch/axios from a component.
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -22,11 +23,12 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
     throw new ApiError("INTERNAL", "NEXT_PUBLIC_API_URL is not set", 0);
   }
 
+  const token = tokenStore.get();
   const res = await fetch(`${BASE_URL}/api/v1${path}`, {
     ...init,
-    credentials: "include", // session cookie is Domain=.nexashopping.in
     headers: {
       "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...(init.headers ?? {}),
     },
   });
