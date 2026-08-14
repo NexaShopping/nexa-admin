@@ -11,6 +11,7 @@ const NAV = [
   { href: "/dashboard", label: "Overview", icon: HomeIcon },
   { href: "/dashboard/catalog", label: "Catalog", icon: BoxIcon },
   { href: "/dashboard/catalog/categories", label: "Categories", icon: TagIcon },
+  { href: "/dashboard/inventory", label: "Inventory", icon: StackIcon },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -108,6 +109,18 @@ function BoxIcon({ className }: { className?: string }) {
         d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5v-9Z M3.5 7.5 12 12l8.5-4.5M12 12v9"
         strokeLinecap="round"
         strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function StackIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className={className}>
+      <path
+        d="M12 3.5 3.5 8 12 12.5 20.5 8 12 3.5Z M3.5 12 12 16.5 20.5 12 M3.5 16 12 20.5 20.5 16"
+        strokeLinejoin="round"
+        strokeLinecap="round"
       />
     </svg>
   );

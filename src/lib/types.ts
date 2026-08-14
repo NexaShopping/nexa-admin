@@ -211,3 +211,73 @@ export interface UpdateProductBody {
   description?: string;
   status?: ProductStatus;
 }
+
+// --- Inventory (from API.md · Inventory Phase 3) ---
+
+export interface StockItemView {
+  id: string;
+  variant: {
+    id: string;
+    sku: string;
+    name: string;
+    mrp: string;
+    product: { id: string; name: string; slug: string; brand: string };
+  };
+  onHand: number;
+  reserved: number;
+  available: number;
+  sellPrice: string;
+  discountPrice: string | null;
+  taxRatePct: string;
+  isListed: boolean;
+  lowStockAt: number | null;
+}
+
+export interface StockLedgerEntry {
+  id: string;
+  delta: number;
+  onHandAfter: number;
+  reservedAfter: number;
+  reason: string;
+  refType: string | null;
+  refId: string | null;
+  unitCost: string | null;
+  batchNo: string | null;
+  note: string | null;
+  createdAt: string;
+}
+
+export interface ReceiveStockBody {
+  variantId: string;
+  quantity: number;
+  sellPrice: string;
+  discountPrice?: string;
+  taxRatePct?: string;
+  unitCost?: string;
+  batchNo?: string;
+  expiryAt?: string;
+  note?: string;
+}
+
+export interface UpdateStockItemBody {
+  sellPrice?: string;
+  discountPrice?: string;
+  taxRatePct?: string;
+  isListed?: boolean;
+  lowStockAt?: number;
+}
+
+export interface AdjustStockBody {
+  delta: number;
+  reason: "ADJUSTMENT" | "DAMAGE" | "RETURN_IN";
+  note?: string;
+}
+
+export interface TransferStockBody {
+  variantId: string;
+  toAccountId: string;
+  quantity: number;
+  unitCost?: string;
+  sellPrice?: string;
+  note?: string;
+}

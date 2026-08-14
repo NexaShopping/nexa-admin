@@ -25,16 +25,15 @@ interface AuthContextValue {
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [status, setStatus] = useState<Status>("loading");
+  // Lazy initial state (not a setState-in-effect) so the no-token case never renders
+  // "loading" at all — only the token-present case needs the effect's async round trip.
+  const [status, setStatus] = useState<Status>(() => (tokenStore.get() ? "loading" : "anon"));
   const [account, setAccount] = useState<AuthAccount | null>(null);
 
   // On load, if we hold a token, ask the server who we are. A bad/expired token
   // is cleared and we fall back to signed-out.
   useEffect(() => {
-    if (!tokenStore.get()) {
-      setStatus("anon");
-      return;
-    }
+    if (!tokenStore.get()) return;
     api
       .get<MeResponse>("/auth/me")
       .then((data) => {
