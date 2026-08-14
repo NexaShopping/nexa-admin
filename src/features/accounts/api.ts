@@ -28,6 +28,14 @@ export function useAccounts(filters: AccountFilters, cursor?: string) {
   });
 }
 
+export function useAccount(id: string | undefined) {
+  return useQuery({
+    queryKey: ["account", id],
+    queryFn: () => api.get<{ account: AccountSummary }>(`/accounts/${id}`),
+    enabled: Boolean(id),
+  });
+}
+
 export function useCreateDistributor() {
   const qc = useQueryClient();
   return useMutation({

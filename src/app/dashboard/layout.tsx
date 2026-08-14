@@ -12,6 +12,7 @@ const NAV = [
   { href: "/dashboard/catalog", label: "Catalog", icon: BoxIcon },
   { href: "/dashboard/catalog/categories", label: "Categories", icon: TagIcon },
   { href: "/dashboard/inventory", label: "Inventory", icon: StackIcon },
+  { href: "/dashboard/orders", label: "Orders", icon: OrdersIcon },
   { href: "/dashboard/accounts", label: "Accounts", icon: UsersIcon },
 ];
 
@@ -123,6 +124,18 @@ function StackIcon({ className }: { className?: string }) {
         strokeLinejoin="round"
         strokeLinecap="round"
       />
+    </svg>
+  );
+}
+
+function OrdersIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className={className}>
+      <path
+        d="M6 3.5h9l3.5 3.5V19a1.5 1.5 0 0 1-1.5 1.5H6A1.5 1.5 0 0 1 4.5 19V5A1.5 1.5 0 0 1 6 3.5Z"
+        strokeLinejoin="round"
+      />
+      <path d="M15 3.5V7h3.5M8 11.5h8M8 15h5" strokeLinecap="round" />
     </svg>
   );
 }
