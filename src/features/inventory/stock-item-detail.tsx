@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useAdjustStock, useLedger, useTransferStock, useUpdateStockItem } from "@/features/inventory/api";
+import { DistributorPicker } from "@/features/accounts/distributor-picker";
 import { ApiError } from "@/lib/api";
 import { Button, Card, Input, Label, Select, Spinner } from "@/components/ui";
 import type { AdjustStockBody, StockItemView } from "@/lib/types";
@@ -171,7 +172,7 @@ function AdjustForm({ item }: { item: StockItemView }) {
 
 function TransferForm({ item }: { item: StockItemView }) {
   const transfer = useTransferStock();
-  const [toAccountId, setToAccountId] = useState("");
+  const [toAccount, setToAccount] = useState<{ id: string; name: string | null; phone: string | null } | null>(null);
   const [quantity, setQuantity] = useState("");
   const [sellPrice, setSellPrice] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -181,14 +182,19 @@ function TransferForm({ item }: { item: StockItemView }) {
     e.preventDefault();
     setError(null);
     setDone(false);
+    if (!toAccount) {
+      setError("Pick a distributor first");
+      return;
+    }
     try {
       await transfer.mutateAsync({
         variantId: item.variant.id,
-        toAccountId,
+        toAccountId: toAccount.id,
         quantity: Number(quantity),
         sellPrice: sellPrice || undefined,
       });
       setQuantity("");
+      setToAccount(null);
       setDone(true);
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Could not transfer stock");
@@ -198,27 +204,25 @@ function TransferForm({ item }: { item: StockItemView }) {
   return (
     <Card className="space-y-3 p-4">
       <p className="text-sm font-medium">Transfer to distributor</p>
-      <p className="text-xs text-ink-soft">
-        Distributor accounts don&apos;t have a picker yet — paste the account ID until the
-        accounts module ships.
-      </p>
-      <form onSubmit={submit} className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-        <div className="col-span-2">
-          <Label>Distributor account ID</Label>
-          <Input value={toAccountId} onChange={(e) => setToAccountId(e.target.value)} placeholder="uuid" required />
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+        <div className="col-span-full">
+          <Label>Distributor</Label>
+          <DistributorPicker onSelect={setToAccount} selectedLabel={toAccount?.name ?? toAccount?.phone ?? null} />
         </div>
+      </div>
+      <form onSubmit={submit} className="grid grid-cols-2 gap-3 sm:grid-cols-3">
         <div>
           <Label>Quantity</Label>
           <Input value={quantity} onChange={(e) => setQuantity(e.target.value)} inputMode="numeric" required />
         </div>
-        <div className="col-span-full sm:col-span-1">
+        <div className="col-span-full sm:col-span-2">
           <Label>Sell price for them (optional)</Label>
           <Input value={sellPrice} onChange={(e) => setSellPrice(e.target.value)} placeholder={`defaults to MRP (${item.variant.mrp})`} />
         </div>
         {error && <p className="col-span-full text-sm text-red-600">{error}</p>}
         {done && <p className="col-span-full text-sm text-emerald-700">Transferred.</p>}
         <div className="col-span-full">
-          <Button type="submit" size="sm" variant="secondary" disabled={transfer.isPending || !toAccountId || !quantity}>
+          <Button type="submit" size="sm" variant="secondary" disabled={transfer.isPending || !toAccount || !quantity}>
             {transfer.isPending ? "Transferring…" : "Transfer"}
           </Button>
         </div>

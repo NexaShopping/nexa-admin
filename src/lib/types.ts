@@ -281,3 +281,40 @@ export interface TransferStockBody {
   sellPrice?: string;
   note?: string;
 }
+
+// --- Accounts (from API.md · Accounts Phase 1) ---
+
+export interface AccountSummary {
+  id: string;
+  name: string | null;
+  email: string | null;
+  phone: string | null;
+  avatarUrl: string | null;
+  role: Role;
+  status: AccountStatus;
+  createdAt: string;
+  lastLoginAt: string | null;
+  distributor: {
+    businessName: string;
+    referralCode: string;
+    territory: string | null;
+    onboardedAt: string | null;
+  } | null;
+}
+
+export interface CreateDistributorBody {
+  name: string;
+  phone: string;
+  businessName: string;
+  territory?: string;
+  referredByAccountId?: string;
+  status?: "PENDING" | "ACTIVE";
+}
+
+export interface UpdateAccountBody {
+  name?: string;
+  avatarUrl?: string;
+  status?: AccountStatus;
+  businessName?: string;
+  territory?: string;
+}
