@@ -1,5 +1,5 @@
 import { tokenStore } from "./auth-store";
-import type { ApiErrorCode, ApiResponse } from "./types";
+import type { ApiErrorCode, ApiResponse, PageMeta } from "./types";
 
 // The ONLY place fetch is called in this app. Base URL, auth header, and error mapping from
 // the response envelope all live here — never call fetch/axios from a component.
@@ -18,7 +18,7 @@ export class ApiError extends Error {
   }
 }
 
-async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
+async function requestFull<T>(path: string, init: RequestInit = {}): Promise<{ data: T; meta?: PageMeta }> {
   if (!BASE_URL) {
     throw new ApiError("INTERNAL", "NEXT_PUBLIC_API_URL is not set", 0);
   }
@@ -48,11 +48,17 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
     throw new ApiError(err.code, err.message, res.status, err.details);
   }
 
-  return body.data;
+  return { data: body.data, meta: body.meta };
+}
+
+async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
+  return (await requestFull<T>(path, init)).data;
 }
 
 export const api = {
   get: <T>(path: string) => request<T>(path),
+  // Same as `get`, but also surfaces `meta` (cursor pagination) — for list endpoints.
+  getPage: <T>(path: string) => requestFull<T>(path),
   post: <T>(path: string, data?: unknown) =>
     request<T>(path, { method: "POST", body: data === undefined ? undefined : JSON.stringify(data) }),
   patch: <T>(path: string, data?: unknown) =>

@@ -63,3 +63,151 @@ export interface AdminLoginResponse {
 export interface MeResponse {
   account: AuthAccount;
 }
+
+// --- Catalog (from API.md · Catalog Phase 2) ---
+
+export type ProductStatus = "DRAFT" | "ACTIVE" | "ARCHIVED";
+export type AttributeType = "TEXT" | "NUMBER" | "BOOLEAN" | "ENUM";
+
+export interface Category {
+  id: string;
+  parentId: string | null;
+  name: string;
+  slug: string;
+  imageUrl: string | null;
+  position: number;
+  isActive: boolean;
+}
+
+export interface AttributeOption {
+  id: string;
+  value: string;
+  position: number;
+}
+
+export interface AttributeDef {
+  id: string;
+  categoryId: string;
+  name: string;
+  code: string;
+  type: AttributeType;
+  unit: string | null;
+  isVariantAxis: boolean;
+  isFilterable: boolean;
+  position: number;
+  options: AttributeOption[];
+}
+
+export interface ProductSummary {
+  id: string;
+  category: { id: string; name: string; slug: string };
+  brand: string;
+  name: string;
+  slug: string;
+  shortDescription: string;
+  status: ProductStatus;
+  variantCount: number;
+  minMrp: string | null;
+  maxMrp: string | null;
+  image: { url: string; alt: string | null } | null;
+}
+
+export interface VariantOptionValue {
+  attributeDefId: string;
+  name: string;
+  code: string;
+  value: string;
+}
+
+export interface Media {
+  id: string;
+  url: string;
+  alt: string | null;
+  isPrimary: boolean;
+  position: number;
+}
+
+export interface Variant {
+  id: string;
+  sku: string;
+  name: string;
+  mrp: string;
+  isActive: boolean;
+  options: VariantOptionValue[];
+  media: Media[];
+}
+
+export interface ProductDetail {
+  id: string;
+  category: { id: string; name: string; slug: string };
+  brand: string;
+  name: string;
+  slug: string;
+  shortDescription: string;
+  description: string | null;
+  status: ProductStatus;
+  archivedAt: string | null;
+  variants: Variant[];
+  media: Media[];
+  attributes: VariantOptionValue[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateCategoryBody {
+  name: string;
+  slug?: string;
+  parentId?: string;
+  imageUrl?: string;
+  position?: number;
+}
+
+export interface UpdateCategoryBody extends Partial<CreateCategoryBody> {
+  isActive?: boolean;
+}
+
+export interface CreateAttributeDefBody {
+  name: string;
+  code: string;
+  type?: AttributeType;
+  unit?: string;
+  isVariantAxis?: boolean;
+  isFilterable?: boolean;
+  position?: number;
+  options?: string[];
+}
+
+export interface VariantInput {
+  sku: string;
+  name: string;
+  mrp: string;
+  options?: { attributeDefId: string; value: string }[];
+}
+
+export interface MediaInput {
+  url: string;
+  alt?: string;
+  isPrimary?: boolean;
+}
+
+export interface CreateProductBody {
+  categoryId: string;
+  brand: string;
+  name: string;
+  slug?: string;
+  shortDescription: string;
+  description?: string;
+  status?: ProductStatus;
+  variants: VariantInput[];
+  media?: MediaInput[];
+}
+
+export interface UpdateProductBody {
+  categoryId?: string;
+  brand?: string;
+  name?: string;
+  slug?: string;
+  shortDescription?: string;
+  description?: string;
+  status?: ProductStatus;
+}
