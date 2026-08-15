@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { useCancelOrder, useOrder } from "@/features/orders/api";
+import { useCancelOrder, useConfirmOrder, useDeliverOrder, useOrder, useShipOrder } from "@/features/orders/api";
 import { useAccount } from "@/features/accounts/api";
 import { ApiError } from "@/lib/api";
 import { formatMoney } from "@/lib/money";
@@ -44,6 +44,7 @@ function OrderDetail({ order }: { order: NonNullable<ReturnType<typeof useOrder>
   const [reason, setReason] = useState("");
   const [showCancel, setShowCancel] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [fulfilError, setFulfilError] = useState<string | null>(null);
 
   async function doCancel(e: React.FormEvent) {
     e.preventDefault();
@@ -74,6 +75,7 @@ function OrderDetail({ order }: { order: NonNullable<ReturnType<typeof useOrder>
           <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${STATUS_TONES[order.status]}`}>
             {order.status.toLowerCase().replace("_", " ")}
           </span>
+          <FulfilmentAction order={order} onError={setFulfilError} />
           {CANCELLABLE.includes(order.status) && !showCancel && (
             <Button size="sm" variant="danger" onClick={() => setShowCancel(true)}>
               Cancel order
@@ -81,6 +83,8 @@ function OrderDetail({ order }: { order: NonNullable<ReturnType<typeof useOrder>
           )}
         </div>
       </div>
+
+      {fulfilError && <p className="mt-2 text-sm text-red-600">{fulfilError}</p>}
 
       {showCancel && (
         <Card className="mt-4 p-4">
@@ -161,6 +165,52 @@ function OrderDetail({ order }: { order: NonNullable<ReturnType<typeof useOrder>
       </div>
     </div>
   );
+}
+
+// The next fulfilment step, if there is one. Delivering is the transition that moves stock —
+// if the buyer is a distributor, this is what makes it appear in their own inventory.
+function FulfilmentAction({
+  order,
+  onError,
+}: {
+  order: NonNullable<ReturnType<typeof useOrder>["data"]>["order"];
+  onError: (message: string | null) => void;
+}) {
+  const confirm = useConfirmOrder(order.id);
+  const ship = useShipOrder(order.id);
+  const deliver = useDeliverOrder(order.id);
+
+  async function run(mutation: typeof confirm, message: string) {
+    onError(null);
+    try {
+      await mutation.mutateAsync();
+    } catch (err) {
+      onError(err instanceof ApiError ? err.message : message);
+    }
+  }
+
+  if (order.status === "AWAITING_PAYMENT") {
+    return (
+      <Button size="sm" variant="secondary" disabled={confirm.isPending} onClick={() => run(confirm, "Could not confirm this order")}>
+        {confirm.isPending ? "Confirming…" : "Confirm order"}
+      </Button>
+    );
+  }
+  if (order.status === "CONFIRMED") {
+    return (
+      <Button size="sm" variant="secondary" disabled={ship.isPending} onClick={() => run(ship, "Could not mark this shipped")}>
+        {ship.isPending ? "Marking shipped…" : "Mark shipped"}
+      </Button>
+    );
+  }
+  if (order.status === "SHIPPED") {
+    return (
+      <Button size="sm" disabled={deliver.isPending} onClick={() => run(deliver, "Could not mark this delivered")}>
+        {deliver.isPending ? "Marking delivered…" : "Mark delivered"}
+      </Button>
+    );
+  }
+  return null;
 }
 
 function Row({ label, value, bold, negative }: { label: string; value: string; bold?: boolean; negative?: boolean }) {

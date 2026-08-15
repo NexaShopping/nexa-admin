@@ -47,3 +47,21 @@ export function useCancelOrder(id: string) {
     },
   });
 }
+
+// Fulfilment state machine: AWAITING_PAYMENT -> CONFIRMED -> SHIPPED -> DELIVERED. Delivering
+// is the transition that actually moves stock (see API.md) — if the buyer is a distributor,
+// this is what makes it show up in their own inventory.
+function useOrderTransition(id: string, step: "confirm" | "ship" | "deliver") {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: () => api.post<{ order: Order }>(`/orders/${id}/${step}`),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["orders"] });
+      qc.invalidateQueries({ queryKey: ["order", id] });
+    },
+  });
+}
+
+export const useConfirmOrder = (id: string) => useOrderTransition(id, "confirm");
+export const useShipOrder = (id: string) => useOrderTransition(id, "ship");
+export const useDeliverOrder = (id: string) => useOrderTransition(id, "deliver");
