@@ -228,6 +228,8 @@ export interface StockItemView {
   available: number;
   sellPrice: string;
   discountPrice: string | null;
+  minimumRetailPrice: string | null;
+  customerPrice: string | null;
   taxRatePct: string;
   isListed: boolean;
   lowStockAt: number | null;
@@ -252,6 +254,8 @@ export interface ReceiveStockBody {
   quantity: number;
   sellPrice: string;
   discountPrice?: string;
+  minimumRetailPrice: string;
+  customerPrice: string;
   taxRatePct?: string;
   unitCost?: string;
   batchNo?: string;
@@ -261,7 +265,9 @@ export interface ReceiveStockBody {
 
 export interface UpdateStockItemBody {
   sellPrice?: string;
-  discountPrice?: string;
+  discountPrice?: string | null;
+  minimumRetailPrice?: string;
+  customerPrice?: string;
   taxRatePct?: string;
   isListed?: boolean;
   lowStockAt?: number;

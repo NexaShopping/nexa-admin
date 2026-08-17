@@ -56,6 +56,8 @@ function PricingForm({ item }: { item: StockItemView }) {
   const update = useUpdateStockItem(item.id);
   const [sellPrice, setSellPrice] = useState(item.sellPrice);
   const [discountPrice, setDiscountPrice] = useState(item.discountPrice ?? "");
+  const [minimumRetailPrice, setMinimumRetailPrice] = useState(item.minimumRetailPrice ?? "");
+  const [customerPrice, setCustomerPrice] = useState(item.customerPrice ?? "");
   const [lowStockAt, setLowStockAt] = useState(item.lowStockAt?.toString() ?? "");
   const [error, setError] = useState<string | null>(null);
 
@@ -65,7 +67,9 @@ function PricingForm({ item }: { item: StockItemView }) {
     try {
       await update.mutateAsync({
         sellPrice,
-        discountPrice: discountPrice || undefined,
+        discountPrice: discountPrice || null,
+        minimumRetailPrice,
+        customerPrice,
         lowStockAt: lowStockAt ? Number(lowStockAt) : undefined,
       });
     } catch (err) {
@@ -98,12 +102,20 @@ function PricingForm({ item }: { item: StockItemView }) {
       </div>
       <form onSubmit={save} className="grid grid-cols-2 gap-3 sm:grid-cols-3">
         <div>
-          <Label>Sell price (₹)</Label>
+          <Label>Distributor wholesale price (₹)</Label>
           <Input value={sellPrice} onChange={(e) => setSellPrice(e.target.value)} />
         </div>
         <div>
-          <Label>Discount price</Label>
+          <Label>Wholesale discount price</Label>
           <Input value={discountPrice} onChange={(e) => setDiscountPrice(e.target.value)} />
+        </div>
+        <div>
+          <Label>Minimum customer price (₹)</Label>
+          <Input value={minimumRetailPrice} onChange={(e) => setMinimumRetailPrice(e.target.value)} />
+        </div>
+        <div>
+          <Label>Default customer price (₹)</Label>
+          <Input value={customerPrice} onChange={(e) => setCustomerPrice(e.target.value)} />
         </div>
         <div>
           <Label>Low-stock alert at</Label>
@@ -111,7 +123,11 @@ function PricingForm({ item }: { item: StockItemView }) {
         </div>
         {error && <p className="col-span-full text-sm text-red-600">{error}</p>}
         <div className="col-span-full">
-          <Button type="submit" size="sm" disabled={update.isPending}>
+          <Button
+            type="submit"
+            size="sm"
+            disabled={update.isPending || !sellPrice || !minimumRetailPrice || !customerPrice}
+          >
             {update.isPending ? "Saving…" : "Save pricing"}
           </Button>
         </div>

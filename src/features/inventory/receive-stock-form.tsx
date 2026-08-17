@@ -12,6 +12,8 @@ export function ReceiveStockForm({ onDone }: { onDone: () => void }) {
   const [quantity, setQuantity] = useState("");
   const [sellPrice, setSellPrice] = useState("");
   const [discountPrice, setDiscountPrice] = useState("");
+  const [minimumRetailPrice, setMinimumRetailPrice] = useState("");
+  const [customerPrice, setCustomerPrice] = useState("");
   const [taxRatePct, setTaxRatePct] = useState("");
   const [unitCost, setUnitCost] = useState("");
   const [batchNo, setBatchNo] = useState("");
@@ -30,6 +32,8 @@ export function ReceiveStockForm({ onDone }: { onDone: () => void }) {
         quantity: Number(quantity),
         sellPrice,
         discountPrice: discountPrice || undefined,
+        minimumRetailPrice,
+        customerPrice,
         taxRatePct: taxRatePct || undefined,
         unitCost: unitCost || undefined,
         batchNo: batchNo || undefined,
@@ -54,8 +58,16 @@ export function ReceiveStockForm({ onDone }: { onDone: () => void }) {
             <Input value={quantity} onChange={(e) => setQuantity(e.target.value)} inputMode="numeric" required />
           </div>
           <div>
-            <Label>Sell price (₹)</Label>
+            <Label>Distributor wholesale price (₹)</Label>
             <Input value={sellPrice} onChange={(e) => setSellPrice(e.target.value)} placeholder="22.00" required />
+          </div>
+          <div>
+            <Label>Minimum customer price (₹)</Label>
+            <Input value={minimumRetailPrice} onChange={(e) => setMinimumRetailPrice(e.target.value)} placeholder="25.00" required />
+          </div>
+          <div>
+            <Label>Default customer price (₹)</Label>
+            <Input value={customerPrice} onChange={(e) => setCustomerPrice(e.target.value)} placeholder="28.00" required />
           </div>
           <div>
             <Label>Unit cost (optional)</Label>
@@ -76,7 +88,11 @@ export function ReceiveStockForm({ onDone }: { onDone: () => void }) {
         </div>
         {error && <p className="text-sm text-red-600">{error}</p>}
         <div className="flex gap-2">
-          <Button type="submit" size="sm" disabled={receive.isPending || !variant || !quantity || !sellPrice}>
+          <Button
+            type="submit"
+            size="sm"
+            disabled={receive.isPending || !variant || !quantity || !sellPrice || !minimumRetailPrice || !customerPrice}
+          >
             {receive.isPending ? "Receiving…" : "Receive stock"}
           </Button>
           <Button type="button" size="sm" variant="ghost" onClick={onDone}>
