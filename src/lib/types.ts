@@ -315,6 +315,35 @@ export interface CreateDistributorBody {
   territory?: string;
   referredByAccountId?: string;
   status?: "PENDING" | "ACTIVE";
+  credit?: { enabled: boolean; limit: string };
+}
+
+export type CreditAccountStatus = "ACTIVE" | "SUSPENDED";
+export interface CreditSummary {
+  accountId: string; distributorAccountId: string; creditLimit: string; currentBalance: string;
+  availableCredit: string; status: CreditAccountStatus; termDays: number; hasOverdueCharges: boolean; nextDueAt: string | null;
+}
+export interface CreditCharge {
+  id: string; orderId: string; principalAmount: string; outstandingAmount: string; dueAt: string;
+  status: "OPEN" | "PARTIALLY_PAID" | "PAID" | "REVERSED"; createdAt: string; updatedAt: string;
+}
+export interface CreditLedgerEntry {
+  id: string; direction: "DEBIT" | "CREDIT"; reason: string; amount: string; balanceAfter: string;
+  sourceType: string; sourceId: string; note: string | null; createdAt: string;
+}
+export interface CreditRepayment {
+  id: string; amount: string; method: "PHONEPE" | "OFFLINE"; status: "PENDING" | "SUCCESS" | "FAILED";
+  externalReference: string | null; paidAt: string | null; createdAt: string; updatedAt: string;
+}
+export interface DistributorPayable {
+  id: string; orderId: string; distributorAccountId: string; amount: string; status: "HELD" | "PAYABLE" | "PAID";
+  eligibleAt: string | null; paidAt: string | null; createdAt: string; updatedAt: string;
+  order: { orderNo: string; deliveredAt: string | null; grandTotal: string };
+  distributor: { name: string | null; phone: string | null; distributorProfile: { businessName: string } | null };
+}
+export interface DistributorPayout {
+  id: string; distributorAccountId: string; amount: string; method: string; externalReference: string;
+  paidAt: string; createdAt: string; allocations: Array<{ id: string; payableId: string; amount: string; createdAt: string }>;
 }
 
 export interface UpdateAccountBody {
