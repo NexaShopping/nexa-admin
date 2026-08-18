@@ -14,6 +14,7 @@ const NAV = [
   { href: "/dashboard/inventory", label: "Inventory", icon: StackIcon },
   { href: "/dashboard/orders", label: "Orders", icon: OrdersIcon },
   { href: "/dashboard/accounts", label: "Accounts", icon: UsersIcon },
+  { href: "/dashboard/settlements", label: "Settlements", icon: MoneyIcon },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -160,4 +161,8 @@ function TagIcon({ className }: { className?: string }) {
       <circle cx="8.25" cy="8.25" r="1.25" />
     </svg>
   );
+}
+
+function MoneyIcon({ className }: { className?: string }) {
+  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className={className}><rect x="3.5" y="5" width="17" height="14" rx="2" /><path d="M3.5 9h17M8 14h3" strokeLinecap="round" /></svg>;
 }

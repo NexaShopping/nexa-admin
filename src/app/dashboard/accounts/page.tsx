@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useAccounts, useCreateDistributor, useUpdateAccount, type AccountFilters } from "@/features/accounts/api";
 import { ApiError } from "@/lib/api";
 import { Button, Card, EmptyState, ErrorState, Input, Label, Select, Spinner } from "@/components/ui";
@@ -163,17 +164,24 @@ function CreateDistributorForm({ onDone }: { onDone: () => void }) {
   const [phone, setPhone] = useState("");
   const [businessName, setBusinessName] = useState("");
   const [territory, setTerritory] = useState("");
+  const [creditEnabled, setCreditEnabled] = useState(false);
+  const [creditLimit, setCreditLimit] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
     try {
-      await create.mutateAsync({ name, phone, businessName, territory: territory || undefined });
+      await create.mutateAsync({
+        name, phone, businessName, territory: territory || undefined,
+        credit: creditEnabled ? { enabled: true, limit: creditLimit } : undefined,
+      });
       setName("");
       setPhone("");
       setBusinessName("");
       setTerritory("");
+      setCreditEnabled(false);
+      setCreditLimit("");
       onDone();
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Could not onboard this distributor");
@@ -203,9 +211,14 @@ function CreateDistributorForm({ onDone }: { onDone: () => void }) {
           <Label>Territory (optional)</Label>
           <Input value={territory} onChange={(e) => setTerritory(e.target.value)} />
         </div>
+        <label className="flex items-center gap-3 rounded-md border border-line bg-canvas px-3 py-2.5 text-sm">
+          <input type="checkbox" checked={creditEnabled} onChange={(e) => setCreditEnabled(e.target.checked)} className="accent-brand" />
+          Enable 30-day credit
+        </label>
+        {creditEnabled && <div><Label>Credit limit</Label><Input value={creditLimit} onChange={(e) => setCreditLimit(e.target.value)} inputMode="decimal" placeholder="50000.00" required /></div>}
         {error && <p className="text-sm text-red-600 sm:col-span-2">{error}</p>}
         <div className="sm:col-span-2">
-          <Button type="submit" size="sm" disabled={create.isPending || !name || !phone || !businessName}>
+          <Button type="submit" size="sm" disabled={create.isPending || !name || !phone || !businessName || (creditEnabled && !creditLimit)}>
             {create.isPending ? "Onboarding…" : "Onboard distributor"}
           </Button>
         </div>
@@ -253,6 +266,8 @@ function AccountDetail({ account, onClose }: { account: AccountSummary; onClose:
           </p>
         </div>
       )}
+
+      {account.role === "DISTRIBUTOR" && <Link href={`/dashboard/accounts/${account.id}/credit`} className="flex items-center justify-between rounded-md border border-brand/25 bg-brand/5 px-3 py-2.5 text-sm font-medium text-brand hover:bg-brand/10"><span>Credit account</span><span aria-hidden>→</span></Link>}
 
       <form onSubmit={save} className="space-y-3">
         <div>
