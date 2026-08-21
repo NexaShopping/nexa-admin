@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 import type {
   AttributeDef,
@@ -83,6 +83,18 @@ export function useProducts(filters: ProductFilters, cursor?: string) {
     queryKey: ["products", filters, cursor],
     queryFn: () => api.getPage<{ products: ProductSummary[] }>(`/products${qs ? `?${qs}` : ""}`),
     placeholderData: (prev) => prev,
+  });
+}
+
+export function useInfiniteProducts(filters: ProductFilters) {
+  return useInfiniteQuery({
+    queryKey: ["productsInfinite", filters],
+    initialPageParam: undefined as string | undefined,
+    queryFn: ({ pageParam }) => {
+      const qs = productsQueryString(filters, pageParam);
+      return api.getPage<{ products: ProductSummary[] }>(`/products${qs ? `?${qs}` : ""}`);
+    },
+    getNextPageParam: (lastPage) => (lastPage.meta?.hasMore ? lastPage.meta.cursor : undefined),
   });
 }
 

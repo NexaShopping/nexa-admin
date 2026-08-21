@@ -8,9 +8,10 @@ import { useCredit, useCreditCharges, useCreditLedger, useCreditRepayments, useO
 
 export function CreditPanel({ accountId }: { accountId: string }) {
   const summary = useCredit(accountId);
-  const charges = useCreditCharges(accountId);
-  const ledger = useCreditLedger(accountId);
-  const repayments = useCreditRepayments(accountId);
+  const hasCreditAccount = Boolean(summary.data?.credit);
+  const charges = useCreditCharges(accountId, hasCreditAccount);
+  const ledger = useCreditLedger(accountId, hasCreditAccount);
+  const repayments = useCreditRepayments(accountId, hasCreditAccount);
   const update = useUpdateCredit(accountId);
   const repay = useOfflineRepayment(accountId);
   const [limit, setLimit] = useState("");
@@ -22,9 +23,9 @@ export function CreditPanel({ accountId }: { accountId: string }) {
   const [message, setMessage] = useState<string | null>(null);
 
   if (summary.isLoading) return <div className="grid place-items-center py-24"><Spinner className="h-6 w-6 text-brand" /></div>;
-  if (summary.isError) return <ErrorState message={summary.error instanceof Error ? summary.error.message : "Could not load credit"} onRetry={summary.refetch} />;
+  if (summary.isError && !(summary.error instanceof ApiError && summary.error.status === 404)) return <ErrorState message={summary.error instanceof Error ? summary.error.message : "Could not load credit"} onRetry={summary.refetch} />;
   const credit = summary.data?.credit;
-  if (!credit) return <EmptyState title="Credit is not enabled" hint="Enable credit from distributor onboarding or account administration." />;
+  if (!credit) return <CreditApproval accountId={accountId} />;
 
   async function saveCredit(e: React.FormEvent) {
     e.preventDefault(); setMessage(null);
@@ -72,6 +73,26 @@ export function CreditPanel({ accountId }: { accountId: string }) {
       <DataTable title="Credit ledger" loading={ledger.isLoading} error={ledger.error} empty={!ledger.data?.entries.length} headers={["Date", "Entry", "Amount", "Balance after"]} rows={(ledger.data?.entries ?? []).map((e) => [new Date(e.createdAt).toLocaleDateString("en-IN"), e.reason.replaceAll("_", " "), formatMoney(e.amount), formatMoney(e.balanceAfter)])} />
     </div>
   );
+}
+
+function CreditApproval({ accountId }: { accountId: string }) {
+  const update = useUpdateCredit(accountId);
+  const [limit, setLimit] = useState("");
+  const [reason, setReason] = useState("");
+  const [message, setMessage] = useState<string | null>(null);
+
+  async function approve(event: React.FormEvent) {
+    event.preventDefault();
+    setMessage(null);
+    try {
+      await update.mutateAsync({ creditLimit: limit, status: "ACTIVE", reason });
+      setMessage("Credit approved and account created.");
+    } catch (error) {
+      setMessage(error instanceof ApiError ? error.message : "Could not approve credit");
+    }
+  }
+
+  return <Card className="overflow-hidden"><div className="border-b border-line p-5"><p className="text-xs font-semibold uppercase tracking-[0.16em] text-brand">Approval required</p><h2 className="mt-1 text-lg font-semibold">Enable distributor credit</h2><p className="mt-1 text-sm text-ink-soft">This distributor does not have a credit account yet. Set the approved limit to create one with an audit trail.</p></div><form onSubmit={approve} className="grid gap-4 p-5 sm:grid-cols-2"><div><Label>Approved credit limit</Label><Input value={limit} onChange={(event) => setLimit(event.target.value)} placeholder="50000.00" inputMode="decimal" required /></div><div><Label>Approval reason</Label><Input value={reason} onChange={(event) => setReason(event.target.value)} placeholder="Approved after verification" required /></div><div className="sm:col-span-2"><Button disabled={update.isPending || !limit || !reason}>{update.isPending ? "Approving…" : "Approve credit"}</Button></div>{message && <p className="sm:col-span-2 rounded-md border border-line bg-canvas px-3 py-2 text-sm">{message}</p>}</form></Card>;
 }
 
 function Metric({ label, value, tone = "default" }: { label: string; value: string; tone?: "default" | "positive" | "danger" }) {

@@ -3,16 +3,16 @@ import { api } from "@/lib/api";
 import type { CreditCharge, CreditLedgerEntry, CreditRepayment, CreditSummary } from "@/lib/types";
 
 export function useCredit(accountId: string) {
-  return useQuery({ queryKey: ["credit", accountId], queryFn: () => api.get<{ credit: CreditSummary }>(`/credit/${accountId}`) });
+  return useQuery({ queryKey: ["credit", accountId], queryFn: () => api.get<{ credit: CreditSummary | null }>(`/credit/${accountId}`) });
 }
-export function useCreditCharges(accountId: string) {
-  return useQuery({ queryKey: ["credit", accountId, "charges"], queryFn: () => api.get<{ charges: CreditCharge[] }>(`/credit/${accountId}/charges`) });
+export function useCreditCharges(accountId: string, enabled = true) {
+  return useQuery({ queryKey: ["credit", accountId, "charges"], enabled, queryFn: () => api.get<{ charges: CreditCharge[] }>(`/credit/${accountId}/charges`) });
 }
-export function useCreditLedger(accountId: string) {
-  return useQuery({ queryKey: ["credit", accountId, "ledger"], queryFn: () => api.get<{ entries: CreditLedgerEntry[] }>(`/credit/${accountId}/ledger`) });
+export function useCreditLedger(accountId: string, enabled = true) {
+  return useQuery({ queryKey: ["credit", accountId, "ledger"], enabled, queryFn: () => api.get<{ entries: CreditLedgerEntry[] }>(`/credit/${accountId}/ledger`) });
 }
-export function useCreditRepayments(accountId: string) {
-  return useQuery({ queryKey: ["credit", accountId, "repayments"], queryFn: () => api.get<{ repayments: CreditRepayment[] }>(`/credit/${accountId}/repayments`) });
+export function useCreditRepayments(accountId: string, enabled = true) {
+  return useQuery({ queryKey: ["credit", accountId, "repayments"], enabled, queryFn: () => api.get<{ repayments: CreditRepayment[] }>(`/credit/${accountId}/repayments`) });
 }
 export function useUpdateCredit(accountId: string) {
   const qc = useQueryClient();

@@ -8,7 +8,7 @@ import { Button, Card, Input, Label } from "@/components/ui";
 
 export function ReceiveStockForm({ onDone }: { onDone: () => void }) {
   const receive = useReceiveStock();
-  const [variant, setVariant] = useState<{ id: string; sku: string; name: string } | null>(null);
+  const [variant, setVariant] = useState<{ id: string; sku: string; name: string; mrp: string } | null>(null);
   const [quantity, setQuantity] = useState("");
   const [sellPrice, setSellPrice] = useState("");
   const [discountPrice, setDiscountPrice] = useState("");
@@ -51,6 +51,7 @@ export function ReceiveStockForm({ onDone }: { onDone: () => void }) {
         <div>
           <Label>Variant</Label>
           <VariantPicker onSelect={setVariant} selectedLabel={variant?.name ?? null} />
+          {variant && <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-md bg-canvas px-3 py-2 text-xs text-ink-soft"><span className="font-mono">{variant.sku}</span><span className="font-semibold text-ink">MRP ₹{variant.mrp}</span><span>Use this MRP as the upper pricing reference.</span></div>}
         </div>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
           <div>
@@ -59,15 +60,15 @@ export function ReceiveStockForm({ onDone }: { onDone: () => void }) {
           </div>
           <div>
             <Label>Distributor wholesale price (₹)</Label>
-            <Input value={sellPrice} onChange={(e) => setSellPrice(e.target.value)} placeholder="22.00" required />
+            <Input value={sellPrice} onChange={(e) => setSellPrice(e.target.value)} placeholder={variant ? `Below MRP ${variant.mrp}` : "22.00"} required />
           </div>
           <div>
             <Label>Minimum customer price (₹)</Label>
-            <Input value={minimumRetailPrice} onChange={(e) => setMinimumRetailPrice(e.target.value)} placeholder="25.00" required />
+            <Input value={minimumRetailPrice} onChange={(e) => setMinimumRetailPrice(e.target.value)} placeholder={variant ? `Floor ≤ ${variant.mrp}` : "25.00"} required />
           </div>
           <div>
             <Label>Default customer price (₹)</Label>
-            <Input value={customerPrice} onChange={(e) => setCustomerPrice(e.target.value)} placeholder="28.00" required />
+            <Input value={customerPrice} onChange={(e) => setCustomerPrice(e.target.value)} placeholder={variant ? `Suggested ≤ ${variant.mrp}` : "28.00"} required />
           </div>
           <div>
             <Label>Unit cost (optional)</Label>
