@@ -42,6 +42,7 @@ function ProductDetail({ id, product }: { id: string; product: NonNullable<Retur
   });
   const [error, setError] = useState<string | null>(null);
   const [mediaError, setMediaError] = useState<string | null>(null);
+  const [activeMediaIndex, setActiveMediaIndex] = useState(0);
 
   async function addImages(event: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(event.target.files ?? []);
@@ -196,17 +197,21 @@ function ProductDetail({ id, product }: { id: string; product: NonNullable<Retur
                 <input type="file" accept="image/jpeg,image/png,image/webp" multiple className="sr-only" onChange={addImages} disabled={uploadMedia.isPending || product.media.length >= 10} />
               </label>
             </div>
-            <div className="mt-3 grid grid-cols-2 gap-2">
-              {product.media.length === 0 && <p className="text-sm text-ink-soft">No images yet.</p>}
-              {product.media.map((m) => (
-                <div key={m.id} className="group relative aspect-square overflow-hidden rounded-md bg-canvas">
-                  <Image src={m.url} alt={m.alt ?? product.name} width={200} height={200} className="h-full w-full object-cover" unoptimized />
-                  <div className="absolute inset-x-1 bottom-1 flex items-center justify-between gap-1 rounded bg-black/60 px-2 py-1 text-[10px] text-white opacity-0 transition group-hover:opacity-100">
-                    <span>{m.isPrimary ? "Primary" : `Image ${m.position + 1}`}</span>
-                    <button type="button" className="text-red-200 hover:text-white" onClick={() => removeImage(m.id)}>Delete</button>
-                  </div>
-                </div>
-              ))}
+            <div className="mt-3 grid grid-cols-[64px_minmax(0,1fr)] gap-3 sm:grid-cols-[76px_minmax(0,1fr)]">
+              <div className="order-2 flex gap-2 overflow-x-auto sm:order-1 sm:block sm:space-y-2">
+                {product.media.map((m, index) => (
+                  <button key={m.id} type="button" aria-label={`View product image ${index + 1}`} onClick={() => setActiveMediaIndex(index)} className={`relative block h-14 w-14 shrink-0 overflow-hidden rounded-md border sm:h-[68px] sm:w-[68px] ${index === activeMediaIndex ? "border-brand ring-2 ring-brand/20" : "border-line hover:border-brand/60"}`}>
+                    <Image src={m.url} alt="" fill unoptimized className="object-cover" />
+                    {m.isPrimary && <span className="absolute inset-x-0 bottom-0 bg-brand/90 px-0.5 py-0.5 text-[8px] font-semibold text-white">PRIMARY</span>}
+                  </button>
+                ))}
+              </div>
+              <div className="order-1 min-w-0 sm:order-2">
+                {product.media.length === 0 ? <p className="text-sm text-ink-soft">No images yet.</p> : (() => {
+                  const active = product.media[Math.min(activeMediaIndex, product.media.length - 1)];
+                  return <div className="relative aspect-square overflow-hidden rounded-xl border border-line bg-canvas"><Image src={active.url} alt={active.alt ?? product.name} fill unoptimized className="object-contain" /><span className="absolute left-2 top-2 rounded-full bg-black/60 px-2 py-1 text-[10px] font-semibold text-white">{active.isPrimary ? "Primary image" : `Image ${active.position + 1}`}</span><button type="button" className="absolute bottom-2 right-2 rounded-md bg-black/65 px-2 py-1 text-[10px] text-red-100 hover:text-white" onClick={() => removeImage(active.id)}>Delete image</button></div>;
+                })()}
+              </div>
             </div>
             {uploadMedia.isPending && <p className="mt-2 text-xs text-ink-soft">Uploading images…</p>}
             {mediaError && <p className="mt-2 text-xs text-red-600">{mediaError}</p>}

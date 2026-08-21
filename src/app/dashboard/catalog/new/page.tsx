@@ -33,7 +33,6 @@ export default function NewProductPage() {
   const [name, setName] = useState("");
   const [shortDescription, setShortDescription] = useState("");
   const [description, setDescription] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
   const [status, setStatus] = useState<ProductStatus>("DRAFT");
   const [files, setFiles] = useState<File[]>([]);
   const [primaryIndex, setPrimaryIndex] = useState(0);
@@ -97,7 +96,6 @@ export default function NewProductPage() {
         description: description || undefined,
         status: "DRAFT",
         variants,
-        media: imageUrl ? [{ url: imageUrl, isPrimary: true }] : undefined,
       });
       setCreatedProductId(product.id);
       await completeProduct(product.id);
@@ -172,10 +170,6 @@ export default function NewProductPage() {
                 rows={3}
                 className="w-full rounded-md border border-line bg-surface px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
               />
-            </div>
-            <div className="sm:col-span-2">
-              <Label>Cover image URL (optional)</Label>
-              <Input value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} placeholder="https://…" />
             </div>
           </div>
         </Card>
