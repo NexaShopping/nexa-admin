@@ -97,6 +97,7 @@ export default function NewProductPage() {
         description: description || undefined,
         status: "DRAFT",
         variants,
+        media: imageUrl ? [{ url: imageUrl, isPrimary: true }] : undefined,
       });
       setCreatedProductId(product.id);
       await completeProduct(product.id);
@@ -273,7 +274,7 @@ export default function NewProductPage() {
 
         <div className="flex items-center gap-3">
           <Button type="submit" disabled={!canSubmit || create.isPending || uploading || Boolean(createdProductId)}>
-            {create.isPending ? "Creating…" : "Create product"}
+            {create.isPending || uploading ? "Creating…" : "Create product"}
           </Button>
           <Button type="button" variant="ghost" onClick={() => router.back()}>
             Cancel
