@@ -81,6 +81,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <div className="hidden text-sm text-ink-soft sm:block" />
           <div className="flex items-center gap-4">
             <span className="hidden text-sm text-ink-soft sm:inline">{account?.email ?? account?.name}</span>
+            <a
+              href="https://business.phonepe.com/dashboard"
+              target="_blank"
+              rel="noreferrer"
+              className="hidden rounded-md border border-brand/30 bg-brand/5 px-3 py-1.5 text-sm font-medium text-brand transition-colors hover:bg-brand/10 sm:inline-flex"
+            >
+              PhonePe dashboard ↗
+            </a>
             <button
               type="button"
               onClick={handleLogout}

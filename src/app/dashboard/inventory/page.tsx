@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { useInventory, type InventoryFilters } from "@/features/inventory/api";
 import { ReceiveStockForm } from "@/features/inventory/receive-stock-form";
@@ -24,6 +24,14 @@ export default function InventoryPage() {
   const meta = data?.meta;
   const selected = items.find((i) => i.id === selectedId) ?? null;
 
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setCursors([]);
+      setFilters((current) => ({ ...current, q: qInput.trim() || undefined }));
+    }, 300);
+    return () => window.clearTimeout(timer);
+  }, [qInput]);
+
   function updateFilters(next: Partial<InventoryFilters>) {
     setCursors([]);
     setFilters((f) => ({ ...f, ...next }));
@@ -31,7 +39,7 @@ export default function InventoryPage() {
 
   function search(e: React.FormEvent) {
     e.preventDefault();
-    updateFilters({ q: qInput || undefined });
+    updateFilters({ q: qInput.trim() || undefined });
   }
 
   return (
@@ -56,15 +64,18 @@ export default function InventoryPage() {
         <form onSubmit={search} className="flex-1 sm:max-w-xs">
           <Input placeholder="Search SKU / product…" value={qInput} onChange={(e) => setQInput(e.target.value)} />
         </form>
-        <Select
+        <div className="sm:w-48">
+          <Select
           className="sm:w-40"
           value={filters.isListed === undefined ? "" : String(filters.isListed)}
           onChange={(e) => updateFilters({ isListed: e.target.value === "" ? undefined : e.target.value === "true" })}
-        >
-          <option value="">Any listing state</option>
-          <option value="true">Listed</option>
-          <option value="false">Unlisted</option>
-        </Select>
+          >
+            <option value="">Any storefront visibility</option>
+            <option value="true">Visible to buyers</option>
+            <option value="false">Hidden from buyers</option>
+          </Select>
+          <p className="mt-1 text-[11px] leading-4 text-ink-soft">Controls whether this stock appears in the storefront.</p>
+        </div>
         <label className="flex items-center gap-2 text-sm text-ink-soft">
           <input
             type="checkbox"
