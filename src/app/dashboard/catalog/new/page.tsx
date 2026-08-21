@@ -23,6 +23,20 @@ function blankRow(): VariantRow {
   return { key: rowSeq, sku: "", name: "", mrp: "", values: {} };
 }
 
+function skuPart(value: string) {
+  return value
+    .toUpperCase()
+    .trim()
+    .replace(/&/g, " AND ")
+    .replace(/[^A-Z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 18);
+}
+
+function suggestedSku(categoryName: string, productName: string, variantName: string) {
+  return [categoryName, productName, variantName].map(skuPart).filter(Boolean).join("-") || "PRODUCT-VARIANT";
+}
+
 export default function NewProductPage() {
   const router = useRouter();
   const categories = useCategories();
@@ -44,6 +58,7 @@ export default function NewProductPage() {
 
   const attrs = useAttributeDefs(categoryId || undefined);
   const axes = (attrs.data?.attributes ?? []).filter((a) => a.isVariantAxis);
+  const selectedCategoryName = categories.data?.categories.find((category) => category.id === categoryId)?.name ?? "";
 
   function updateRow(key: number, patch: Partial<VariantRow>) {
     setRows((rs) => rs.map((r) => (r.key === key ? { ...r, ...patch } : r)));
@@ -197,7 +212,22 @@ export default function NewProductPage() {
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                   <div>
                     <Label>SKU</Label>
-                    <Input value={row.sku} onChange={(e) => updateRow(row.key, { sku: e.target.value })} required />
+                    <Input
+                      value={row.sku}
+                      onChange={(e) => updateRow(row.key, { sku: e.target.value.toUpperCase() })}
+                      placeholder={suggestedSku(selectedCategoryName, name, row.name)}
+                      required
+                    />
+                    <div className="mt-1 flex items-center justify-between gap-2 text-[11px] text-ink-soft">
+                      <span className="truncate">Suggestion: {suggestedSku(selectedCategoryName, name, row.name)}</span>
+                      <button
+                        type="button"
+                        className="shrink-0 font-medium text-brand hover:text-brand-strong"
+                        onClick={() => updateRow(row.key, { sku: suggestedSku(selectedCategoryName, name, row.name) })}
+                      >
+                        Use suggestion
+                      </button>
+                    </div>
                   </div>
                   <div>
                     <Label>Variant name</Label>

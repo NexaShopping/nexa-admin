@@ -9,7 +9,7 @@ import { Spinner } from "@/components/ui";
 
 const NAV = [
   { href: "/dashboard", label: "Overview", icon: HomeIcon },
-  { href: "/dashboard/catalog", label: "Catalog", icon: BoxIcon },
+  { href: "/dashboard/catalog", label: "Products", icon: BoxIcon },
   { href: "/dashboard/catalog/categories", label: "Categories", icon: TagIcon },
   { href: "/dashboard/inventory", label: "Inventory", icon: StackIcon },
   { href: "/dashboard/orders", label: "Orders", icon: OrdersIcon },
