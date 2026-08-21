@@ -113,6 +113,17 @@ export function useUpdateProduct(id: string) {
   });
 }
 
+export function useDeleteProductPermanently(id: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: () => api.del<{ deleted: true }>(`/products/${id}/permanent`),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["products"] });
+      qc.removeQueries({ queryKey: ["product", id] });
+    },
+  });
+}
+
 export function useAddVariant(productId: string) {
   const qc = useQueryClient();
   return useMutation({

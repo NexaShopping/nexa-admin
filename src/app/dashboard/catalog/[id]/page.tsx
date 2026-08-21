@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
-import { useAddVariant, useAttributeDefs, useDeleteProductMedia, useMoveProductMedia, useProduct, useUpdateProduct, useUploadProductMedia } from "@/features/catalog/api";
+import { useAddVariant, useAttributeDefs, useDeleteProductMedia, useDeleteProductPermanently, useMoveProductMedia, useProduct, useUpdateProduct, useUploadProductMedia } from "@/features/catalog/api";
 import { ApiError } from "@/lib/api";
 import { formatMoney } from "@/lib/money";
 import { Button, Card, ErrorState, Input, Label, Select, Spinner, StatusBadge } from "@/components/ui";
@@ -29,10 +29,12 @@ export default function ProductDetailPage() {
 }
 
 function ProductDetail({ id, product }: { id: string; product: NonNullable<ReturnType<typeof useProduct>["data"]>["product"] }) {
+  const router = useRouter();
   const update = useUpdateProduct(id);
   const deleteMedia = useDeleteProductMedia(id);
   const uploadMedia = useUploadProductMedia(id);
   const moveMedia = useMoveProductMedia(id);
+  const deleteProduct = useDeleteProductPermanently(id);
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState({
     brand: product.brand,
@@ -90,6 +92,18 @@ function ProductDetail({ id, product }: { id: string; product: NonNullable<Retur
     }
   }
 
+  async function permanentlyDelete() {
+    if (product.status !== "DRAFT") return;
+    if (!window.confirm(`Permanently delete \"${product.name}\"? This cannot be undone.`)) return;
+    setError(null);
+    try {
+      await deleteProduct.mutateAsync();
+      router.replace("/dashboard/catalog");
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "This product cannot be permanently deleted");
+    }
+  }
+
   return (
     <div className="mx-auto max-w-4xl">
       <Link href="/dashboard/catalog" className="text-sm text-ink-soft hover:text-ink">
@@ -119,6 +133,11 @@ function ProductDetail({ id, product }: { id: string; product: NonNullable<Retur
           {product.status !== "ARCHIVED" && (
             <Button size="sm" variant="danger" onClick={() => setStatus("ARCHIVED")}>
               Archive
+            </Button>
+          )}
+          {product.status === "DRAFT" && (
+            <Button size="sm" variant="danger" onClick={permanentlyDelete} disabled={deleteProduct.isPending}>
+              {deleteProduct.isPending ? "Deleting…" : "Delete permanently"}
             </Button>
           )}
         </div>
