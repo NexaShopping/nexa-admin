@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { useAddVariant, useAttributeDefs, useProduct, useUpdateProduct } from "@/features/catalog/api";
+import { useAddVariant, useAttributeDefs, useDeleteProductMedia, useProduct, useUpdateProduct, useUploadProductMedia } from "@/features/catalog/api";
 import { ApiError } from "@/lib/api";
 import { formatMoney } from "@/lib/money";
 import { Button, Card, ErrorState, Input, Label, Select, Spinner, StatusBadge } from "@/components/ui";
@@ -30,6 +30,8 @@ export default function ProductDetailPage() {
 
 function ProductDetail({ id, product }: { id: string; product: NonNullable<ReturnType<typeof useProduct>["data"]>["product"] }) {
   const update = useUpdateProduct(id);
+  const deleteMedia = useDeleteProductMedia(id);
+  const uploadMedia = useUploadProductMedia(id);
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState({
     brand: product.brand,
@@ -38,6 +40,29 @@ function ProductDetail({ id, product }: { id: string; product: NonNullable<Retur
     description: product.description ?? "",
   });
   const [error, setError] = useState<string | null>(null);
+  const [mediaError, setMediaError] = useState<string | null>(null);
+
+  async function addImages(event: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(event.target.files ?? []);
+    event.target.value = "";
+    if (!files.length) return;
+    setMediaError(null);
+    try {
+      await uploadMedia.mutateAsync({ files, primaryIndex: 0 });
+    } catch (err) {
+      setMediaError(err instanceof ApiError ? err.message : "Could not upload images");
+    }
+  }
+
+  async function removeImage(mediaId: string) {
+    if (!window.confirm("Delete this product image? It will also be removed from Cloudinary.")) return;
+    setMediaError(null);
+    try {
+      await deleteMedia.mutateAsync(mediaId);
+    } catch (err) {
+      setMediaError(err instanceof ApiError ? err.message : "Could not delete image");
+    }
+  }
 
   async function saveDetails(e: React.FormEvent) {
     e.preventDefault();
@@ -155,15 +180,30 @@ function ProductDetail({ id, product }: { id: string; product: NonNullable<Retur
 
         <div className="space-y-4">
           <Card className="p-4">
-            <p className="text-sm font-medium">Media</p>
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className="text-sm font-medium">Media</p>
+                <p className="mt-1 text-xs text-ink-soft">{product.media.length}/10 images</p>
+              </div>
+              <label className="inline-flex cursor-pointer items-center rounded-md border border-line px-3 py-1.5 text-xs font-medium hover:border-brand hover:text-brand">
+                Add images
+                <input type="file" accept="image/jpeg,image/png,image/webp" multiple className="sr-only" onChange={addImages} disabled={uploadMedia.isPending || product.media.length >= 10} />
+              </label>
+            </div>
             <div className="mt-3 grid grid-cols-2 gap-2">
               {product.media.length === 0 && <p className="text-sm text-ink-soft">No images yet.</p>}
               {product.media.map((m) => (
-                <div key={m.id} className="aspect-square overflow-hidden rounded-md bg-canvas">
+                <div key={m.id} className="group relative aspect-square overflow-hidden rounded-md bg-canvas">
                   <Image src={m.url} alt={m.alt ?? product.name} width={200} height={200} className="h-full w-full object-cover" unoptimized />
+                  <div className="absolute inset-x-1 bottom-1 flex items-center justify-between gap-1 rounded bg-black/60 px-2 py-1 text-[10px] text-white opacity-0 transition group-hover:opacity-100">
+                    <span>{m.isPrimary ? "Primary" : `Image ${m.position + 1}`}</span>
+                    <button type="button" className="text-red-200 hover:text-white" onClick={() => removeImage(m.id)}>Delete</button>
+                  </div>
                 </div>
               ))}
             </div>
+            {uploadMedia.isPending && <p className="mt-2 text-xs text-ink-soft">Uploading images…</p>}
+            {mediaError && <p className="mt-2 text-xs text-red-600">{mediaError}</p>}
           </Card>
         </div>
       </div>
