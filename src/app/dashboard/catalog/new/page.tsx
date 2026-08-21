@@ -3,7 +3,9 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useAttributeDefs, useCategories, useCreateProduct } from "@/features/catalog/api";
+import { ProductMediaPicker } from "@/features/catalog/product-media-picker";
 import { ApiError } from "@/lib/api";
+import { api } from "@/lib/api";
 import { Button, Card, Input, Label, Select } from "@/components/ui";
 import type { ProductStatus, VariantInput } from "@/lib/types";
 
@@ -31,8 +33,13 @@ export default function NewProductPage() {
   const [name, setName] = useState("");
   const [shortDescription, setShortDescription] = useState("");
   const [description, setDescription] = useState("");
-  const [status, setStatus] = useState<ProductStatus>("DRAFT");
   const [imageUrl, setImageUrl] = useState("");
+  const [status, setStatus] = useState<ProductStatus>("DRAFT");
+  const [files, setFiles] = useState<File[]>([]);
+  const [primaryIndex, setPrimaryIndex] = useState(0);
+  const [imagesReviewed, setImagesReviewed] = useState(false);
+  const [createdProductId, setCreatedProductId] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
   const [rows, setRows] = useState<VariantRow[]>([blankRow()]);
   const [error, setError] = useState<string | null>(null);
 
@@ -46,9 +53,29 @@ export default function NewProductPage() {
     setRows((rs) => rs.map((r) => (r.key === key ? { ...r, values: { ...r.values, [attributeDefId]: value } } : r)));
   }
 
+  async function completeProduct(productId: string) {
+    if (files.length) {
+      setUploading(true);
+      const form = new FormData();
+      files.forEach((file) => form.append("images", file, file.name));
+      form.append("primaryIndex", String(primaryIndex));
+      try {
+        await api.postForm(`/products/${productId}/media`, form);
+      } finally {
+        setUploading(false);
+      }
+    }
+    if (status !== "DRAFT") await api.patch(`/products/${productId}`, { status });
+    router.push(`/dashboard/catalog/${productId}`);
+  }
+
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+    if (files.length && !imagesReviewed) {
+      setError("Review and confirm the selected images before creating the product.");
+      return;
+    }
 
     const variants: VariantInput[] = rows.map((r) => ({
       sku: r.sku.trim(),
@@ -68,13 +95,23 @@ export default function NewProductPage() {
         name,
         shortDescription,
         description: description || undefined,
-        status,
+        status: "DRAFT",
         variants,
-        media: imageUrl ? [{ url: imageUrl, isPrimary: true }] : undefined,
       });
-      router.push(`/dashboard/catalog/${product.id}`);
+      setCreatedProductId(product.id);
+      await completeProduct(product.id);
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Could not create product");
+      setError(err instanceof ApiError ? err.message : "Could not create product or upload images");
+    }
+  }
+
+  async function retryImages() {
+    if (!createdProductId) return;
+    setError(null);
+    try {
+      await completeProduct(createdProductId);
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Could not upload images; the draft is still saved");
     }
   }
 
@@ -141,6 +178,13 @@ export default function NewProductPage() {
             </div>
           </div>
         </Card>
+
+        <ProductMediaPicker
+          files={files}
+          primaryIndex={primaryIndex}
+          onChange={(nextFiles, nextPrimary) => { setFiles(nextFiles); setPrimaryIndex(nextPrimary); setImagesReviewed(false); }}
+          onReviewed={() => setImagesReviewed(true)}
+        />
 
         <Card className="space-y-4 p-5">
           <div className="flex items-center justify-between">
@@ -218,8 +262,17 @@ export default function NewProductPage() {
 
         {error && <p className="text-sm text-red-600">{error}</p>}
 
+        {createdProductId && files.length > 0 && (
+          <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
+            The draft product is saved, but its images still need uploading.
+            <Button type="button" size="sm" variant="secondary" className="ml-3" onClick={retryImages} disabled={uploading}>
+              {uploading ? "Uploading..." : "Retry image upload"}
+            </Button>
+          </div>
+        )}
+
         <div className="flex items-center gap-3">
-          <Button type="submit" disabled={!canSubmit || create.isPending}>
+          <Button type="submit" disabled={!canSubmit || create.isPending || uploading || Boolean(createdProductId)}>
             {create.isPending ? "Creating…" : "Create product"}
           </Button>
           <Button type="button" variant="ghost" onClick={() => router.back()}>
