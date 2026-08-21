@@ -123,3 +123,30 @@ export function useAddVariant(productId: string) {
     },
   });
 }
+
+export function useUploadProductMedia(productId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ files, primaryIndex = 0 }: { files: File[]; primaryIndex?: number }) => {
+      const form = new FormData();
+      files.forEach((file) => form.append("images", file, file.name));
+      form.append("primaryIndex", String(primaryIndex));
+      return api.postForm<{ product: ProductDetail }>(`/products/${productId}/media`, form);
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["products"] });
+      qc.invalidateQueries({ queryKey: ["product", productId] });
+    },
+  });
+}
+
+export function useDeleteProductMedia(productId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (mediaId: string) => api.del<{ product: ProductDetail }>(`/products/${productId}/media/${mediaId}`),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["products"] });
+      qc.invalidateQueries({ queryKey: ["product", productId] });
+    },
+  });
+}

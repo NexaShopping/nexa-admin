@@ -125,6 +125,7 @@ export interface Media {
   alt: string | null;
   isPrimary: boolean;
   position: number;
+  resourceType?: "image";
 }
 
 export interface Variant {

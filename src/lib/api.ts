@@ -24,10 +24,11 @@ async function requestFull<T>(path: string, init: RequestInit = {}): Promise<{ d
   }
 
   const token = tokenStore.get();
+  const isFormData = typeof FormData !== "undefined" && init.body instanceof FormData;
   const res = await fetch(`${BASE_URL}/api/v1${path}`, {
     ...init,
     headers: {
-      "Content-Type": "application/json",
+      ...(isFormData ? {} : { "Content-Type": "application/json" }),
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...(init.headers ?? {}),
     },
@@ -61,6 +62,7 @@ export const api = {
   getPage: <T>(path: string) => requestFull<T>(path),
   post: <T>(path: string, data?: unknown) =>
     request<T>(path, { method: "POST", body: data === undefined ? undefined : JSON.stringify(data) }),
+  postForm: <T>(path: string, data: FormData) => request<T>(path, { method: "POST", body: data }),
   patch: <T>(path: string, data?: unknown) =>
     request<T>(path, { method: "PATCH", body: data === undefined ? undefined : JSON.stringify(data) }),
   del: <T>(path: string) => request<T>(path, { method: "DELETE" }),
