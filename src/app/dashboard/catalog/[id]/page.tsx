@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { useAddVariant, useAttributeDefs, useDeleteProductMedia, useProduct, useUpdateProduct, useUploadProductMedia } from "@/features/catalog/api";
+import { useAddVariant, useAttributeDefs, useDeleteProductMedia, useMoveProductMedia, useProduct, useUpdateProduct, useUploadProductMedia } from "@/features/catalog/api";
 import { ApiError } from "@/lib/api";
 import { formatMoney } from "@/lib/money";
 import { Button, Card, ErrorState, Input, Label, Select, Spinner, StatusBadge } from "@/components/ui";
@@ -32,6 +32,7 @@ function ProductDetail({ id, product }: { id: string; product: NonNullable<Retur
   const update = useUpdateProduct(id);
   const deleteMedia = useDeleteProductMedia(id);
   const uploadMedia = useUploadProductMedia(id);
+  const moveMedia = useMoveProductMedia(id);
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState({
     brand: product.brand,
@@ -67,11 +68,16 @@ function ProductDetail({ id, product }: { id: string; product: NonNullable<Retur
   async function saveDetails(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+    const nameChanged = form.name.trim() !== product.name.trim();
+    const moveConfirmed = nameChanged && product.media.length > 0
+      ? window.confirm("Move the existing product images to the new Cloudinary product folder?")
+      : false;
     try {
       await update.mutateAsync(form);
+      if (moveConfirmed) await moveMedia.mutateAsync(product.name);
       setEditing(false);
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Could not save changes");
+      setError(err instanceof ApiError ? err.message : "Could not save changes or move product images");
     }
   }
 

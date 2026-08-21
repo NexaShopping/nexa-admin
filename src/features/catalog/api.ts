@@ -150,3 +150,14 @@ export function useDeleteProductMedia(productId: string) {
     },
   });
 }
+
+export function useMoveProductMedia(productId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (oldProductName: string) => api.post<{ product: ProductDetail }>(`/products/${productId}/media/move`, { oldProductName }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["products"] });
+      qc.invalidateQueries({ queryKey: ["product", productId] });
+    },
+  });
+}
