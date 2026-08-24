@@ -22,6 +22,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const router = useRouter();
   const pathname = usePathname();
   const [signingOut, setSigningOut] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (status === "anon") router.replace("/login");
@@ -73,6 +74,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <div className="flex flex-1 flex-col">
         <header className="flex h-14 items-center justify-between border-b border-line bg-surface px-5">
           <div className="flex items-center gap-2.5 sm:hidden">
+            <button type="button" onClick={() => setMobileMenuOpen((open) => !open)} aria-expanded={mobileMenuOpen} aria-controls="admin-mobile-nav" className="grid h-9 w-9 place-items-center rounded-lg border border-line text-ink transition-colors hover:bg-canvas">
+              <span className="sr-only">{mobileMenuOpen ? "Close navigation" : "Open navigation"}</span>
+              <span className="text-xl leading-none">{mobileMenuOpen ? "×" : "☰"}</span>
+            </button>
             <Image src="/logo.png" alt="" width={24} height={23} className="h-6 w-auto" />
             <span className="font-semibold tracking-tight">
               Nexa<span className="text-brand">Shopping</span>
@@ -99,6 +104,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </button>
           </div>
         </header>
+        {mobileMenuOpen && (
+          <div id="admin-mobile-nav" className="border-b border-line bg-surface px-4 py-3 shadow-sm sm:hidden">
+            <nav className="grid gap-1">
+              {NAV.map((item) => {
+                const active = item.href === "/dashboard" ? pathname === item.href : pathname.startsWith(item.href);
+                const Icon = item.icon;
+                return <Link key={item.href} href={item.href} onClick={() => setMobileMenuOpen(false)} className={`flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium ${active ? "bg-brand/10 text-brand" : "text-ink-soft hover:bg-canvas hover:text-ink"}`}><Icon className="h-5 w-5" />{item.label}</Link>;
+              })}
+            </nav>
+          </div>
+        )}
         <main className="flex-1 overflow-y-auto p-6">{children}</main>
       </div>
     </div>
