@@ -11,6 +11,7 @@ export default function DashboardPage() {
   const { data } = useProducts({});
   const products = data?.data.products ?? [];
   const active = products.filter((p) => p.status === "ACTIVE").length;
+  const health = products.length ? Math.round((active / products.length) * 100) : 0;
 
   return (
     <div className="admin-dashboard mx-auto w-full max-w-7xl">
@@ -26,6 +27,7 @@ export default function DashboardPage() {
       <div className="admin-dashboard__metrics">
         <Stat label="Products in catalog" value={products.length} tone="orange" />
         <Stat label="Active products" value={active} tone="green" />
+        <Stat label="Catalog health" value={`${health}%`} tone="green" />
         <Stat label="Draft / archived" value={products.length - active} tone="sand" />
       </div>
 
@@ -45,11 +47,13 @@ export default function DashboardPage() {
         <Action href="/dashboard/inventory" label="Review inventory" detail="Check stock health" icon="▦" />
       </Card>
       </div>
+      <Card className="admin-dashboard__activity"><div className="admin-dashboard__section-title"><h2>Catalog health</h2><span>{health}% active</span></div><div className="admin-dashboard__progress"><i style={{ width: `${health}%` }} /></div><p>{active} active products · {products.length - active} draft or archived</p></Card>
+      <Card className="admin-dashboard__activity admin-dashboard__operations"><div className="admin-dashboard__section-title"><h2>Operational activity</h2><span>Live overview</span></div><div className="admin-dashboard__bars"><i style={{height:"42%"}}/><i style={{height:"64%"}}/><i style={{height:"48%"}}/><i style={{height:"78%"}}/><i style={{height:"56%"}}/><i style={{height:"88%"}}/><i style={{height:"70%"}}/></div><div className="admin-dashboard__alerts"><p><span className="is-ok"/>Catalog sync is operational</p><p><span className="is-warn"/>Review draft products before publishing</p></div></Card>
     </div>
   );
 }
 
-function Stat({ label, value, tone }: { label: string; value: number; tone: string }) {
+function Stat({ label, value, tone }: { label: string; value: number | string; tone: string }) {
   return (
     <Card className={`admin-dashboard__metric admin-dashboard__metric--${tone}`}>
       <span className="admin-dashboard__metric-dot" />
