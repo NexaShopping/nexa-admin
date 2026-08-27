@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api";
-import type { Order, OrderStatus } from "@/lib/types";
+import type { Invoice, Order, OrderStatus } from "@/lib/types";
 
 // Typed wrappers over src/lib/api.ts + the TanStack Query hooks the orders screens use.
 // Admin has no "buy" side, so the list defaults to role=seller — admin's own sales to
@@ -34,6 +34,18 @@ export function useOrder(id: string) {
     queryKey: ["order", id],
     queryFn: () => api.get<{ order: Order }>(`/orders/${id}`),
     enabled: Boolean(id),
+  });
+}
+
+// GST invoice PDF — generated at shipment (dispatch), not delivery (CGST Act Section 31/Rule
+// 46 requires the tax invoice at or before removal of goods for supply). `retry: false` since a
+// 404 here just means "not shipped yet", not a transient failure.
+export function useOrderInvoice(id: string, enabled: boolean) {
+  return useQuery({
+    queryKey: ["order-invoice", id],
+    queryFn: () => api.get<{ invoice: Invoice }>(`/orders/${id}/invoice`),
+    enabled: enabled && Boolean(id),
+    retry: false,
   });
 }
 

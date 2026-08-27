@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { useCancelOrder, useConfirmOrder, useDeliverOrder, useOrder, useShipOrder } from "@/features/orders/api";
+import { InvoiceDownload } from "@/features/orders/invoice-download";
 import { useAccount } from "@/features/accounts/api";
 import { ApiError } from "@/lib/api";
 import { formatMoney } from "@/lib/money";
@@ -76,6 +77,7 @@ function OrderDetail({ order }: { order: NonNullable<ReturnType<typeof useOrder>
           <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${STATUS_TONES[order.status]}`}>
             {order.status.toLowerCase().replace("_", " ")}
           </span>
+          <InvoiceDownload orderId={order.id} ready={order.status === "SHIPPED" || order.status === "DELIVERED"} />
           <FulfilmentAction order={order} onError={setFulfilError} />
           {CANCELLABLE.includes(order.status) && !showCancel && (
             <Button size="sm" variant="danger" onClick={() => setShowCancel(true)}>

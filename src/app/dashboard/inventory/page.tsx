@@ -5,9 +5,61 @@ import { useAuth } from "@/lib/auth-context";
 import { useInventory, type InventoryFilters } from "@/features/inventory/api";
 import { ReceiveStockForm } from "@/features/inventory/receive-stock-form";
 import { StockItemDetail } from "@/features/inventory/stock-item-detail";
+import { api } from "@/lib/api";
 import { formatMoney } from "@/lib/money";
 import { Button, EmptyState, ErrorState, Input, Select, Spinner } from "@/components/ui";
 import "./inventory-modern.css";
+
+async function downloadFile(path: string, filename: string) {
+  const blob = await api.download(path);
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = filename;
+  anchor.click();
+  URL.revokeObjectURL(url);
+}
+
+function InventoryExports() {
+  const todayIso = new Date().toISOString().slice(0, 10);
+  const [stockFormat, setStockFormat] = useState<"csv" | "pdf">("csv");
+  const [exportingStock, setExportingStock] = useState(false);
+  const [ledgerFrom, setLedgerFrom] = useState(() => new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10));
+  const [ledgerTo, setLedgerTo] = useState(todayIso);
+  const [ledgerFormat, setLedgerFormat] = useState<"csv" | "pdf">("csv");
+  const [exportingLedger, setExportingLedger] = useState(false);
+
+  async function exportStockSnapshot() {
+    if (exportingStock) return;
+    setExportingStock(true);
+    try { await downloadFile(`/inventory/export?format=${stockFormat}`, `inventory-snapshot-${todayIso}.${stockFormat}`); }
+    catch { /* mutation errors surface where they're caught below */ }
+    finally { setExportingStock(false); }
+  }
+
+  async function exportStockLedger() {
+    if (exportingLedger || ledgerFrom > ledgerTo) return;
+    setExportingLedger(true);
+    try { await downloadFile(`/inventory/ledger/export?from=${ledgerFrom}&to=${ledgerTo}&format=${ledgerFormat}`, `inventory-ledger-${ledgerFrom}-to-${ledgerTo}.${ledgerFormat}`); }
+    catch { /* mutation errors surface where they're caught below */ }
+    finally { setExportingLedger(false); }
+  }
+
+  return (
+    <div className="flex flex-wrap items-end gap-2">
+      <div className="flex items-end gap-2">
+        <Select className="h-8" value={stockFormat} onChange={(e) => setStockFormat(e.target.value as "csv" | "pdf")} aria-label="Snapshot export format"><option value="csv">CSV</option><option value="pdf">PDF</option></Select>
+        <Button size="sm" variant="secondary" disabled={exportingStock} onClick={() => void exportStockSnapshot()}>{exportingStock ? "Exporting…" : "Export snapshot"}</Button>
+      </div>
+      <div className="flex items-end gap-2">
+        <label className="flex flex-col gap-1 text-xs text-ink-soft">From<Input type="date" className="h-8" value={ledgerFrom} max={ledgerTo} onChange={(e) => setLedgerFrom(e.target.value)} aria-label="Ledger export from date" /></label>
+        <label className="flex flex-col gap-1 text-xs text-ink-soft">To<Input type="date" className="h-8" value={ledgerTo} min={ledgerFrom} max={todayIso} onChange={(e) => setLedgerTo(e.target.value)} aria-label="Ledger export to date" /></label>
+        <Select className="h-8" value={ledgerFormat} onChange={(e) => setLedgerFormat(e.target.value as "csv" | "pdf")} aria-label="Ledger export format"><option value="csv">CSV</option><option value="pdf">PDF</option></Select>
+        <Button size="sm" variant="secondary" disabled={exportingLedger || ledgerFrom > ledgerTo} onClick={() => void exportStockLedger()}>{exportingLedger ? "Exporting…" : "Export ledger"}</Button>
+      </div>
+    </div>
+  );
+}
 
 export default function InventoryPage() {
   const { account } = useAuth();
@@ -53,6 +105,10 @@ export default function InventoryPage() {
           </p>
         </div>
         <Button onClick={() => setShowReceive((s) => !s)}>{showReceive ? "Close" : "Receive stock"}</Button>
+      </div>
+
+      <div className="mt-4">
+        <InventoryExports />
       </div>
 
       {showReceive && (

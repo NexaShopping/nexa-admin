@@ -384,6 +384,8 @@ export interface OrderItemView {
   lineTotal: string;
 }
 
+export interface Invoice { invoiceNo: string; pdfUrl: string; issuedAt: string; }
+
 export interface Order {
   id: string;
   orderNo: string;
