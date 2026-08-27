@@ -1,4 +1,5 @@
 .admin-settlements { color:#2b211d; }
+.admin-settlements__metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 22px}.admin-settlements__metric{border:1px solid #dfc0b1;border-radius:12px;background:#fff8f6;padding:15px 16px;box-shadow:0 1px 2px rgba(0,0,0,.05)}.admin-settlements__metric span{display:block;color:#584237;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.admin-settlements__metric strong{display:block;margin-top:7px;color:#231916;font-family:"Plus Jakarta Sans",Manrope,sans-serif;font-size:22px;letter-spacing:-.04em}.admin-settlements__filterbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:1px solid #dfc0b1;border-radius:12px;background:#fff8f6}.admin-settlement-table .rounded-xl{border-color:#dfc0b1;background:#fff8f6;box-shadow:0 1px 2px rgba(0,0,0,.05)}
 .admin-settlements h1,
 .admin-settlements h2,
 .admin-settlements p,
@@ -27,4 +28,5 @@
   .admin-settlements > div:first-child p:last-child { font-size:11px; }
   .admin-settlements .overflow-x-auto { max-width:100%; }
   .admin-settlements form { min-width:0; }
+  .admin-settlements__metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.admin-settlements__metric{padding:12px 13px}.admin-settlements__metric strong{font-size:18px}.admin-settlements__filterbar{align-items:stretch;flex-direction:column}
 }

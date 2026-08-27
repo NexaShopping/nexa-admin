@@ -8,6 +8,7 @@ import { ApiError } from "@/lib/api";
 import { api } from "@/lib/api";
 import { Button, Card, Input, Label, Select } from "@/components/ui";
 import type { ProductStatus, VariantInput } from "@/lib/types";
+import "./new-product-modern.css";
 
 interface VariantRow {
   key: number;
@@ -137,14 +138,15 @@ export default function NewProductPage() {
     rows.every((r) => r.sku && r.name && r.mrp);
 
   return (
-    <div className="mx-auto max-w-3xl">
-      <h1 className="text-xl font-semibold">New product</h1>
+    <div className="admin-new-product mx-auto w-full max-w-5xl">
+      <p className="admin-new-product__eyebrow">CATALOG CONTROL CENTER</p>
+      <h1 className="mt-1 text-xl font-semibold">New product</h1>
       <p className="mt-1 text-sm text-ink-soft">
         Every product needs at least one variant — even a single-SKU product gets one row below.
       </p>
 
       <form onSubmit={onSubmit} className="mt-6 space-y-6">
-        <Card className="space-y-4 p-5">
+        <Card className="admin-new-product__card space-y-4 p-5">
           <p className="text-sm font-medium">Details</p>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
@@ -196,7 +198,7 @@ export default function NewProductPage() {
           onReviewed={() => setImagesReviewed(true)}
         />
 
-        <Card className="space-y-4 p-5">
+        <Card className="admin-new-product__card space-y-4 p-5">
           <div className="flex items-center justify-between">
             <p className="text-sm font-medium">
               Variants{axes.length > 0 && <span className="ml-1.5 font-normal text-ink-soft">({axes.map((a) => a.name).join(" × ")})</span>}
@@ -208,7 +210,7 @@ export default function NewProductPage() {
 
           <div className="space-y-3">
             {rows.map((row) => (
-              <div key={row.key} className="rounded-lg border border-line p-3">
+              <div key={row.key} className="admin-new-product__variant rounded-lg border border-line p-3">
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                   <div>
                     <Label>SKU</Label>
@@ -296,7 +298,7 @@ export default function NewProductPage() {
           </div>
         )}
 
-        <div className="flex items-center gap-3">
+        <div className="admin-new-product__actions flex items-center gap-3">
           <Button type="submit" disabled={!canSubmit || create.isPending || uploading || Boolean(createdProductId)}>
             {create.isPending || uploading ? "Creating…" : "Create product"}
           </Button>

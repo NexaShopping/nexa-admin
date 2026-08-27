@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAccounts, useCreateDistributor, useUpdateAccount, type AccountFilters } from "@/features/accounts/api";
+import { useAuth } from "@/lib/auth-context";
 import { ApiError } from "@/lib/api";
 import { Button, Card, EmptyState, ErrorState, Input, Label, Select, Spinner } from "@/components/ui";
 import type { AccountSummary, AccountStatus, Role } from "@/lib/types";
@@ -21,6 +22,10 @@ export default function AccountsPage() {
   const meta = data?.meta;
   const selected = accounts.find((a) => a.id === selectedId) ?? null;
 
+  useEffect(() => {
+    if (selectedId === null && accounts.length > 0) setSelectedId(accounts[0].id);
+  }, [accounts, selectedId]);
+
   function updateFilters(next: Partial<AccountFilters>) {
     setCursors([]);
     setFilters((f) => ({ ...f, ...next }));
@@ -35,11 +40,14 @@ export default function AccountsPage() {
     <div className="admin-accounts mx-auto w-full max-w-7xl">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
+          <p className="admin-accounts__eyebrow">ADMIN OPERATIONS</p>
           <h1 className="text-xl font-semibold">Accounts</h1>
           <p className="mt-1 text-sm text-ink-soft">Everyone with access — admins, distributors, and customers.</p>
         </div>
         <Button onClick={() => setShowCreate((s) => !s)}>{showCreate ? "Close" : "Onboard distributor"}</Button>
       </div>
+
+      <div className="admin-accounts__metrics"><AccountMetric label="Total accounts" value={accounts.length} /><AccountMetric label="Distributors" value={accounts.filter((a) => a.role === "DISTRIBUTOR").length} /><AccountMetric label="Customers" value={accounts.filter((a) => a.role === "CUSTOMER").length} /><AccountMetric label="Pending review" value={accounts.filter((a) => a.status === "PENDING").length} /></div>
 
       {showCreate && (
         <div className="mt-5">
@@ -159,6 +167,8 @@ function StatusPill({ status }: { status: AccountStatus }) {
   return <span className={`rounded-full px-2 py-0.5 text-xs font-medium capitalize ${tones[status]}`}>{status.toLowerCase()}</span>;
 }
 
+function AccountMetric({ label, value }: { label: string; value: number }) { return <div className="admin-accounts__metric"><span>{label}</span><strong>{value}</strong></div>; }
+
 function CreateDistributorForm({ onDone }: { onDone: () => void }) {
   const create = useCreateDistributor();
   const [name, setName] = useState("");
@@ -229,6 +239,8 @@ function CreateDistributorForm({ onDone }: { onDone: () => void }) {
 }
 
 function AccountDetail({ account, onClose }: { account: AccountSummary; onClose: () => void }) {
+  const { account: currentAdmin } = useAuth();
+  const isSelf = currentAdmin?.id === account.id;
   const update = useUpdateAccount(account.id);
   const [status, setStatus] = useState<AccountStatus>(account.status);
   const [territory, setTerritory] = useState(account.distributor?.territory ?? "");
@@ -239,7 +251,7 @@ function AccountDetail({ account, onClose }: { account: AccountSummary; onClose:
     setError(null);
     try {
       await update.mutateAsync({
-        status: status !== account.status ? status : undefined,
+        status: !isSelf && status !== account.status ? status : undefined,
         territory: account.role === "DISTRIBUTOR" ? territory || undefined : undefined,
       });
     } catch (err) {
@@ -273,12 +285,17 @@ function AccountDetail({ account, onClose }: { account: AccountSummary; onClose:
       <form onSubmit={save} className="space-y-3">
         <div>
           <Label>Status</Label>
-          <Select value={status} onChange={(e) => setStatus(e.target.value as AccountStatus)}>
+          <Select value={status} disabled={isSelf} onChange={(e) => setStatus(e.target.value as AccountStatus)}>
             <option value="PENDING">Pending</option>
             <option value="ACTIVE">Active</option>
             <option value="SUSPENDED">Suspended</option>
             <option value="CLOSED">Closed</option>
           </Select>
+          {isSelf && (
+            <p className="mt-1 text-xs text-ink-soft">
+              You can&apos;t change your own status — there&apos;s no way back in once it leaves Active. Ask another admin.
+            </p>
+          )}
         </div>
         {account.role === "DISTRIBUTOR" && (
           <div>

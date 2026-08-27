@@ -15,6 +15,12 @@ import "./categories-modern.css";
 export default function CategoriesPage() {
   const categories = useCategories();
   const [selected, setSelected] = useState<string | null>(null);
+  const [query, setQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState<"ALL" | "ACTIVE" | "INACTIVE">("ALL");
+  const categoryRows = (categories.data?.categories ?? []).filter((category) =>
+    category.name.toLowerCase().includes(query.toLowerCase()) &&
+    (statusFilter === "ALL" || (statusFilter === "ACTIVE" ? category.isActive : !category.isActive))
+  );
 
   return (
     <div className="admin-categories mx-auto grid w-full max-w-6xl grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
@@ -35,22 +41,12 @@ export default function CategoriesPage() {
           ) : categories.data!.categories.length === 0 ? (
             <EmptyState title="No categories yet" hint="Create the first one on the right." />
           ) : (
-            <Card className="divide-y divide-line">
-              {categories.data!.categories.map((c) => (
-                <button
-                  key={c.id}
-                  onClick={() => setSelected(c.id)}
-                  className={`flex w-full items-center justify-between px-4 py-3 text-left text-sm transition-colors hover:bg-canvas ${
-                    selected === c.id ? "bg-brand/5" : ""
-                  }`}
-                >
-                  <span className="flex items-center gap-2">
-                    <span className={`h-1.5 w-1.5 rounded-full ${c.isActive ? "bg-emerald-500" : "bg-neutral-300"}`} />
-                    {c.name}
-                  </span>
-                  <span className="text-xs text-ink-soft">/{c.slug}</span>
-                </button>
-              ))}
+            <Card className="admin-categories__table-card overflow-hidden">
+              <div className="admin-categories__table-toolbar"><div className="admin-categories__search"><SearchIcon /><input aria-label="Search categories" placeholder="Search categories..." value={query} onChange={(event) => setQuery(event.target.value)} /></div><select aria-label="Filter categories" value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as typeof statusFilter)}><option value="ALL">All states</option><option value="ACTIVE">Active</option><option value="INACTIVE">Inactive</option></select></div>
+              <div className="admin-categories__table-wrap"><table><thead><tr><th>Status</th><th>Category name</th><th>Slug</th><th>Position</th></tr></thead><tbody>
+                {categoryRows.map((c) => <tr key={c.id} onClick={() => setSelected(c.id)} className={selected === c.id ? "is-selected" : ""}><td><span className={`admin-categories__status ${c.isActive ? "is-active" : ""}`}>{c.isActive ? "Active" : "Inactive"}</span></td><td className="category-name">{c.name}</td><td className="slug">/{c.slug}</td><td>{c.position + 1}</td></tr>)}
+              </tbody></table></div>
+              {!categoryRows.length && <p className="admin-categories__empty">No categories match your filters.</p>}
             </Card>
           )}
         </div>
@@ -62,6 +58,8 @@ export default function CategoriesPage() {
     </div>
   );
 }
+
+function SearchIcon() { return <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" /><path d="m15.3 15.3 4.5 4.5" /></svg>; }
 
 function NewCategoryForm() {
   const create = useCreateCategory();

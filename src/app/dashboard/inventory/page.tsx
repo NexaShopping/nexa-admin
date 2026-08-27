@@ -99,6 +99,7 @@ export default function InventoryPage() {
     <div className="admin-inventory mx-auto w-full max-w-7xl">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
+          <p className="admin-inventory__eyebrow">CATALOG OPERATIONS</p>
           <h1 className="text-xl font-semibold">Inventory</h1>
           <p className="mt-1 text-sm text-ink-soft">
             Your own stock — {isAdmin ? "the central catalog's stock." : "what you bought from admin."}
@@ -109,6 +110,13 @@ export default function InventoryPage() {
 
       <div className="mt-4">
         <InventoryExports />
+      </div>
+
+      <div className="admin-inventory__metrics">
+        <Metric label="Total SKUs" value={items.length} tone="neutral" />
+        <Metric label="Healthy" value={items.filter((item) => item.lowStockAt === null || item.available > item.lowStockAt).length} tone="green" />
+        <Metric label="Low stock" value={items.filter((item) => item.lowStockAt !== null && item.available <= item.lowStockAt && item.available > 0).length} tone="orange" />
+        <Metric label="Out of stock" value={items.filter((item) => item.available <= 0).length} tone="red" />
       </div>
 
       {showReceive && (
@@ -159,13 +167,16 @@ export default function InventoryPage() {
               action={<Button size="sm" onClick={() => setShowReceive(true)}>Receive stock</Button>}
             />
           ) : (
-            <div className="overflow-x-auto rounded-xl border border-line">
+            <>
+            <div className="admin-inventory__desktop-table overflow-x-auto rounded-xl border border-line">
               <table className="w-full text-sm">
                 <thead className="bg-canvas">
                   <tr className="text-left text-xs text-ink-soft">
-                    <th className="px-4 py-2.5 font-medium">Product / variant</th>
+                    <th className="px-4 py-2.5 font-medium">Product</th>
                     <th className="px-4 py-2.5 font-medium">SKU</th>
+                    <th className="px-4 py-2.5 font-medium">Category</th>
                     <th className="px-4 py-2.5 text-right font-medium">Available</th>
+                    <th className="px-4 py-2.5 text-right font-medium">Reserved</th>
                     <th className="px-4 py-2.5 text-right font-medium">Sell price</th>
                     <th className="px-4 py-2.5 font-medium">Status</th>
                   </tr>
@@ -186,10 +197,12 @@ export default function InventoryPage() {
                           <p className="text-xs text-ink-soft">{item.variant.name}</p>
                         </td>
                         <td className="px-4 py-2.5 font-mono text-xs text-ink-soft">{item.variant.sku}</td>
+                        <td className="px-4 py-2.5 text-xs text-ink-soft">—</td>
                         <td className={`px-4 py-2.5 text-right tabular-nums ${lowStock ? "font-medium text-amber-700" : ""}`}>
                           {item.available}
                           {lowStock && " ⚠"}
                         </td>
+                        <td className="px-4 py-2.5 text-right tabular-nums text-ink-soft">{item.reserved}</td>
                         <td className="px-4 py-2.5 text-right">{formatMoney(item.sellPrice)}</td>
                         <td className="px-4 py-2.5">
                           <span
@@ -206,6 +219,8 @@ export default function InventoryPage() {
                 </tbody>
               </table>
             </div>
+            <div className="admin-inventory__mobile-list">{items.map((item) => { const lowStock = item.lowStockAt !== null && item.available <= item.lowStockAt; return <button type="button" key={item.id} onClick={() => setSelectedId(item.id)} className={`admin-inventory__mobile-item ${selectedId === item.id ? "is-selected" : ""}`}><div className="admin-inventory__mobile-item-head"><span>{item.variant.product.name}</span><span className={`admin-inventory__stock-pill ${item.isListed ? "is-listed" : ""}`}>{item.isListed ? "Listed" : "Unlisted"}</span></div><p>{item.variant.name} · {item.variant.sku}</p><div className="admin-inventory__mobile-meta"><span>Available <b className={lowStock ? "is-low" : ""}>{item.available}</b></span><span>Reserved <b>{item.reserved}</b></span><span>Sell price <b>{formatMoney(item.sellPrice)}</b></span></div></button>; })}</div>
+            </>
           )}
 
           {(cursors.length > 0 || meta?.hasMore) && items.length > 0 && (
@@ -241,4 +256,8 @@ export default function InventoryPage() {
       </div>
     </div>
   );
+}
+
+function Metric({ label, value, tone }: { label: string; value: number; tone: string }) {
+  return <div className={`admin-inventory__metric admin-inventory__metric--${tone}`}><span>{label}</span><strong>{value}</strong></div>;
 }

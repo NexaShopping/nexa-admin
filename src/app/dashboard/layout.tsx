@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { Spinner } from "@/components/ui";
 import "./admin-shell.css";
+import "./sidebar.css";
 
 const NAV = [
   { href: "/dashboard", label: "Overview", icon: HomeIcon },
@@ -43,50 +44,49 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     router.replace("/login");
   }
 
+  const displayName = account?.name?.trim() || account?.email || "Admin";
+  const profileInitial = displayName.charAt(0).toUpperCase();
+
   return (
-    <div className="admin-shell flex flex-1">
-      <aside className="admin-shell__sidebar hidden w-60 shrink-0 flex-col border-r border-line bg-surface sm:flex">
-        <div className="flex h-14 items-center gap-2.5 border-b border-line px-5">
-          <Image src="/logo.png" alt="" width={26} height={25} className="h-6.5 w-auto" />
-          <span className="font-semibold tracking-tight">
-            Nexa<span className="text-brand">Shopping</span>
-          </span>
+    <div className="admin-shell flex h-screen w-full min-w-0 flex-1 overflow-hidden">
+      <aside className="admin-sidebar sticky top-0 hidden h-screen w-60 shrink-0 flex-col overflow-hidden sm:flex">
+        <div className="admin-sidebar__brand">
+          <div className="admin-sidebar__logo"><Image src="/logo.png" alt="" width={26} height={25} /></div>
+          <div><span>Nexa<span>Shopping</span></span><small>Admin workspace</small></div>
         </div>
-        <nav className="flex-1 space-y-0.5 p-3">
+        <nav className="admin-sidebar__nav">
+          <p className="admin-sidebar__label">Workspace</p>
           {NAV.map((item) => {
             const active = item.href === "/dashboard" ? pathname === item.href : pathname.startsWith(item.href);
             const Icon = item.icon;
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`flex items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-                  active ? "bg-brand/10 text-brand" : "text-ink-soft hover:bg-canvas hover:text-ink"
-                }`}
-              >
+              <Link key={item.href} href={item.href} className={`admin-sidebar__link ${active ? "is-active" : ""}`}>
                 <Icon className="h-4 w-4" />
                 {item.label}
               </Link>
             );
           })}
         </nav>
+        <div className="admin-sidebar__footer">
+          <div className="admin-sidebar__account">
+            <span className="admin-sidebar__account-avatar">{profileInitial}</span>
+            <span className="admin-sidebar__account-copy"><strong>{displayName}</strong><small>{account?.email ?? "Admin"}</small></span>
+            <button type="button" onClick={handleLogout} disabled={signingOut} aria-label="Log out"><CloseIcon className="h-4 w-4" /></button>
+          </div>
+        </div>
       </aside>
 
-      <div className="admin-shell__content flex flex-1 flex-col">
-        <header className="admin-shell__header flex h-14 items-center justify-between border-b border-line bg-surface px-5">
+      <div className="admin-shell__content flex h-screen min-h-0 w-full min-w-0 flex-1 flex-col">
+        <header className="admin-shell__header flex min-h-14 flex-wrap items-center justify-between gap-3 border-b border-line bg-surface px-5">
           <div className="flex items-center gap-2.5 sm:hidden">
             <button type="button" onClick={() => setMobileMenuOpen((open) => !open)} aria-expanded={mobileMenuOpen} aria-controls="admin-mobile-nav" className="grid h-9 w-9 place-items-center rounded-lg border border-line text-ink transition-colors hover:bg-canvas">
               <span className="sr-only">{mobileMenuOpen ? "Close navigation" : "Open navigation"}</span>
-              <span className="text-xl leading-none">{mobileMenuOpen ? "×" : "☰"}</span>
+              {mobileMenuOpen ? <CloseIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
             </button>
             <Image src="/logo.png" alt="" width={24} height={23} className="h-6 w-auto" />
-            <span className="font-semibold tracking-tight">
-              Nexa<span className="text-brand">Shopping</span>
-            </span>
           </div>
           <div className="hidden text-sm text-ink-soft sm:block" />
           <div className="flex items-center gap-4">
-            <span className="hidden text-sm text-ink-soft sm:inline">{account?.email ?? account?.name}</span>
             <a
               href="https://business.phonepe.com/dashboard"
               target="_blank"
@@ -95,32 +95,44 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             >
               PhonePe dashboard ↗
             </a>
-            <button
-              type="button"
-              onClick={handleLogout}
-              disabled={signingOut}
-              className="rounded-md border border-line px-3 py-1.5 text-sm transition-colors hover:bg-canvas disabled:opacity-60"
-            >
-              {signingOut ? "Signing out…" : "Log out"}
-            </button>
           </div>
         </header>
         <>
           <button type="button" aria-label="Close navigation" onClick={() => setMobileMenuOpen(false)} className={`fixed inset-0 z-40 bg-black/25 transition-opacity sm:hidden ${mobileMenuOpen ? "opacity-100" : "pointer-events-none opacity-0"}`} />
-          <div id="admin-mobile-nav" className={`fixed inset-y-0 left-0 z-50 w-[min(82vw,320px)] overflow-y-auto border-r border-line bg-surface px-4 py-5 shadow-2xl transition-transform duration-300 ease-out sm:hidden ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"}`}>
-            <div className="mb-6 flex items-center justify-between border-b border-line pb-4"><span className="font-semibold">Navigation</span><button type="button" onClick={() => setMobileMenuOpen(false)} className="rounded-lg px-2 py-1 text-xl text-ink-soft hover:bg-canvas" aria-label="Close navigation">×</button></div>
-            <nav className="grid gap-1">
+          <div id="admin-mobile-nav" className={`admin-mobile-drawer fixed inset-y-0 left-0 z-50 flex h-screen w-[min(82vw,320px)] flex-col overflow-hidden px-4 py-5 shadow-2xl transition-transform duration-300 ease-out sm:hidden ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"}`}>
+            <div className="admin-mobile-drawer__head"><div><strong>Nexa<span>Shopping</span></strong><small>Admin workspace</small></div><button type="button" onClick={() => setMobileMenuOpen(false)} aria-label="Close navigation"><CloseIcon className="h-5 w-5" /></button></div>
+            <nav className="admin-sidebar__nav admin-sidebar__nav--mobile">
+              <p className="admin-sidebar__label">Workspace</p>
               {NAV.map((item) => {
                 const active = item.href === "/dashboard" ? pathname === item.href : pathname.startsWith(item.href);
                 const Icon = item.icon;
-                return <Link key={item.href} href={item.href} onClick={() => setMobileMenuOpen(false)} className={`flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium ${active ? "bg-brand/10 text-brand" : "text-ink-soft hover:bg-canvas hover:text-ink"}`}><Icon className="h-5 w-5" />{item.label}</Link>;
+                return <Link key={item.href} href={item.href} onClick={() => setMobileMenuOpen(false)} className={`admin-sidebar__link ${active ? "is-active" : ""}`}><Icon className="h-5 w-5" />{item.label}</Link>;
               })}
             </nav>
+            <div className="admin-sidebar__footer admin-sidebar__footer--mobile">
+              <button type="button" onClick={() => { setMobileMenuOpen(false); void handleLogout(); }} disabled={signingOut} className="admin-sidebar__logout"><CloseIcon className="h-4 w-4" />{signingOut ? "Signing out…" : "Log out"}</button>
+            </div>
           </div>
         </>
         <main className="admin-shell__main flex-1 overflow-y-auto p-6">{children}</main>
       </div>
     </div>
+  );
+}
+
+function CloseIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className={className}>
+      <path d="m6 6 12 12M18 6 6 18" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function MenuIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className={className}>
+      <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round" />
+    </svg>
   );
 }
 

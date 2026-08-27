@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useOrders, type OrderFilters } from "@/features/orders/api";
 import { api } from "@/lib/api";
 import { formatMoney } from "@/lib/money";
@@ -62,12 +62,14 @@ function SalesRegisterExport() {
 
 export default function OrdersPage() {
   const [filters, setFilters] = useState<OrderFilters>({ role: "seller" });
+  const [query, setQuery] = useState("");
   const [cursors, setCursors] = useState<string[]>([]);
   const cursor = cursors.at(-1);
 
   const { data, isLoading, isError, error, refetch, isFetching } = useOrders(filters, cursor);
   const orders = data?.data.orders ?? [];
   const meta = data?.meta;
+  const visibleOrders = useMemo(() => orders.filter((order) => order.orderNo.toLowerCase().includes(query.toLowerCase())), [orders, query]);
 
   function updateFilters(next: Partial<OrderFilters>) {
     setCursors([]);
@@ -84,7 +86,10 @@ export default function OrdersPage() {
         <SalesRegisterExport />
       </div>
 
-      <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
+      <div className="admin-orders__metrics"><OrderMetric label="Total orders" value={orders.length} /><OrderMetric label="Pending payment" value={orders.filter((o) => o.status === "AWAITING_PAYMENT").length} /><OrderMetric label="Processing" value={orders.filter((o) => o.status === "CONFIRMED" || o.status === "SHIPPED").length} /><OrderMetric label="Completed" value={orders.filter((o) => o.status === "DELIVERED").length} /></div>
+
+      <div className="admin-orders__toolbar mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <Input aria-label="Search orders" placeholder="Search order number..." value={query} onChange={(event) => setQuery(event.target.value)} />
         <Select
           className="sm:w-48"
           value={filters.status ?? ""}
@@ -106,7 +111,7 @@ export default function OrdersPage() {
           </div>
         ) : isError ? (
           <ErrorState message={error instanceof Error ? error.message : "Could not load orders"} onRetry={refetch} />
-        ) : orders.length === 0 ? (
+        ) : visibleOrders.length === 0 ? (
           <EmptyState
             title="No orders yet"
             hint="Orders placed against your stock will show up here."
@@ -124,7 +129,7 @@ export default function OrdersPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-line bg-surface">
-                {orders.map((o) => (
+                  {visibleOrders.map((o) => (
                   <tr key={o.id} className="cursor-pointer hover:bg-canvas">
                     <td className="px-4 py-2.5">
                       <Link href={`/dashboard/orders/${o.id}`} className="font-medium text-brand hover:underline">
@@ -164,3 +169,5 @@ export default function OrdersPage() {
     </div>
   );
 }
+
+function OrderMetric({ label, value }: { label: string; value: number }) { return <div className="admin-orders__metric"><span>{label}</span><strong>{value}</strong></div>; }

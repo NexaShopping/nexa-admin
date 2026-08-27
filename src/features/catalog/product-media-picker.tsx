@@ -61,7 +61,7 @@ export function ProductMediaPicker({ files, primaryIndex, onChange, onReviewed }
   }
 
   return (
-    <Card className="space-y-4 p-5">
+    <Card className="admin-new-product__card admin-new-product__media space-y-4 p-5">
       <div className="flex items-center justify-between gap-3">
         <div>
           <p className="text-sm font-medium">Product images</p>

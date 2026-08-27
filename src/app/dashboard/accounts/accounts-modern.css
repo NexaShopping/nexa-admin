@@ -1,4 +1,5 @@
 .admin-accounts { color:#2b211d; }
+.admin-accounts__eyebrow{margin:0 0 5px;color:#9c4400;font-size:10px;font-weight:800;letter-spacing:.14em}.admin-accounts__metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:22px}.admin-accounts__metric{border:1px solid #dfc0b1;border-radius:12px;background:#fff8f6;padding:15px 16px;box-shadow:0 1px 2px rgba(0,0,0,.05)}.admin-accounts__metric span{display:block;color:#584237;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.admin-accounts__metric strong{display:block;margin-top:7px;color:#231916;font-family:"Plus Jakarta Sans",Manrope,sans-serif;font-size:25px;letter-spacing:-.04em}
 .admin-accounts h1,
 .admin-accounts h2,
 .admin-accounts p,
@@ -27,6 +28,7 @@
   .admin-accounts { min-width:0; }
   .admin-accounts > div:first-child h1 { font-size:22px; }
   .admin-accounts > div:first-child p { font-size:11px; }
+  .admin-accounts__metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:18px}.admin-accounts__metric{padding:12px 13px}
   .admin-accounts .overflow-x-auto { max-width:100%; }
   .admin-accounts table { min-width:620px; }
   .admin-accounts > div:nth-child(2) { width:100%; }
