@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
 import { useProducts } from "@/features/catalog/api";
 import { Card } from "@/components/ui";
+import "./dashboard-modern.css";
 
 export default function DashboardPage() {
   const { account } = useAuth();
@@ -12,39 +13,52 @@ export default function DashboardPage() {
   const active = products.filter((p) => p.status === "ACTIVE").length;
 
   return (
-    <div className="mx-auto max-w-5xl">
-      <h1 className="text-xl font-semibold">
-        Welcome back{account?.name ? `, ${account.name.split(" ")[0]}` : ""}
-      </h1>
-      <p className="mt-1 text-sm text-ink-soft">Here&apos;s what&apos;s in the catalog right now.</p>
-
-      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <Stat label="Products (this page)" value={products.length} />
-        <Stat label="Active" value={active} />
-        <Stat label="Draft / archived" value={products.length - active} />
+    <div className="admin-dashboard mx-auto w-full max-w-7xl">
+      <div className="admin-dashboard__heading">
+        <div>
+          <p className="admin-dashboard__eyebrow">NEXA ADMIN · OPERATIONS</p>
+          <h1>Welcome back{account?.name ? `, ${account.name.split(" ")[0]}` : ""}</h1>
+          <p>Keep your catalog, inventory, and distributor operations moving.</p>
+        </div>
+        <span className="admin-dashboard__status"><i /> Systems operational</span>
       </div>
 
-      <Card className="mt-6 flex flex-col items-start gap-2 p-6 sm:flex-row sm:items-center sm:justify-between">
+      <div className="admin-dashboard__metrics">
+        <Stat label="Products in catalog" value={products.length} tone="orange" />
+        <Stat label="Active products" value={active} tone="green" />
+        <Stat label="Draft / archived" value={products.length - active} tone="sand" />
+      </div>
+
+      <div className="admin-dashboard__grid">
+      <Card className="admin-dashboard__hero">
         <div>
-          <p className="text-sm font-medium">Manage the catalog</p>
-          <p className="text-sm text-ink-soft">Categories, attributes, products and variants.</p>
+          <p className="admin-dashboard__eyebrow">CATALOG CONTROL CENTER</p>
+          <h2>Everything your team needs to keep supply moving.</h2>
+          <p>Manage categories, product details, pricing, and variants from one focused workspace.</p>
         </div>
-        <Link
-          href="/dashboard/catalog"
-          className="inline-flex h-9 items-center rounded-md bg-brand px-4 text-sm font-medium text-white hover:bg-brand-strong"
-        >
-          Open catalog
-        </Link>
+        <Link href="/dashboard/catalog" className="admin-dashboard__primary">Open catalog <span>↗</span></Link>
       </Card>
+      <Card className="admin-dashboard__actions">
+        <div className="admin-dashboard__section-title"><h2>Quick actions</h2><span>→</span></div>
+        <Action href="/dashboard/catalog/new" label="Add product" detail="Create a new catalog item" icon="＋" />
+        <Action href="/dashboard/catalog/categories" label="Manage categories" detail="Organize your assortment" icon="⌁" />
+        <Action href="/dashboard/inventory" label="Review inventory" detail="Check stock health" icon="▦" />
+      </Card>
+      </div>
     </div>
   );
 }
 
-function Stat({ label, value }: { label: string; value: number }) {
+function Stat({ label, value, tone }: { label: string; value: number; tone: string }) {
   return (
-    <Card className="p-5">
-      <p className="text-2xl font-semibold tabular-nums">{value}</p>
-      <p className="mt-1 text-sm text-ink-soft">{label}</p>
+    <Card className={`admin-dashboard__metric admin-dashboard__metric--${tone}`}>
+      <span className="admin-dashboard__metric-dot" />
+      <p>{label}</p>
+      <strong>{value}</strong>
     </Card>
   );
+}
+
+function Action({ href, label, detail, icon }: { href: string; label: string; detail: string; icon: string }) {
+  return <Link href={href} className="admin-dashboard__action"><span className="admin-dashboard__action-icon">{icon}</span><span><b>{label}</b><small>{detail}</small></span><em>↗</em></Link>;
 }

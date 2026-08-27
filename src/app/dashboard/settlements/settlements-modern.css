@@ -1,0 +1,30 @@
+.admin-settlements { color:#2b211d; }
+.admin-settlements h1,
+.admin-settlements h2,
+.admin-settlements p,
+.admin-settlements input,
+.admin-settlements select,
+.admin-settlements button,
+.admin-settlements label { font-family:Manrope,system-ui,sans-serif; }
+.admin-settlements h1,
+.admin-settlements h2 { font-family:"Plus Jakarta Sans",Manrope,sans-serif; }
+.admin-settlements > div:first-child h1 { letter-spacing:-.035em; }
+.admin-settlements > div:first-child p:last-child { color:#8b7265; font-size:12px; line-height:1.55; }
+.admin-settlements .rounded-xl,
+.admin-settlements .rounded-md { border-color:#eadfd7; background:#fffdf9; box-shadow:0 8px 22px rgba(74,42,24,.045); }
+.admin-settlements .bg-canvas { background:#fff7ed; }
+.admin-settlements input,
+.admin-settlements select { border-color:#dfcfc4; background:#fffdf9; }
+.admin-settlements input:focus,
+.admin-settlements select:focus { border-color:#f2751f; outline:0; box-shadow:0 0 0 2px rgba(242,117,31,.14); }
+.admin-settlements input[type="checkbox"] { accent-color:#f2751f; }
+.admin-settlements .border-brand\/30 { border-color:rgba(242,117,31,.3); }
+.admin-settlements .text-brand { color:#ad4c13; }
+
+@media (max-width:767px) {
+  .admin-settlements { min-width:0; }
+  .admin-settlements > div:first-child h1 { font-size:22px; }
+  .admin-settlements > div:first-child p:last-child { font-size:11px; }
+  .admin-settlements .overflow-x-auto { max-width:100%; }
+  .admin-settlements form { min-width:0; }
+}

@@ -6,6 +6,7 @@ import { useOrders, type OrderFilters } from "@/features/orders/api";
 import { formatMoney } from "@/lib/money";
 import { Button, EmptyState, ErrorState, Select, Spinner } from "@/components/ui";
 import type { OrderStatus } from "@/lib/types";
+import "./orders-modern.css";
 
 const STATUS_TONES: Record<OrderStatus, string> = {
   AWAITING_PAYMENT: "bg-amber-50 text-amber-700",
@@ -36,7 +37,7 @@ export default function OrdersPage() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl">
+    <div className="admin-orders mx-auto w-full max-w-7xl">
       <div>
         <h1 className="text-xl font-semibold">Orders</h1>
         <p className="mt-1 text-sm text-ink-soft">Sales from the central catalog to distributors.</p>

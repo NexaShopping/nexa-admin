@@ -1,0 +1,33 @@
+.admin-accounts { color:#2b211d; }
+.admin-accounts h1,
+.admin-accounts h2,
+.admin-accounts p,
+.admin-accounts input,
+.admin-accounts select,
+.admin-accounts button,
+.admin-accounts table { font-family:Manrope,system-ui,sans-serif; }
+.admin-accounts h1,
+.admin-accounts h2 { font-family:"Plus Jakarta Sans",Manrope,sans-serif; }
+.admin-accounts > div:first-child h1 { font-size:24px; letter-spacing:-.03em; }
+.admin-accounts > div:first-child p { color:#8b7265; font-size:12px; }
+.admin-accounts input,
+.admin-accounts select { border-color:#dfcfc4; background:#fffdf9; }
+.admin-accounts input:focus,
+.admin-accounts select:focus { border-color:#f2751f; outline:0; box-shadow:0 0 0 2px rgba(242,117,31,.14); }
+.admin-accounts .overflow-x-auto,
+.admin-accounts .rounded-xl,
+.admin-accounts .rounded-md { border-color:#eadfd7; background:#fffdf9; }
+.admin-accounts table thead { background:#fff7ed; }
+.admin-accounts table th { color:#8b7265; font-size:10px; font-weight:650; letter-spacing:.04em; text-transform:uppercase; }
+.admin-accounts table td { font-size:11px; }
+.admin-accounts table tbody tr:hover { background:#fff7ed; }
+.admin-accounts .text-brand { color:#ad4c13; }
+
+@media (max-width:767px) {
+  .admin-accounts { min-width:0; }
+  .admin-accounts > div:first-child h1 { font-size:22px; }
+  .admin-accounts > div:first-child p { font-size:11px; }
+  .admin-accounts .overflow-x-auto { max-width:100%; }
+  .admin-accounts table { min-width:620px; }
+  .admin-accounts > div:nth-child(2) { width:100%; }
+}

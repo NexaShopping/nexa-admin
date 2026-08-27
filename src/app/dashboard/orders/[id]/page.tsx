@@ -9,6 +9,7 @@ import { ApiError } from "@/lib/api";
 import { formatMoney } from "@/lib/money";
 import { Button, Card, ErrorState, Input, Spinner } from "@/components/ui";
 import type { OrderAddress, OrderStatus } from "@/lib/types";
+import "../orders-modern.css";
 
 const STATUS_TONES: Record<OrderStatus, string> = {
   AWAITING_PAYMENT: "bg-amber-50 text-amber-700",
@@ -58,7 +59,7 @@ function OrderDetail({ order }: { order: NonNullable<ReturnType<typeof useOrder>
   }
 
   return (
-    <div className="mx-auto max-w-4xl">
+    <div className="admin-order-detail mx-auto w-full max-w-7xl">
       <Link href="/dashboard/orders" className="text-sm text-ink-soft hover:text-ink">
         ← Back to orders
       </Link>

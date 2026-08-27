@@ -1,0 +1,41 @@
+.admin-categories { color:#2b211d; }
+.admin-categories h1,
+.admin-categories h2,
+.admin-categories p,
+.admin-categories label,
+.admin-categories input,
+.admin-categories textarea,
+.admin-categories select,
+.admin-categories button,
+.admin-categories li { font-family:Manrope,system-ui,sans-serif; }
+.admin-categories h1,
+.admin-categories h2 { font-family:"Plus Jakarta Sans",Manrope,sans-serif; }
+.admin-categories > div:first-child > h1 { font-size:24px; letter-spacing:-.03em; }
+.admin-categories > div:first-child > p { max-width:680px; color:#8b7265; font-size:12px; line-height:1.55; }
+.admin-categories .rounded-xl,
+.admin-categories .rounded-lg { border-color:#eadfd7; background:#fffdf9; box-shadow:0 8px 22px rgba(74,42,24,.045); }
+.admin-categories .rounded-xl.divide-y > button { min-height:54px; }
+.admin-categories .rounded-xl.divide-y > button:hover { background:#fff7ed; }
+.admin-categories .rounded-xl.divide-y > button.bg-brand\/5 { background:#fff0e6; box-shadow:inset 3px 0 #f2751f; }
+.admin-categories input,
+.admin-categories textarea,
+.admin-categories select { border-color:#dfcfc4; background:#fffdf9; }
+.admin-categories input:focus,
+.admin-categories textarea:focus,
+.admin-categories select:focus { border-color:#f2751f; outline:0; box-shadow:0 0 0 2px rgba(242,117,31,.14); }
+.admin-categories form button { min-height:40px; }
+.admin-categories li { border-color:#eadfd7; background:#fff7ed; color:#5b4a42; }
+.admin-categories li .text-brand { color:#ad4c13; font-weight:650; }
+.admin-categories .text-ink-soft { color:#8b7265; }
+
+@media (max-width:767px) {
+  .admin-categories { min-width:0; }
+  .admin-categories > div:first-child > h1 { font-size:22px; }
+  .admin-categories > div:first-child > p { font-size:11px; }
+  .admin-categories .rounded-xl,
+  .admin-categories .rounded-lg { min-width:0; }
+  .admin-categories .rounded-xl.divide-y > button { gap:12px; padding-inline:14px; }
+  .admin-categories .rounded-xl.divide-y > button > span:last-child { max-width:52%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .admin-categories form { min-width:0; }
+  .admin-categories textarea { min-height:88px; }
+}

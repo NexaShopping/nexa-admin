@@ -7,6 +7,7 @@ import { ReceiveStockForm } from "@/features/inventory/receive-stock-form";
 import { StockItemDetail } from "@/features/inventory/stock-item-detail";
 import { formatMoney } from "@/lib/money";
 import { Button, EmptyState, ErrorState, Input, Select, Spinner } from "@/components/ui";
+import "./inventory-modern.css";
 
 export default function InventoryPage() {
   const { account } = useAuth();
@@ -43,7 +44,7 @@ export default function InventoryPage() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl">
+    <div className="admin-inventory mx-auto w-full max-w-7xl">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-xl font-semibold">Inventory</h1>

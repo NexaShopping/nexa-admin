@@ -1,0 +1,52 @@
+.admin-orders,
+.admin-order-detail { color:#2b211d; }
+.admin-orders h1,
+.admin-order-detail h1,
+.admin-orders h2,
+.admin-order-detail h2,
+.admin-orders p,
+.admin-order-detail p,
+.admin-orders input,
+.admin-order-detail input,
+.admin-orders select,
+.admin-order-detail select,
+.admin-orders button,
+.admin-order-detail button,
+.admin-orders table,
+.admin-order-detail table { font-family:Manrope,system-ui,sans-serif; }
+.admin-orders h1,
+.admin-order-detail h1,
+.admin-orders h2,
+.admin-order-detail h2 { font-family:"Plus Jakarta Sans",Manrope,sans-serif; }
+.admin-orders > div:first-child h1,
+.admin-order-detail > div:nth-child(2) h1 { font-size:24px; letter-spacing:-.03em; }
+.admin-orders > div:first-child p { color:#8b7265; font-size:12px; }
+.admin-orders > div:nth-child(2) select { border-color:#dfcfc4; background:#fffdf9; }
+.admin-orders > div:nth-child(2) select:focus { border-color:#f2751f; outline:0; box-shadow:0 0 0 2px rgba(242,117,31,.14); }
+.admin-orders .overflow-x-auto,
+.admin-order-detail .overflow-x-auto { border-color:#eadfd7; border-radius:14px; background:#fffdf9; box-shadow:0 8px 22px rgba(74,42,24,.045); }
+.admin-orders table thead,
+.admin-order-detail table thead { background:#fff7ed; }
+.admin-orders table th,
+.admin-order-detail table th { color:#8b7265; font-size:10px; font-weight:650; letter-spacing:.04em; text-transform:uppercase; }
+.admin-orders table td,
+.admin-order-detail table td { font-size:11px; }
+.admin-orders table tbody tr:hover { background:#fff7ed; }
+.admin-order-detail .rounded-xl { border-color:#eadfd7; background:#fffdf9; box-shadow:0 8px 22px rgba(74,42,24,.045); }
+.admin-order-detail > a:first-child { color:#8b7265; font-size:12px; text-decoration:none; }
+.admin-order-detail > a:first-child:hover { color:#9c4400; }
+.admin-order-detail input:focus { border-color:#f2751f; outline:0; box-shadow:0 0 0 2px rgba(242,117,31,.14); }
+
+@media (max-width:767px) {
+  .admin-orders,
+  .admin-order-detail { min-width:0; }
+  .admin-orders > div:first-child h1,
+  .admin-order-detail > div:nth-child(2) h1 { font-size:22px; }
+  .admin-orders > div:nth-child(2) { width:100%; }
+  .admin-orders .overflow-x-auto,
+  .admin-order-detail .overflow-x-auto { max-width:100%; }
+  .admin-orders table,
+  .admin-order-detail table { min-width:620px; }
+  .admin-order-detail > div:nth-child(2) > div:last-child { width:100%; }
+  .admin-order-detail > div:nth-child(2) > div:last-child > * { flex:1; }
+}

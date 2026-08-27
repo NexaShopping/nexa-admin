@@ -9,6 +9,7 @@ import { ApiError } from "@/lib/api";
 import { formatMoney } from "@/lib/money";
 import { Button, Card, ErrorState, Input, Label, Select, Spinner, StatusBadge } from "@/components/ui";
 import type { ProductStatus } from "@/lib/types";
+import "../product-detail.css";
 
 export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -105,7 +106,7 @@ function ProductDetail({ id, product }: { id: string; product: NonNullable<Retur
   }
 
   return (
-    <div className="mx-auto max-w-4xl">
+    <div className="admin-product-detail mx-auto w-full max-w-none">
       <Link href="/dashboard/catalog" className="text-sm text-ink-soft hover:text-ink">
         ← Back to catalog
       </Link>

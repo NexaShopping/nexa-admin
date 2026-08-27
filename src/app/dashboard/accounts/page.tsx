@@ -6,6 +6,7 @@ import { useAccounts, useCreateDistributor, useUpdateAccount, type AccountFilter
 import { ApiError } from "@/lib/api";
 import { Button, Card, EmptyState, ErrorState, Input, Label, Select, Spinner } from "@/components/ui";
 import type { AccountSummary, AccountStatus, Role } from "@/lib/types";
+import "./accounts-modern.css";
 
 export default function AccountsPage() {
   const [filters, setFilters] = useState<AccountFilters>({});
@@ -31,7 +32,7 @@ export default function AccountsPage() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl">
+    <div className="admin-accounts mx-auto w-full max-w-7xl">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-xl font-semibold">Accounts</h1>

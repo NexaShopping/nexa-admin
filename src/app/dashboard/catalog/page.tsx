@@ -7,6 +7,7 @@ import { useCategories, useInfiniteProducts, type ProductFilters } from "@/featu
 import { formatMoney } from "@/lib/money";
 import { Button, Card, EmptyState, ErrorState, Input, Select, Spinner, StatusBadge } from "@/components/ui";
 import type { ProductStatus, ProductSummary } from "@/lib/types";
+import "./catalog-modern.css";
 
 type ViewMode = "grid" | "list";
 
@@ -45,7 +46,7 @@ export default function CatalogPage() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-[1680px]">
+    <div className="admin-catalog mx-auto w-full max-w-[1680px]">
       <header className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand">Central catalog</p>

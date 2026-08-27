@@ -1,0 +1,81 @@
+.admin-product-detail {
+  color: #2b211d;
+}
+
+.admin-product-detail > a:first-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #8b7265;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.admin-product-detail > a:first-child:hover { color: #9c4400; }
+.admin-product-detail .rounded-xl,
+.admin-product-detail .rounded-lg {
+  border-color: #eadfd7;
+  background: #fffdf9;
+}
+
+.admin-product-detail h1,
+.admin-product-detail h2,
+.admin-product-detail p,
+.admin-product-detail label,
+.admin-product-detail input,
+.admin-product-detail textarea,
+.admin-product-detail select,
+.admin-product-detail table {
+  font-family: Manrope, system-ui, sans-serif;
+}
+
+.admin-product-detail h1,
+.admin-product-detail h2 { font-family: "Plus Jakarta Sans", Manrope, sans-serif; }
+
+.admin-product-detail .mt-3.flex.flex-wrap {
+  padding: 18px 20px;
+  border: 1px solid #eadfd7;
+  border-radius: 14px;
+  background: #fffdf9;
+  box-shadow: 0 8px 22px rgba(74, 42, 24, .05);
+}
+
+.admin-product-detail .mt-6.grid {
+  align-items: start;
+  gap: 18px;
+}
+
+.admin-product-detail .space-y-6 > .rounded-xl,
+.admin-product-detail .space-y-4 > .rounded-xl {
+  box-shadow: 0 8px 22px rgba(74, 42, 24, .045);
+}
+
+.admin-product-detail table th {
+  color: #8b7265;
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.admin-product-detail table td { font-size: 11px; }
+.admin-product-detail input,
+.admin-product-detail textarea,
+.admin-product-detail select { border-color: #dfcfc4; background: #fffdf9; }
+.admin-product-detail input:focus,
+.admin-product-detail textarea:focus,
+.admin-product-detail select:focus { border-color: #f2751f; outline: none; box-shadow: 0 0 0 2px rgba(242,117,31,.15); }
+
+@media (max-width: 767px) {
+  .admin-product-detail { min-width: 0; }
+  .admin-product-detail .mt-3.flex.flex-wrap { padding: 15px; }
+  .admin-product-detail .mt-3.flex.flex-wrap > div:last-child { width: 100%; }
+  .admin-product-detail .mt-3.flex.flex-wrap > div:last-child > * { max-width: 100%; }
+  .admin-product-detail .mt-6.grid { gap: 12px; }
+  .admin-product-detail .rounded-xl,
+  .admin-product-detail .rounded-lg { min-width: 0; }
+  .admin-product-detail table { min-width: 540px; }
+  .admin-product-detail .overflow-x-auto { max-width: 100%; }
+  .admin-product-detail .space-y-4 > .rounded-xl { padding: 15px; }
+  .admin-product-detail .space-y-6 > .rounded-xl { padding: 15px; }
+}

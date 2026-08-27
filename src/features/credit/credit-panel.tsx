@@ -5,6 +5,7 @@ import { ApiError } from "@/lib/api";
 import { formatMoney } from "@/lib/money";
 import { Button, Card, EmptyState, ErrorState, Input, Label, Select, Spinner } from "@/components/ui";
 import { useCredit, useCreditCharges, useCreditLedger, useCreditRepayments, useOfflineRepayment, useUpdateCredit } from "./api";
+import "./credit-modern.css";
 
 export function CreditPanel({ accountId }: { accountId: string }) {
   const summary = useCredit(accountId);
@@ -43,7 +44,7 @@ export function CreditPanel({ accountId }: { accountId: string }) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="admin-credit space-y-6">
       <div className="grid gap-3 sm:grid-cols-3">
         <Metric label="Credit limit" value={formatMoney(credit.creditLimit)} />
         <Metric label="Outstanding" value={formatMoney(credit.currentBalance)} tone={credit.hasOverdueCharges ? "danger" : "default"} />

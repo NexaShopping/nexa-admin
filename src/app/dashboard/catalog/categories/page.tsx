@@ -10,13 +10,14 @@ import {
 import { ApiError } from "@/lib/api";
 import { Button, Card, EmptyState, ErrorState, Input, Label, Select, Spinner } from "@/components/ui";
 import type { AttributeType } from "@/lib/types";
+import "./categories-modern.css";
 
 export default function CategoriesPage() {
   const categories = useCategories();
   const [selected, setSelected] = useState<string | null>(null);
 
   return (
-    <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+    <div className="admin-categories mx-auto grid w-full max-w-6xl grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
       <div>
         <h1 className="text-xl font-semibold">Categories</h1>
         <p className="mt-1 text-sm text-ink-soft">
