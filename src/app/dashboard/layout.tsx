@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { Spinner } from "@/components/ui";
+import "./admin-shell.css";
 
 const NAV = [
   { href: "/dashboard", label: "Overview", icon: HomeIcon },
@@ -43,8 +44,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }
 
   return (
-    <div className="flex flex-1">
-      <aside className="hidden w-60 shrink-0 flex-col border-r border-line bg-surface sm:flex">
+    <div className="admin-shell flex flex-1">
+      <aside className="admin-shell__sidebar hidden w-60 shrink-0 flex-col border-r border-line bg-surface sm:flex">
         <div className="flex h-14 items-center gap-2.5 border-b border-line px-5">
           <Image src="/logo.png" alt="" width={26} height={25} className="h-6.5 w-auto" />
           <span className="font-semibold tracking-tight">
@@ -71,8 +72,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </nav>
       </aside>
 
-      <div className="flex flex-1 flex-col">
-        <header className="flex h-14 items-center justify-between border-b border-line bg-surface px-5">
+      <div className="admin-shell__content flex flex-1 flex-col">
+        <header className="admin-shell__header flex h-14 items-center justify-between border-b border-line bg-surface px-5">
           <div className="flex items-center gap-2.5 sm:hidden">
             <button type="button" onClick={() => setMobileMenuOpen((open) => !open)} aria-expanded={mobileMenuOpen} aria-controls="admin-mobile-nav" className="grid h-9 w-9 place-items-center rounded-lg border border-line text-ink transition-colors hover:bg-canvas">
               <span className="sr-only">{mobileMenuOpen ? "Close navigation" : "Open navigation"}</span>
@@ -117,7 +118,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </nav>
           </div>
         </>
-        <main className="flex-1 overflow-y-auto p-6">{children}</main>
+        <main className="admin-shell__main flex-1 overflow-y-auto p-6">{children}</main>
       </div>
     </div>
   );

@@ -1,0 +1,14 @@
+.admin-shell { background:#faf7f3; color:#2b211d; }
+.admin-shell__sidebar { border-color:#eadfd7; background:#fffdf9; }
+.admin-shell__sidebar > div:first-child { border-color:#eadfd7; }
+.admin-shell__sidebar nav a { min-height:38px; border-radius:10px; font-family:Manrope,system-ui,sans-serif; font-size:12px; letter-spacing:-.01em; }
+.admin-shell__sidebar nav a.text-brand { background:#fff0e6; color:#ad4c13; font-weight:700; }
+.admin-shell__header { border-color:#eadfd7; background:rgba(255,253,249,.94); }
+.admin-shell__header > div:last-child { font-family:Manrope,system-ui,sans-serif; }
+.admin-shell__header a,.admin-shell__header button { border-radius:9px; font-size:11px; }
+.admin-shell__main { background:#faf7f3; }
+.admin-shell__main > :is(.admin-catalog,.admin-categories,.admin-product-detail,.admin-dashboard) { width:100%; max-width:1440px; margin-inline:auto; }
+@media (max-width:767px) {
+  .admin-shell__main { padding:18px 14px; }
+  .admin-shell__header { height:58px; padding-inline:14px; }
+}
