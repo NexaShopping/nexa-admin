@@ -116,8 +116,9 @@ export default function OrdersPage() {
             title="No orders yet"
             hint="Orders placed against your stock will show up here."
           />
-        ) : (
-          <div className="overflow-x-auto rounded-xl border border-line">
+          ) : (
+          <>
+          <div className="admin-orders__desktop-table overflow-x-auto rounded-xl border border-line">
             <table className="w-full text-sm">
               <thead className="bg-canvas">
                 <tr className="text-left text-xs text-ink-soft">
@@ -149,6 +150,8 @@ export default function OrdersPage() {
               </tbody>
             </table>
           </div>
+          <div className="admin-orders__mobile-list">{visibleOrders.map((o) => <Link key={o.id} href={`/dashboard/orders/${o.id}`} className="admin-orders__mobile-card"><div className="admin-orders__mobile-head"><span>{o.orderNo}</span><span className={`admin-orders__status ${o.status === "DELIVERED" ? "is-success" : o.status === "CANCELLED" ? "is-error" : "is-pending"}`}>{o.status.toLowerCase().replace("_", " ")}</span></div><p>{CHANNEL_LABELS[o.channel] ?? o.channel}</p><div className="admin-orders__mobile-meta"><span>Total <b>{formatMoney(o.grandTotal)}</b></span><span>Placed <b>{new Date(o.placedAt).toLocaleDateString("en-IN")}</b></span></div></Link>)}</div>
+          </>
         )}
       </div>
 

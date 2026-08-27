@@ -29,4 +29,5 @@
   .admin-settlements .overflow-x-auto { max-width:100%; }
   .admin-settlements form { min-width:0; }
   .admin-settlements__metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.admin-settlements__metric{padding:12px 13px}.admin-settlements__metric strong{font-size:18px}.admin-settlements__filterbar{align-items:stretch;flex-direction:column}
+  .admin-settlement-table .rounded-xl{border-radius:12px}.admin-settlement-table .rounded-xl>div{min-width:0}.admin-settlement-table label{gap:10px;padding:12px 13px}.admin-settlement-table label p{min-width:0}.admin-settlement-table label>p:last-child{font-size:12px}.admin-settlement-table form{grid-template-columns:1fr!important}.admin-settlement-table form>div{width:100%}.admin-settlement-table form button{width:100%;min-height:42px}.admin-settlement-table .border-brand\/30{padding:14px}
 }

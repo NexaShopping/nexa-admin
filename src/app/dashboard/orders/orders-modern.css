@@ -1,5 +1,6 @@
 .admin-orders,
 .admin-order-detail { color:#2b211d; }
+.admin-orders__mobile-list{display:none}
 .admin-orders__metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:22px}.admin-orders__metric{border:1px solid #dfc0b1;border-radius:12px;background:#fff8f6;padding:15px 16px;box-shadow:0 1px 2px rgba(0,0,0,.05)}.admin-orders__metric span{display:block;color:#584237;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.admin-orders__metric strong{display:block;margin-top:7px;color:#231916;font-family:"Plus Jakarta Sans",Manrope,sans-serif;font-size:25px;letter-spacing:-.04em}.admin-orders__toolbar input{border-color:#dfc0b1;background:#fff8f6}.admin-orders__toolbar input:focus{border-color:#9c4400;outline:0;box-shadow:0 0 0 2px rgba(156,68,0,.14)}
 .admin-orders h1,
 .admin-order-detail h1,
@@ -45,7 +46,7 @@
   .admin-order-detail > div:nth-child(2) h1 { font-size:22px; }
   .admin-orders > div:nth-child(2) { width:100%; }
   .admin-orders__metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:18px}.admin-orders__metric{padding:12px 13px}.admin-orders__toolbar input{width:100%}
-  .admin-orders .overflow-x-auto,
+  .admin-orders__desktop-table{display:none}.admin-orders__mobile-list{display:grid;gap:9px}.admin-orders__mobile-card{display:block;border:1px solid #dfc0b1;border-radius:12px;background:#fff8f6;padding:13px;color:#231916;text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,.05)}.admin-orders__mobile-head{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13px;font-weight:700}.admin-orders__mobile-card>p{margin:4px 0 12px;color:#8b7265;font-size:10px}.admin-orders__mobile-meta{display:flex;gap:24px;border-top:1px solid #f1dfd8;padding-top:10px;color:#8b7265;font-size:9px}.admin-orders__mobile-meta b{display:block;margin-top:3px;color:#231916;font-size:12px}.admin-orders__status{border-radius:5px;padding:3px 7px;font-size:9px}.admin-orders__status.is-success{background:rgba(46,172,125,.1);color:#006c4a}.admin-orders__status.is-error{background:#ffdad6;color:#ba1a1a}.admin-orders__status.is-pending{background:#ffdbca;color:#9c4400}.admin-orders .overflow-x-auto,
   .admin-order-detail .overflow-x-auto { max-width:100%; }
   .admin-orders table,
   .admin-order-detail table { min-width:620px; }

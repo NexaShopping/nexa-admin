@@ -94,7 +94,8 @@ export default function AccountsPage() {
           ) : accounts.length === 0 ? (
             <EmptyState title="No accounts match" hint="Try a different search or filter." />
           ) : (
-            <div className="overflow-x-auto rounded-xl border border-line">
+            <>
+            <div className="admin-accounts__desktop-table overflow-x-auto rounded-xl border border-line">
               <table className="w-full text-sm">
                 <thead className="bg-canvas">
                   <tr className="text-left text-xs text-ink-soft">
@@ -125,6 +126,8 @@ export default function AccountsPage() {
                 </tbody>
               </table>
             </div>
+            <div className="admin-accounts__mobile-list">{accounts.map((a) => <button type="button" key={a.id} onClick={() => setSelectedId(a.id)} className={`admin-accounts__mobile-card ${selectedId === a.id ? "is-selected" : ""}`}><div className="admin-accounts__mobile-head"><span>{a.name ?? "—"}</span><StatusPill status={a.status} /></div><p>{a.email ?? a.phone ?? "—"}</p><div className="admin-accounts__mobile-meta"><span>Role <b>{a.role.toLowerCase()}</b></span><span>{a.distributor?.businessName ?? "Account"}</span></div></button>)}</div>
+            </>
           )}
 
           {(cursors.length > 0 || meta?.hasMore) && accounts.length > 0 && (
