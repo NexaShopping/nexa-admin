@@ -9,7 +9,6 @@ import { ApiError } from "@/lib/api";
 import { formatMoney } from "@/lib/money";
 import { Button, Card, ErrorState, Input, Label, Select, Spinner, StatusBadge } from "@/components/ui";
 import type { ProductStatus } from "@/lib/types";
-import "../product-detail.css";
 
 export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -17,7 +16,7 @@ export default function ProductDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="grid place-items-center py-20 text-ink-soft">
+      <div className="grid place-items-center py-20 text-on-surface-variant">
         <Spinner className="h-5 w-5" />
       </div>
     );
@@ -106,16 +105,16 @@ function ProductDetail({ id, product }: { id: string; product: NonNullable<Retur
   }
 
   return (
-    <div className="admin-product-detail mx-auto w-full max-w-none">
-      <Link href="/dashboard/catalog" className="text-sm text-ink-soft hover:text-ink">
+    <div className="mx-auto w-full max-w-none">
+      <Link href="/dashboard/catalog" className="text-sm text-on-surface-variant hover:text-on-surface">
         ← Back to catalog
       </Link>
 
       <div className="mt-3 flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-ink-soft">{product.brand}</p>
-          <h1 className="text-xl font-semibold">{product.name}</h1>
-          <p className="mt-1 text-sm text-ink-soft">
+          <p className="text-xs font-medium uppercase tracking-wide text-on-surface-variant">{product.brand}</p>
+          <h1 className="font-display text-2xl font-bold text-on-surface">{product.name}</h1>
+          <p className="mt-1 text-sm text-on-surface-variant">
             {product.category.name} · /{product.slug}
           </p>
         </div>
@@ -148,7 +147,7 @@ function ProductDetail({ id, product }: { id: string; product: NonNullable<Retur
         <div className="space-y-6">
           <Card className="p-5">
             <div className="flex items-center justify-between">
-              <p className="text-sm font-medium">Details</p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-on-surface-variant">Details</p>
               {!editing && (
                 <Button size="sm" variant="ghost" onClick={() => setEditing(true)}>
                   Edit
@@ -181,7 +180,7 @@ function ProductDetail({ id, product }: { id: string; product: NonNullable<Retur
                     value={form.description}
                     onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
                     rows={3}
-                    className="w-full rounded-md border border-line bg-surface px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
+                    className="w-full rounded-md border border-outline-variant bg-surface-container-lowest px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
                   />
                 </div>
                 {error && <p className="text-sm text-red-600">{error}</p>}
@@ -197,7 +196,7 @@ function ProductDetail({ id, product }: { id: string; product: NonNullable<Retur
             ) : (
               <div className="mt-3 space-y-2 text-sm">
                 <p>{product.shortDescription}</p>
-                {product.description && <p className="text-ink-soft">{product.description}</p>}
+                {product.description && <p className="text-on-surface-variant">{product.description}</p>}
               </div>
             )}
           </Card>
@@ -209,10 +208,10 @@ function ProductDetail({ id, product }: { id: string; product: NonNullable<Retur
           <Card className="p-4">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="text-sm font-medium">Media</p>
-                <p className="mt-1 text-xs text-ink-soft">{product.media.length}/10 images</p>
+                <p className="text-xs font-semibold uppercase tracking-wide text-on-surface-variant">Media</p>
+                <p className="mt-1 text-xs text-on-surface-variant">{product.media.length}/10 images</p>
               </div>
-              <label className="inline-flex cursor-pointer items-center rounded-md border border-line px-3 py-1.5 text-xs font-medium hover:border-brand hover:text-brand">
+              <label className="inline-flex cursor-pointer items-center rounded-md border border-outline-variant px-3 py-1.5 text-xs font-medium hover:border-primary hover:text-primary">
                 Add images
                 <input type="file" accept="image/jpeg,image/png,image/webp" multiple className="sr-only" onChange={addImages} disabled={uploadMedia.isPending || product.media.length >= 10} />
               </label>
@@ -220,20 +219,20 @@ function ProductDetail({ id, product }: { id: string; product: NonNullable<Retur
             <div className="mt-3 grid grid-cols-[64px_minmax(0,1fr)] gap-3 sm:grid-cols-[76px_minmax(0,1fr)]">
               <div className="order-2 flex gap-2 overflow-x-auto sm:order-1 sm:block sm:space-y-2">
                 {product.media.map((m, index) => (
-                  <button key={m.id} type="button" aria-label={`View product image ${index + 1}`} onClick={() => setActiveMediaIndex(index)} className={`relative block h-14 w-14 shrink-0 overflow-hidden rounded-md border sm:h-[68px] sm:w-[68px] ${index === activeMediaIndex ? "border-brand ring-2 ring-brand/20" : "border-line hover:border-brand/60"}`}>
+                  <button key={m.id} type="button" aria-label={`View product image ${index + 1}`} onClick={() => setActiveMediaIndex(index)} className={`relative block h-14 w-14 shrink-0 overflow-hidden rounded-md border sm:h-[68px] sm:w-[68px] ${index === activeMediaIndex ? "border-primary ring-2 ring-primary/20" : "border-outline-variant hover:border-primary/60"}`}>
                     <Image src={m.url} alt="" fill unoptimized className="object-cover" />
-                    {m.isPrimary && <span className="absolute inset-x-0 bottom-0 bg-brand/90 px-0.5 py-0.5 text-[8px] font-semibold text-white">PRIMARY</span>}
+                    {m.isPrimary && <span className="absolute inset-x-0 bottom-0 bg-primary/90 px-0.5 py-0.5 text-[8px] font-semibold text-white">PRIMARY</span>}
                   </button>
                 ))}
               </div>
               <div className="order-1 min-w-0 sm:order-2">
-                {product.media.length === 0 ? <p className="text-sm text-ink-soft">No images yet.</p> : (() => {
+                {product.media.length === 0 ? <p className="text-sm text-on-surface-variant">No images yet.</p> : (() => {
                   const active = product.media[Math.min(activeMediaIndex, product.media.length - 1)];
-                  return <div className="relative aspect-square overflow-hidden rounded-xl border border-line bg-canvas"><Image src={active.url} alt={active.alt ?? product.name} fill unoptimized className="object-contain" /><span className="absolute left-2 top-2 rounded-full bg-black/60 px-2 py-1 text-[10px] font-semibold text-white">{active.isPrimary ? "Primary image" : `Image ${active.position + 1}`}</span><button type="button" className="absolute bottom-2 right-2 rounded-md bg-black/65 px-2 py-1 text-[10px] text-red-100 hover:text-white" onClick={() => removeImage(active.id)}>Delete image</button></div>;
+                  return <div className="relative aspect-square overflow-hidden rounded-xl border border-outline-variant bg-surface-container-high"><Image src={active.url} alt={active.alt ?? product.name} fill unoptimized className="object-contain" /><span className="absolute left-2 top-2 rounded-full bg-black/60 px-2 py-1 text-[10px] font-semibold text-white">{active.isPrimary ? "Primary image" : `Image ${active.position + 1}`}</span><button type="button" className="absolute bottom-2 right-2 rounded-md bg-black/65 px-2 py-1 text-[10px] text-red-100 hover:text-white" onClick={() => removeImage(active.id)}>Delete image</button></div>;
                 })()}
               </div>
             </div>
-            {uploadMedia.isPending && <p className="mt-2 text-xs text-ink-soft">Uploading images…</p>}
+            {uploadMedia.isPending && <p className="mt-2 text-xs text-on-surface-variant">Uploading images…</p>}
             {mediaError && <p className="mt-2 text-xs text-red-600">{mediaError}</p>}
           </Card>
         </div>
@@ -279,7 +278,7 @@ function VariantsCard({ product }: { product: NonNullable<ReturnType<typeof useP
   return (
     <Card className="p-5">
       <div className="flex items-center justify-between">
-        <p className="text-sm font-medium">Variants ({product.variants.length})</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-on-surface-variant">Variants ({product.variants.length})</p>
         {!showForm && (
           <Button size="sm" variant="secondary" onClick={() => setShowForm(true)}>
             Add variant
@@ -290,19 +289,19 @@ function VariantsCard({ product }: { product: NonNullable<ReturnType<typeof useP
       <div className="mt-3 overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="text-left text-xs text-ink-soft">
+            <tr className="text-left text-xs text-on-surface-variant">
               <th className="pb-2 font-medium">SKU</th>
               <th className="pb-2 font-medium">Name</th>
               <th className="pb-2 font-medium">Options</th>
               <th className="pb-2 pr-0 text-right font-medium">MRP</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-line">
+          <tbody className="divide-y divide-outline-variant">
             {product.variants.map((v) => (
               <tr key={v.id}>
                 <td className="py-2 font-mono text-xs">{v.sku}</td>
                 <td className="py-2">{v.name}</td>
-                <td className="py-2 text-ink-soft">{v.options.map((o) => o.value).join(", ") || "—"}</td>
+                <td className="py-2 text-on-surface-variant">{v.options.map((o) => o.value).join(", ") || "—"}</td>
                 <td className="py-2 text-right font-medium">{formatMoney(v.mrp)}</td>
               </tr>
             ))}
@@ -311,7 +310,7 @@ function VariantsCard({ product }: { product: NonNullable<ReturnType<typeof useP
       </div>
 
       {showForm && (
-        <form onSubmit={onSubmit} className="mt-4 space-y-3 border-t border-line pt-4">
+        <form onSubmit={onSubmit} className="mt-4 space-y-3 border-t border-outline-variant pt-4">
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <div>
               <Label>SKU</Label>

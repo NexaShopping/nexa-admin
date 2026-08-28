@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaShopping - Admin Overview</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#4e453e",
+                        "tertiary-fixed": "#83f9c3",
+                        "tertiary": "#006c4a",
+                        "surface-container-high": "#f7e4de",
+                        "on-surface-variant": "#584237",
+                        "on-secondary-container": "#6b6159",
+                        "secondary": "#675c55",
+                        "surface-container": "#fdeae3",
+                        "on-surface": "#231916",
+                        "surface-dim": "#e9d6d0",
+                        "background": "#fff8f6",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#f2751f",
+                        "outline-variant": "#dfc0b1",
+                        "primary-fixed": "#ffdbca",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#002114",
+                        "on-primary-fixed-variant": "#773200",
+                        "error": "#ba1a1a",
+                        "surface-tint": "#9c4400",
+                        "surface-container-low": "#fff1ec",
+                        "inverse-primary": "#ffb68f",
+                        "error-container": "#ffdad6",
+                        "primary": "#9c4400",
+                        "tertiary-fixed-dim": "#66dca9",
+                        "surface-container-highest": "#f1dfd8",
+                        "secondary-fixed": "#eee0d6",
+                        "on-tertiary-fixed-variant": "#005137",
+                        "on-background": "#231916",
+                        "on-secondary-fixed": "#211a14",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#ffb68f",
+                        "surface-bright": "#fff8f6",
+                        "on-primary-container": "#552200",
+                        "surface": "#fff8f6",
+                        "on-primary-fixed": "#331200",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#ffede7",
+                        "secondary-container": "#ebddd3",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#f1dfd8",
+                        "inverse-surface": "#392e2a",
+                        "outline": "#8b7265",
+                        "secondary-fixed-dim": "#d2c4bb",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#003925",
+                        "tertiary-container": "#2eac7d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans", "sans-serif"],
+                        "display": ["Plus Jakarta Sans", "sans-serif"],
+                        "body": ["Manrope", "sans-serif"],
+                        "label": ["Manrope", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-[#FAF7F3] text-on-surface font-body antialiased min-h-screen">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-screen w-[240px] border-r border-outline-variant bg-surface-container-low hidden md:flex flex-col py-6 z-50 shadow-sm">
+<div class="px-6 mb-8 flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary text-on-primary flex items-center justify-center font-bold text-xl">N</div>
+<div>
+<h1 class="text-xl font-headline font-bold text-on-surface tracking-tight">NexaShopping</h1>
+<p class="text-xs text-on-surface-variant">Admin Operations</p>
+</div>
+</div>
+<button class="mt-4 flex items-center justify-center gap-2 w-full py-2 px-4 bg-primary text-on-primary rounded-xl font-semibold text-sm hover:bg-surface-tint transition-colors shadow-sm">
+<span class="material-symbols-outlined text-lg">add</span>
+                New Operation
+            </button>
+</div>
+<div class="flex-1 overflow-y-auto px-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary font-bold border-r-4 border-primary bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-sm font-semibold">Overview</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="text-sm font-semibold">Products</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">category</span>
+<span class="text-sm font-semibold">Categories</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">warehouse</span>
+<span class="text-sm font-semibold">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="text-sm font-semibold">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-sm font-semibold">Accounts</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-sm font-semibold">Settlements</span>
+</a>
+</div>
+<div class="px-4 mt-auto border-t border-outline-variant/30 pt-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-semibold">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="text-sm font-semibold">Support</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="md:ml-[240px] flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-40 bg-surface/80 backdrop-blur-md border-b border-outline-variant flex justify-between items-center px-8 h-16 w-full shadow-sm">
+<div class="flex items-center gap-6">
+<div class="hidden md:flex items-center gap-2 text-sm">
+<span class="text-on-surface-variant">Dashboard</span>
+<span class="material-symbols-outlined text-sm text-outline">chevron_right</span>
+<span class="text-primary font-bold border-b-2 border-primary pb-0.5">Overview</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-full text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-64 text-on-surface placeholder:text-outline" placeholder="Search operations..." type="text"/>
+</div>
+<button class="p-2 text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-primary rounded-full"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors">
+<span class="material-symbols-outlined">apps</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-secondary-container overflow-hidden border border-outline-variant cursor-pointer">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A close up professional headshot of an executive in a modern bright office environment. The image is a square avatar placeholder with natural lighting, soft focus background, wearing a smart casual outfit, representing an administrative user in a corporate setting. High key light aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO70A8JQ5T7hct24TTE1bvtqfv0yPH8K7rIaJ9TktOyoKYzBk3HqXQj34zLDfVQMNj7e8omd1fqLXSARFtaBGnPyWAgYHi0nlY5G-a8xmqQgAhPZwHOQyTLR3E1RQQ0_tq4vJ3A9B9BxQn11dAShOpuw0wvcV37LQJ6KnkAZgfctllRvu2IUdCTGRv1ZbjK4YuejpJlNMF5ddOJXJFXn7CXv713naKmF182mHCservZ9ZsU3dWju_Pj7Ug4TaNVTFCKqY42Kf2PgY"/>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 p-8 flex flex-col gap-8 max-w-7xl mx-auto w-full">
+<!-- Header Section -->
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+<div>
+<h2 class="text-3xl font-headline font-bold text-on-surface tracking-tight">Welcome back, Admin</h2>
+<div class="flex items-center gap-2 mt-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#28A879]"></span>
+<p class="text-sm text-on-surface-variant font-medium">System status: All services operational</p>
+</div>
+</div>
+<div class="text-sm text-outline">
+                    Last updated: Just now
+                </div>
+</div>
+<!-- Summary Stats -->
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+<div class="bg-[#FFFDF9] border border-outline-variant rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<p class="text-sm font-medium text-on-surface-variant">Products</p>
+<span class="material-symbols-outlined text-outline text-xl">inventory_2</span>
+</div>
+<h3 class="text-2xl font-headline font-bold text-on-surface">12,482</h3>
+<p class="text-xs text-outline mt-1">+144 this week</p>
+</div>
+<div class="bg-[#FFFDF9] border border-outline-variant rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<p class="text-sm font-medium text-on-surface-variant">Active Products</p>
+<span class="material-symbols-outlined text-[#28A879] text-xl">check_circle</span>
+</div>
+<h3 class="text-2xl font-headline font-bold text-on-surface">10,931</h3>
+<div class="flex items-center gap-1 mt-1 text-xs text-[#28A879] font-semibold">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+<span>+2.4%</span>
+</div>
+</div>
+<div class="bg-[#FFFDF9] border border-outline-variant rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<p class="text-sm font-medium text-on-surface-variant">Inventory Health</p>
+<span class="material-symbols-outlined text-outline text-xl">health_and_safety</span>
+</div>
+<h3 class="text-2xl font-headline font-bold text-on-surface">94.2%</h3>
+<div class="w-full bg-surface-variant rounded-full h-1.5 mt-2 overflow-hidden">
+<div class="bg-[#28A879] h-1.5 rounded-full" style="width: 94.2%"></div>
+</div>
+</div>
+<div class="bg-[#FFFDF9] border border-[#D99626]/30 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+<div class="absolute top-0 right-0 w-16 h-16 bg-[#D99626]/10 rounded-bl-full -z-10"></div>
+<div class="flex justify-between items-start mb-2">
+<p class="text-sm font-medium text-on-surface-variant">Open Orders</p>
+<span class="material-symbols-outlined text-[#D99626] text-xl">local_shipping</span>
+</div>
+<h3 class="text-2xl font-headline font-bold text-on-surface">342</h3>
+<p class="text-xs text-[#D99626] font-semibold mt-1">12 high priority</p>
+</div>
+<div class="bg-[#FFFDF9] border border-outline-variant rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow col-span-2 lg:col-span-1">
+<div class="flex justify-between items-start mb-2">
+<p class="text-sm font-medium text-on-surface-variant">Payable Balance</p>
+<span class="material-symbols-outlined text-primary text-xl">account_balance_wallet</span>
+</div>
+<h3 class="text-2xl font-headline font-bold text-on-surface">$42,950</h3>
+<p class="text-xs text-outline mt-1">Pending settlements: 5</p>
+</div>
+</div>
+<!-- Main Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Left Column (Wide) -->
+<div class="lg:col-span-2 flex flex-col gap-6">
+<div class="bg-[#FFFDF9] border border-outline-variant rounded-[12px] p-6 shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-lg font-headline font-bold text-on-surface">Operational Activity</h3>
+<select class="bg-surface-variant text-sm border-none rounded-lg px-3 py-1.5 text-on-surface-variant focus:ring-1 focus:ring-primary">
+<option>Last 7 days</option>
+<option>Last 30 days</option>
+</select>
+</div>
+<!-- Simple Trend Chart Placeholder -->
+<div class="h-48 w-full border-b border-l border-outline-variant relative mb-6">
+<div class="absolute bottom-0 left-0 w-full h-full flex items-end justify-between px-2 gap-2 opacity-80">
+<div class="w-full bg-primary/20 rounded-t-sm h-[30%] hover:bg-primary/40 transition-colors"></div>
+<div class="w-full bg-primary/30 rounded-t-sm h-[45%] hover:bg-primary/50 transition-colors"></div>
+<div class="w-full bg-primary/20 rounded-t-sm h-[20%] hover:bg-primary/40 transition-colors"></div>
+<div class="w-full bg-primary/50 rounded-t-sm h-[60%] hover:bg-primary/70 transition-colors"></div>
+<div class="w-full bg-primary/40 rounded-t-sm h-[50%] hover:bg-primary/60 transition-colors"></div>
+<div class="w-full bg-primary rounded-t-sm h-[80%] hover:bg-primary-container transition-colors"></div>
+<div class="w-full bg-primary/60 rounded-t-sm h-[70%] hover:bg-primary/80 transition-colors"></div>
+</div>
+</div>
+<h4 class="text-sm font-bold text-on-surface uppercase tracking-wider mb-4">Operational Alerts</h4>
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-4 p-3 rounded-lg bg-[#D99626]/10 border border-[#D99626]/20">
+<span class="material-symbols-outlined text-[#D99626]">warning</span>
+<div class="flex-1">
+<p class="text-sm font-semibold text-on-surface">Low stock detected</p>
+<p class="text-xs text-on-surface-variant">3 high-velocity items need immediate restock.</p>
+</div>
+<button class="text-sm text-[#D99626] font-bold hover:underline">Review</button>
+</div>
+<div class="flex items-center gap-4 p-3 rounded-lg bg-surface-variant border border-outline-variant">
+<span class="material-symbols-outlined text-outline">pending_actions</span>
+<div class="flex-1">
+<p class="text-sm font-semibold text-on-surface">Pending Settlements</p>
+<p class="text-xs text-on-surface-variant">5 accounts are awaiting final settlement processing.</p>
+</div>
+<button class="text-sm text-primary font-bold hover:underline">Process</button>
+</div>
+</div>
+</div>
+<!-- Catalog Health -->
+<div class="bg-[#FFFDF9] border border-outline-variant rounded-[12px] p-6 shadow-sm">
+<h3 class="text-lg font-headline font-bold text-on-surface mb-4">Catalog Health</h3>
+<div class="flex flex-col gap-4">
+<div>
+<div class="flex justify-between text-sm mb-1">
+<span class="font-medium text-on-surface">Active Products</span>
+<span class="text-on-surface-variant">10,931 (87%)</span>
+</div>
+<div class="w-full bg-surface-variant rounded-full h-2">
+<div class="bg-[#28A879] h-2 rounded-full" style="width: 87%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-1">
+<span class="font-medium text-on-surface">Drafts / Incomplete</span>
+<span class="text-on-surface-variant">1,551 (13%)</span>
+</div>
+<div class="w-full bg-surface-variant rounded-full h-2">
+<div class="bg-[#D99626] h-2 rounded-full" style="width: 13%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column (Compact) -->
+<div class="lg:col-span-1">
+<div class="bg-[#FFFDF9] border border-outline-variant rounded-[12px] p-6 shadow-sm h-full">
+<h3 class="text-lg font-headline font-bold text-on-surface mb-6">Quick Actions</h3>
+<div class="grid grid-cols-2 gap-4">
+<button class="flex flex-col items-center justify-center gap-3 p-4 rounded-xl border border-outline-variant bg-surface-container-lowest hover:border-primary hover:bg-surface-container-low transition-all group">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-colors text-primary">
+<span class="material-symbols-outlined">add_circle</span>
+</div>
+<span class="text-sm font-semibold text-center">Add Product</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-3 p-4 rounded-xl border border-outline-variant bg-surface-container-lowest hover:border-primary hover:bg-surface-container-low transition-all group">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-colors text-on-secondary-container">
+<span class="material-symbols-outlined">category</span>
+</div>
+<span class="text-sm font-semibold text-center">Categories</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-3 p-4 rounded-xl border border-outline-variant bg-surface-container-lowest hover:border-primary hover:bg-surface-container-low transition-all group">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-colors text-on-secondary-container">
+<span class="material-symbols-outlined">inventory</span>
+</div>
+<span class="text-sm font-semibold text-center">Inventory</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-3 p-4 rounded-xl border border-outline-variant bg-surface-container-lowest hover:border-primary hover:bg-surface-container-low transition-all group">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-colors text-on-secondary-container">
+<span class="material-symbols-outlined">receipt_long</span>
+</div>
+<span class="text-sm font-semibold text-center">Orders</span>
+</button>
+</div>
+<div class="mt-8 p-4 rounded-xl bg-surface-container-high border border-outline-variant">
+<h4 class="text-sm font-bold text-on-surface mb-2">Need help?</h4>
+<p class="text-xs text-on-surface-variant mb-3">Access documentation or contact support for operational queries.</p>
+<button class="text-sm text-primary font-bold flex items-center gap-1 hover:underline">
+                                Go to Support <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -7,7 +7,6 @@ import { useAuth } from "@/lib/auth-context";
 import { ApiError } from "@/lib/api";
 import { Button, Card, EmptyState, ErrorState, Input, Label, Select, Spinner } from "@/components/ui";
 import type { AccountSummary, AccountStatus, Role } from "@/lib/types";
-import "./accounts-modern.css";
 
 export default function AccountsPage() {
   const [filters, setFilters] = useState<AccountFilters>({});
@@ -37,17 +36,17 @@ export default function AccountsPage() {
   }
 
   return (
-    <div className="admin-accounts mx-auto w-full max-w-7xl">
+    <div className="mx-auto w-full max-w-7xl">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p className="admin-accounts__eyebrow">ADMIN OPERATIONS</p>
-          <h1 className="text-xl font-semibold">Accounts</h1>
-          <p className="mt-1 text-sm text-ink-soft">Everyone with access — admins, distributors, and customers.</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">Admin operations</p>
+          <h1 className="mt-1 font-display text-2xl font-bold text-on-surface">Accounts</h1>
+          <p className="mt-1 text-sm text-on-surface-variant">Everyone with access — admins, distributors, and customers.</p>
         </div>
         <Button onClick={() => setShowCreate((s) => !s)}>{showCreate ? "Close" : "Onboard distributor"}</Button>
       </div>
 
-      <div className="admin-accounts__metrics"><AccountMetric label="Total accounts" value={accounts.length} /><AccountMetric label="Distributors" value={accounts.filter((a) => a.role === "DISTRIBUTOR").length} /><AccountMetric label="Customers" value={accounts.filter((a) => a.role === "CUSTOMER").length} /><AccountMetric label="Pending review" value={accounts.filter((a) => a.status === "PENDING").length} /></div>
+      <div className="mt-5 grid grid-cols-2 gap-4 lg:grid-cols-4"><AccountMetric label="Total accounts" value={accounts.length} /><AccountMetric label="Distributors" value={accounts.filter((a) => a.role === "DISTRIBUTOR").length} /><AccountMetric label="Customers" value={accounts.filter((a) => a.role === "CUSTOMER").length} /><AccountMetric label="Pending review" value={accounts.filter((a) => a.status === "PENDING").length} /></div>
 
       {showCreate && (
         <div className="mt-5">
@@ -86,7 +85,7 @@ export default function AccountsPage() {
       <div className="mt-5 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
         <div>
           {isLoading ? (
-            <div className="grid place-items-center py-20 text-ink-soft">
+            <div className="grid place-items-center py-20 text-on-surface-variant">
               <Spinner className="h-5 w-5" />
             </div>
           ) : isError ? (
@@ -95,29 +94,29 @@ export default function AccountsPage() {
             <EmptyState title="No accounts match" hint="Try a different search or filter." />
           ) : (
             <>
-            <div className="admin-accounts__desktop-table overflow-x-auto rounded-xl border border-line">
+            <div className="hidden overflow-x-auto rounded-xl border border-outline-variant sm:block">
               <table className="w-full text-sm">
-                <thead className="bg-canvas">
-                  <tr className="text-left text-xs text-ink-soft">
+                <thead className="bg-surface-container-high">
+                  <tr className="text-left text-xs text-on-surface-variant">
                     <th className="px-4 py-2.5 font-medium">Name</th>
                     <th className="px-4 py-2.5 font-medium">Contact</th>
                     <th className="px-4 py-2.5 font-medium">Role</th>
                     <th className="px-4 py-2.5 font-medium">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-line bg-surface">
+                <tbody className="divide-y divide-outline-variant bg-surface-container-lowest">
                   {accounts.map((a) => (
                     <tr
                       key={a.id}
                       onClick={() => setSelectedId(a.id)}
-                      className={`cursor-pointer transition-colors hover:bg-canvas ${selectedId === a.id ? "bg-brand/5" : ""}`}
+                      className={`cursor-pointer transition-colors hover:bg-surface-container-high ${selectedId === a.id ? "bg-primary/5" : ""}`}
                     >
                       <td className="px-4 py-2.5">
-                        <p className="font-medium">{a.name ?? "—"}</p>
-                        {a.distributor && <p className="text-xs text-ink-soft">{a.distributor.businessName}</p>}
+                        <p className="font-medium text-on-surface">{a.name ?? "—"}</p>
+                        {a.distributor && <p className="text-xs text-on-surface-variant">{a.distributor.businessName}</p>}
                       </td>
-                      <td className="px-4 py-2.5 text-xs text-ink-soft">{a.email ?? a.phone ?? "—"}</td>
-                      <td className="px-4 py-2.5 capitalize">{a.role.toLowerCase()}</td>
+                      <td className="px-4 py-2.5 text-xs text-on-surface-variant">{a.email ?? a.phone ?? "—"}</td>
+                      <td className="px-4 py-2.5 capitalize text-on-surface">{a.role.toLowerCase()}</td>
                       <td className="px-4 py-2.5">
                         <StatusPill status={a.status} />
                       </td>
@@ -126,7 +125,7 @@ export default function AccountsPage() {
                 </tbody>
               </table>
             </div>
-            <div className="admin-accounts__mobile-list">{accounts.map((a) => <button type="button" key={a.id} onClick={() => setSelectedId(a.id)} className={`admin-accounts__mobile-card ${selectedId === a.id ? "is-selected" : ""}`}><div className="admin-accounts__mobile-head"><span>{a.name ?? "—"}</span><StatusPill status={a.status} /></div><p>{a.email ?? a.phone ?? "—"}</p><div className="admin-accounts__mobile-meta"><span>Role <b>{a.role.toLowerCase()}</b></span><span>{a.distributor?.businessName ?? "Account"}</span></div></button>)}</div>
+            <div className="flex flex-col gap-3 sm:hidden">{accounts.map((a) => <button type="button" key={a.id} onClick={() => setSelectedId(a.id)} className={`rounded-xl border p-3 text-left ${selectedId === a.id ? "border-primary bg-primary/5" : "border-outline-variant bg-surface-container-lowest"}`}><div className="flex items-center justify-between gap-2"><span className="font-medium text-on-surface">{a.name ?? "—"}</span><StatusPill status={a.status} /></div><p className="mt-0.5 text-xs text-on-surface-variant">{a.email ?? a.phone ?? "—"}</p><div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-on-surface-variant"><span>Role <b className="text-on-surface">{a.role.toLowerCase()}</b></span><span>{a.distributor?.businessName ?? "Account"}</span></div></button>)}</div>
             </>
           )}
 
@@ -150,7 +149,7 @@ export default function AccountsPage() {
           {selected ? (
             <AccountDetail account={selected} onClose={() => setSelectedId(null)} />
           ) : (
-            <div className="rounded-xl border border-dashed border-line p-6 text-center text-sm text-ink-soft">
+            <div className="rounded-xl border border-dashed border-outline-variant p-6 text-center text-sm text-on-surface-variant">
               Select a row to view or edit an account.
             </div>
           )}
@@ -170,7 +169,14 @@ function StatusPill({ status }: { status: AccountStatus }) {
   return <span className={`rounded-full px-2 py-0.5 text-xs font-medium capitalize ${tones[status]}`}>{status.toLowerCase()}</span>;
 }
 
-function AccountMetric({ label, value }: { label: string; value: number }) { return <div className="admin-accounts__metric"><span>{label}</span><strong>{value}</strong></div>; }
+function AccountMetric({ label, value }: { label: string; value: number }) {
+  return (
+    <div className="rounded-xl border border-outline-variant bg-surface-container-lowest p-4">
+      <p className="text-sm text-on-surface-variant">{label}</p>
+      <p className="mt-1 font-display text-2xl font-bold text-on-surface">{value}</p>
+    </div>
+  );
+}
 
 function CreateDistributorForm({ onDone }: { onDone: () => void }) {
   const create = useCreateDistributor();
@@ -205,7 +211,7 @@ function CreateDistributorForm({ onDone }: { onDone: () => void }) {
   return (
     <Card className="space-y-4 p-5">
       <p className="text-sm font-medium">Onboard a distributor</p>
-      <p className="text-xs text-ink-soft">
+      <p className="text-xs text-on-surface-variant">
         Manual onboarding — self sign-up by phone OTP is still blocked on DLT verification.
       </p>
       <form onSubmit={submit} className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -225,8 +231,8 @@ function CreateDistributorForm({ onDone }: { onDone: () => void }) {
           <Label>Territory (optional)</Label>
           <Input value={territory} onChange={(e) => setTerritory(e.target.value)} />
         </div>
-        <label className="flex items-center gap-3 rounded-md border border-line bg-canvas px-3 py-2.5 text-sm">
-          <input type="checkbox" checked={creditEnabled} onChange={(e) => setCreditEnabled(e.target.checked)} className="accent-brand" />
+        <label className="flex items-center gap-3 rounded-md border border-outline-variant bg-surface-container-high px-3 py-2.5 text-sm">
+          <input type="checkbox" checked={creditEnabled} onChange={(e) => setCreditEnabled(e.target.checked)} className="accent-[var(--md-primary)]" />
           Enable 30-day credit
         </label>
         {creditEnabled && <div><Label>Credit limit</Label><Input value={creditLimit} onChange={(e) => setCreditLimit(e.target.value)} inputMode="decimal" placeholder="50000.00" required /></div>}
@@ -266,24 +272,24 @@ function AccountDetail({ account, onClose }: { account: AccountSummary; onClose:
     <Card className="space-y-4 p-5">
       <div className="flex items-start justify-between">
         <div>
-          <p className="font-medium">{account.name ?? "—"}</p>
-          <p className="text-xs text-ink-soft">{account.email ?? account.phone}</p>
+          <p className="font-medium text-on-surface">{account.name ?? "—"}</p>
+          <p className="text-xs text-on-surface-variant">{account.email ?? account.phone}</p>
         </div>
-        <button onClick={onClose} className="text-sm text-ink-soft hover:text-ink">
+        <button onClick={onClose} className="text-sm text-on-surface-variant hover:text-on-surface">
           Close
         </button>
       </div>
 
       {account.distributor && (
-        <div className="rounded-md bg-canvas p-3 text-sm">
+        <div className="rounded-md bg-surface-container-high p-3 text-sm">
           <p className="font-medium">{account.distributor.businessName}</p>
-          <p className="mt-0.5 text-xs text-ink-soft">
+          <p className="mt-0.5 text-xs text-on-surface-variant">
             Referral code <span className="font-mono">{account.distributor.referralCode}</span>
           </p>
         </div>
       )}
 
-      {account.role === "DISTRIBUTOR" && <Link href={`/dashboard/accounts/${account.id}/credit`} className="flex items-center justify-between rounded-md border border-brand/25 bg-brand/5 px-3 py-2.5 text-sm font-medium text-brand hover:bg-brand/10"><span>Credit account</span><span aria-hidden>→</span></Link>}
+      {account.role === "DISTRIBUTOR" && <Link href={`/dashboard/accounts/${account.id}/credit`} className="flex items-center justify-between rounded-md border border-primary/25 bg-primary/5 px-3 py-2.5 text-sm font-medium text-primary hover:bg-primary/10"><span>Credit account</span><span aria-hidden>→</span></Link>}
 
       <form onSubmit={save} className="space-y-3">
         <div>
@@ -295,7 +301,7 @@ function AccountDetail({ account, onClose }: { account: AccountSummary; onClose:
             <option value="CLOSED">Closed</option>
           </Select>
           {isSelf && (
-            <p className="mt-1 text-xs text-ink-soft">
+            <p className="mt-1 text-xs text-on-surface-variant">
               You can&apos;t change your own status — there&apos;s no way back in once it leaves Active. Ask another admin.
             </p>
           )}

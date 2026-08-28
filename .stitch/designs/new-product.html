@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaShopping - New Product</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#eee0d6",
+                        "on-primary-container": "#552200",
+                        "on-error-container": "#93000a",
+                        "surface-dim": "#e9d6d0",
+                        "surface-variant": "#f1dfd8",
+                        "surface-bright": "#fff8f6",
+                        "surface-container-highest": "#f1dfd8",
+                        "on-secondary-fixed-variant": "#4e453e",
+                        "inverse-primary": "#ffb68f",
+                        "tertiary-fixed": "#83f9c3",
+                        "primary": "#9c4400",
+                        "on-primary": "#ffffff",
+                        "outline": "#8b7265",
+                        "primary-fixed-dim": "#ffb68f",
+                        "error": "#ba1a1a",
+                        "background": "#fff8f6",
+                        "surface-tint": "#9c4400",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#fff1ec",
+                        "inverse-surface": "#392e2a",
+                        "secondary-container": "#ebddd3",
+                        "on-secondary-fixed": "#211a14",
+                        "secondary-fixed-dim": "#d2c4bb",
+                        "primary-fixed": "#ffdbca",
+                        "inverse-on-surface": "#ffede7",
+                        "on-surface-variant": "#584237",
+                        "on-error": "#ffffff",
+                        "surface-container": "#fdeae3",
+                        "tertiary": "#006c4a",
+                        "tertiary-fixed-dim": "#66dca9",
+                        "on-tertiary-fixed-variant": "#005137",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#002114",
+                        "surface": "#fff8f6",
+                        "tertiary-container": "#2eac7d",
+                        "secondary": "#675c55",
+                        "on-background": "#231916",
+                        "on-primary-fixed": "#331200",
+                        "on-tertiary-container": "#003925",
+                        "outline-variant": "#dfc0b1",
+                        "on-primary-fixed-variant": "#773200",
+                        "on-secondary-container": "#6b6159",
+                        "surface-container-high": "#f7e4de",
+                        "on-surface": "#231916",
+                        "primary-container": "#f2751f",
+                        "on-tertiary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {},
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "display": ["Plus Jakarta Sans"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    },
+                    "fontSize": {}
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #FAF7F3;
+            color: #2B211D;
+        }
+        
+        .card-surface {
+            background-color: #FFFDF9;
+            border: 1px solid #DFC0B1;
+            border-radius: 12px;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        
+        .input-surface {
+            background-color: #FFFDF9;
+            border: 1px solid #DFC0B1;
+            border-radius: 12px;
+            color: #2B211D;
+        }
+        
+        .input-surface:focus {
+            outline: none;
+            border-color: #F2751F;
+            box-shadow: 0 0 0 1px #F2751F;
+        }
+        
+        .btn-primary {
+            background-color: #F2751F;
+            color: #ffffff;
+            border-radius: 12px;
+            transition: background-color 0.2s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: #9c4400;
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: #231916;
+            border: 1px solid #DFC0B1;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #ebddd3;
+        }
+    </style>
+</head>
+<body class="font-body antialiased flex">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-[240px] bg-surface dark:bg-surface-container-lowest border-r border-outline-variant shadow-sm z-40 md:flex flex-col py-6 px-4 hidden transition-all duration-200 ease-in-out">
+<div class="mb-8 px-2 flex items-center gap-3">
+<div class="h-8 w-8 rounded-lg bg-primary-container text-on-primary flex items-center justify-center font-headline font-bold">N</div>
+<div>
+<h1 class="text-xl font-headline font-black text-on-surface">NexaShopping</h1>
+<p class="text-xs font-label text-on-surface-variant">Admin Operations</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-secondary-container/50 hover:text-on-surface transition-colors font-label text-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+                Overview
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary font-bold border-r-4 border-primary bg-secondary-container/30 transition-colors font-label text-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="inventory_2" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+                Products
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-secondary-container/50 hover:text-on-surface transition-colors font-label text-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="category">category</span>
+                Categories
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-secondary-container/50 hover:text-on-surface transition-colors font-label text-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="warehouse">warehouse</span>
+                Inventory
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-secondary-container/50 hover:text-on-surface transition-colors font-label text-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="shopping_cart">shopping_cart</span>
+                Orders
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-secondary-container/50 hover:text-on-surface transition-colors font-label text-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="group">group</span>
+                Accounts
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-secondary-container/50 hover:text-on-surface transition-colors font-label text-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="payments">payments</span>
+                Settlements
+            </a>
+</nav>
+<div class="mt-auto pt-4">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-secondary-container/50 hover:text-on-surface transition-colors font-label text-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="help_center">help_center</span>
+                Support Center
+            </a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 md:ml-[240px] flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center w-full px-8 h-16 bg-surface/80 backdrop-blur-md border-b border-outline-variant sticky top-0 z-30 transition-all">
+<div class="flex items-center gap-2 text-sm font-body text-on-surface-variant">
+<a class="hover:text-primary transition-colors" href="#">Dashboard</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Catalog</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-on-surface font-semibold">New Product</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors h-8 w-8 flex items-center justify-center rounded-full hover:bg-secondary-container/50">
+<span class="material-symbols-outlined text-[20px]" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors h-8 w-8 flex items-center justify-center rounded-full hover:bg-secondary-container/50">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors h-8 w-8 flex items-center justify-center rounded-full hover:bg-secondary-container/50">
+<span class="material-symbols-outlined text-[20px]" data-icon="help_outline">help_outline</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant ml-2">
+<img alt="User Avatar" class="h-full w-full object-cover" data-alt="Close up portrait of a professional corporate user avatar, warm lighting, neutral background, 8k resolution, photorealistic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRyOlMAmSTlXnVXFoMiCGoh0K_Top7Xyz6n8zuD1ZYbbAmtUaEj4T3aTORQegMtz6mnItNmhtG5AgLHhFmNCGVcbLLCClfSDEk-H2O6xnmZc6jzKUyNaTgd3ail-dKbHMRzh_oZml_oddTLlsIgPAC-s9tDT06BNGOZ4lHmbSgQhDXhh971Xkn_QFb8qdT_lkbTNiT_vT8SnN86iPLNuPh3mgxt4nEgk64obVNL8eTSA56WRPFFS8g7anGPqUTC_fLp-DvAmIZgQc"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<main class="flex-1 p-6 md:p-8">
+<div class="max-w-7xl mx-auto">
+<!-- Header -->
+<div class="mb-8">
+<h2 class="text-3xl font-headline font-bold text-on-surface mb-2">New product</h2>
+<p class="font-body text-on-surface-variant">Create a new product entry in the catalog</p>
+</div>
+<!-- 2-Column Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
+<!-- Left Column (Main Form) -->
+<div class="lg:col-span-2 flex flex-col gap-6">
+<!-- Product Details Card -->
+<div class="card-surface p-6">
+<h3 class="text-[11px] font-label font-bold tracking-wider uppercase text-on-surface-variant mb-6">Product Details</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-label font-medium text-on-surface">Category</label>
+<select class="input-surface px-4 py-2.5 text-sm w-full appearance-none">
+<option disabled="" selected="" value="">Select category...</option>
+<option value="electronics">Electronics</option>
+<option value="clothing">Clothing</option>
+<option value="home">Home &amp; Garden</option>
+</select>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-label font-medium text-on-surface">Brand</label>
+<input class="input-surface px-4 py-2.5 text-sm w-full" placeholder="e.g. NexaTech" type="text"/>
+</div>
+</div>
+<div class="flex flex-col gap-1.5 mb-5">
+<label class="text-sm font-label font-medium text-on-surface">Product Name</label>
+<input class="input-surface px-4 py-2.5 text-sm w-full font-medium" placeholder="Enter full product name" type="text"/>
+</div>
+<div class="flex flex-col gap-1.5 mb-5">
+<label class="text-sm font-label font-medium text-on-surface">Short Description</label>
+<input class="input-surface px-4 py-2.5 text-sm w-full" placeholder="Brief summary for listings (max 120 chars)" type="text"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-label font-medium text-on-surface">Full Description</label>
+<textarea class="input-surface px-4 py-3 text-sm w-full min-h-[120px] resize-y" placeholder="Detailed product description, features, and specifications..."></textarea>
+</div>
+</div>
+<!-- Product Media Card -->
+<div class="card-surface p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-[11px] font-label font-bold tracking-wider uppercase text-on-surface-variant">Product Media</h3>
+<div class="flex items-center gap-1.5 text-xs font-label text-[#D99626] bg-[#FFF8ED] px-2.5 py-1 rounded-md border border-[#F2DEBA]">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+                                    Minimum 3 images recommended
+                                </div>
+</div>
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-8 flex flex-col items-center justify-center text-center bg-surface-bright hover:bg-secondary-container/20 transition-colors cursor-pointer mb-6">
+<div class="h-12 w-12 rounded-full bg-secondary-container/50 text-on-surface-variant flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-[24px]">cloud_upload</span>
+</div>
+<p class="text-sm font-label font-medium text-on-surface mb-1">Click to upload or drag and drop</p>
+<p class="text-xs font-body text-on-surface-variant">SVG, PNG, JPG or GIF (max. 5MB)</p>
+</div>
+<!-- Image Grid Placeholder -->
+<div class="grid grid-cols-3 sm:grid-cols-4 gap-4">
+<div class="aspect-square rounded-lg border border-outline-variant border-dashed flex items-center justify-center text-outline-variant bg-surface-bright">
+<span class="material-symbols-outlined">add_photo_alternate</span>
+</div>
+</div>
+</div>
+<!-- Variants Card -->
+<div class="card-surface p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-[11px] font-label font-bold tracking-wider uppercase text-on-surface-variant">Variants</h3>
+<button class="btn-secondary px-3 py-1.5 text-xs font-label font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">add</span>
+                                    Add variant
+                                </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant/50">
+<th class="pb-3 text-xs font-label font-medium text-on-surface-variant">SKU</th>
+<th class="pb-3 text-xs font-label font-medium text-on-surface-variant">Variant Name</th>
+<th class="pb-3 text-xs font-label font-medium text-on-surface-variant">Options</th>
+<th class="pb-3 text-xs font-label font-medium text-on-surface-variant">Price (MRP)</th>
+<th class="pb-3 text-xs font-label font-medium text-on-surface-variant text-right">Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-outline-variant/30 hover:bg-surface-bright transition-colors">
+<td class="py-3 text-sm font-body text-on-surface">---</td>
+<td class="py-3 text-sm font-body text-on-surface text-on-surface-variant italic">No variants added yet</td>
+<td class="py-3 text-sm font-body text-on-surface">---</td>
+<td class="py-3 text-sm font-body text-on-surface">---</td>
+<td class="py-3 text-right">
+<button class="text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Right Column (Sticky Summary) -->
+<div class="lg:col-span-1">
+<div class="card-surface p-6 sticky top-24">
+<h3 class="text-[11px] font-label font-bold tracking-wider uppercase text-on-surface-variant mb-4">Publish</h3>
+<div class="flex items-center justify-between mb-6 pb-4 border-b border-outline-variant/50">
+<span class="text-sm font-label text-on-surface-variant">Status</span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label font-medium">
+<span class="h-1.5 w-1.5 rounded-full bg-outline"></span>
+                                    Draft
+                                </span>
+</div>
+<div class="mb-6">
+<p class="text-xs font-label font-semibold text-on-surface mb-3">Validation Checklist</p>
+<ul class="flex flex-col gap-2.5">
+<li class="flex items-center gap-2 text-sm font-body text-outline">
+<span class="material-symbols-outlined text-[16px]">radio_button_unchecked</span>
+                                        Details complete
+                                    </li>
+<li class="flex items-center gap-2 text-sm font-body text-outline">
+<span class="material-symbols-outlined text-[16px]">radio_button_unchecked</span>
+                                        Images uploaded
+                                    </li>
+<li class="flex items-center gap-2 text-sm font-body text-outline">
+<span class="material-symbols-outlined text-[16px]">radio_button_unchecked</span>
+                                        Variants defined
+                                    </li>
+</ul>
+</div>
+<button class="btn-primary w-full py-3 font-label font-bold text-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add_task</span>
+                                Create product
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

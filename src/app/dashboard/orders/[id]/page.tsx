@@ -10,7 +10,6 @@ import { ApiError } from "@/lib/api";
 import { formatMoney } from "@/lib/money";
 import { Button, Card, ErrorState, Input, Spinner } from "@/components/ui";
 import type { OrderAddress, OrderStatus } from "@/lib/types";
-import "../orders-modern.css";
 
 const STATUS_TONES: Record<OrderStatus, string> = {
   AWAITING_PAYMENT: "bg-amber-50 text-amber-700",
@@ -28,7 +27,7 @@ export default function OrderDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="grid place-items-center py-20 text-ink-soft">
+      <div className="grid place-items-center py-20 text-on-surface-variant">
         <Spinner className="h-5 w-5" />
       </div>
     );
@@ -60,15 +59,15 @@ function OrderDetail({ order }: { order: NonNullable<ReturnType<typeof useOrder>
   }
 
   return (
-    <div className="admin-order-detail mx-auto w-full max-w-7xl">
-      <Link href="/dashboard/orders" className="text-sm text-ink-soft hover:text-ink">
+    <div className="mx-auto w-full max-w-7xl">
+      <Link href="/dashboard/orders" className="text-sm text-on-surface-variant hover:text-on-surface">
         ← Back to orders
       </Link>
 
       <div className="mt-3 flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h1 className="text-xl font-semibold">{order.orderNo}</h1>
-          <p className="mt-1 text-sm text-ink-soft">
+          <h1 className="font-display text-2xl font-bold text-on-surface">{order.orderNo}</h1>
+          <p className="mt-1 text-sm text-on-surface-variant">
             {buyer.data ? buyer.data.account.name ?? buyer.data.account.phone ?? buyer.data.account.email : "…"}
             {order.channel === "DISTRIBUTOR_ASSISTED" && " · distributor-assisted"}
           </p>
@@ -93,7 +92,7 @@ function OrderDetail({ order }: { order: NonNullable<ReturnType<typeof useOrder>
         <Card className="mt-4 p-4">
           <form onSubmit={doCancel} className="space-y-3">
             <div>
-              <label className="mb-1.5 block text-xs font-medium text-ink-soft">Reason (optional)</label>
+              <label className="mb-1.5 block text-xs font-medium text-on-surface-variant">Reason (optional)</label>
               <Input value={reason} onChange={(e) => setReason(e.target.value)} placeholder="Out of stock, customer request, …" />
             </div>
             {error && <p className="text-sm text-red-600">{error}</p>}
@@ -110,7 +109,7 @@ function OrderDetail({ order }: { order: NonNullable<ReturnType<typeof useOrder>
       )}
 
       {order.status === "CANCELLED" && order.cancelReason && (
-        <p className="mt-4 rounded-md border border-line bg-canvas px-3 py-2 text-sm text-ink-soft">
+        <p className="mt-4 rounded-md border border-outline-variant bg-surface-container-high px-3 py-2 text-sm text-on-surface-variant">
           Cancelled {order.cancelledAt && new Date(order.cancelledAt).toLocaleString()} — {order.cancelReason}
         </p>
       )}
@@ -118,8 +117,8 @@ function OrderDetail({ order }: { order: NonNullable<ReturnType<typeof useOrder>
       <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_280px]">
         <Card className="overflow-x-auto p-0">
           <table className="w-full text-sm">
-            <thead className="bg-canvas">
-              <tr className="text-left text-xs text-ink-soft">
+            <thead className="bg-surface-container-high">
+              <tr className="text-left text-xs text-on-surface-variant">
                 <th className="px-4 py-2.5 font-medium">Item</th>
                 <th className="px-4 py-2.5 text-right font-medium">Unit price</th>
                 <th className="px-4 py-2.5 text-right font-medium">Qty</th>
@@ -127,18 +126,18 @@ function OrderDetail({ order }: { order: NonNullable<ReturnType<typeof useOrder>
                 <th className="px-4 py-2.5 pr-4 text-right font-medium">Line total</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-line">
+            <tbody className="divide-y divide-outline-variant">
               {order.items.map((item) => (
                 <tr key={item.id}>
                   <td className="px-4 py-2.5">
                     <p className="font-medium">{item.productName}</p>
-                    <p className="text-xs text-ink-soft">
+                    <p className="text-xs text-on-surface-variant">
                       {item.variantLabel} · <span className="font-mono">{item.sku}</span>
                     </p>
                   </td>
                   <td className="px-4 py-2.5 text-right">{formatMoney(item.unitPrice)}</td>
                   <td className="px-4 py-2.5 text-right">{item.quantity}</td>
-                  <td className="px-4 py-2.5 text-right text-ink-soft">{formatMoney(item.taxAmount)}</td>
+                  <td className="px-4 py-2.5 text-right text-on-surface-variant">{formatMoney(item.taxAmount)}</td>
                   <td className="px-4 py-2.5 pr-4 text-right font-medium">{formatMoney(item.lineTotal)}</td>
                 </tr>
               ))}
@@ -154,7 +153,7 @@ function OrderDetail({ order }: { order: NonNullable<ReturnType<typeof useOrder>
               <Row label="Discount" value={order.discountTotal} negative />
               <Row label="Tax" value={order.taxTotal} />
               <Row label="Shipping" value={order.shippingTotal} />
-              <div className="mt-2 border-t border-line pt-2">
+              <div className="mt-2 border-t border-outline-variant pt-2">
                 <Row label="Grand total" value={order.grandTotal} bold />
               </div>
             </dl>
@@ -219,7 +218,7 @@ function FulfilmentAction({
 function Row({ label, value, bold, negative }: { label: string; value: string; bold?: boolean; negative?: boolean }) {
   return (
     <div className={`flex items-center justify-between ${bold ? "font-semibold" : ""}`}>
-      <dt className="text-ink-soft">{label}</dt>
+      <dt className="text-on-surface-variant">{label}</dt>
       <dd>{negative && Number(value) > 0 ? "−" : ""}{formatMoney(value)}</dd>
     </div>
   );
@@ -227,8 +226,8 @@ function Row({ label, value, bold, negative }: { label: string; value: string; b
 
 function AddressBlock({ address }: { address: OrderAddress }) {
   return (
-    <div className="mt-2 text-sm text-ink-soft">
-      <p className="text-ink">{address.contactName}</p>
+    <div className="mt-2 text-sm text-on-surface-variant">
+      <p className="text-on-surface">{address.contactName}</p>
       <p>{address.contactPhone}</p>
       <p>
         {address.line1}

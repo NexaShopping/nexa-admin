@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaShopping - Category Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-bright": "#fff8f6",
+                    "primary-fixed": "#ffdbca",
+                    "on-secondary-fixed": "#211a14",
+                    "surface-variant": "#f1dfd8",
+                    "on-secondary": "#ffffff",
+                    "primary-container": "#f2751f",
+                    "inverse-surface": "#392e2a",
+                    "tertiary": "#006c4a",
+                    "on-surface": "#231916",
+                    "on-secondary-fixed-variant": "#4e453e",
+                    "surface-container-low": "#fff1ec",
+                    "surface-container-high": "#f7e4de",
+                    "on-error": "#ffffff",
+                    "secondary-fixed-dim": "#d2c4bb",
+                    "secondary-container": "#ebddd3",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed-variant": "#005137",
+                    "on-primary-container": "#552200",
+                    "background": "#fff8f6",
+                    "on-primary-fixed": "#331200",
+                    "surface": "#fff8f6",
+                    "secondary-fixed": "#eee0d6",
+                    "on-tertiary-fixed": "#002114",
+                    "on-background": "#231916",
+                    "tertiary-container": "#2eac7d",
+                    "on-primary-fixed-variant": "#773200",
+                    "on-secondary-container": "#6b6159",
+                    "surface-container": "#fdeae3",
+                    "primary-fixed-dim": "#ffb68f",
+                    "on-tertiary-container": "#003925",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed": "#83f9c3",
+                    "on-primary": "#ffffff",
+                    "inverse-primary": "#ffb68f",
+                    "tertiary-fixed-dim": "#66dca9",
+                    "surface-dim": "#e9d6d0",
+                    "on-surface-variant": "#584237",
+                    "error": "#ba1a1a",
+                    "surface-container-highest": "#f1dfd8",
+                    "inverse-on-surface": "#ffede7",
+                    "secondary": "#675c55",
+                    "primary": "#9c4400",
+                    "outline": "#8b7265",
+                    "surface-tint": "#9c4400",
+                    "outline-variant": "#dfc0b1"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {},
+            "fontFamily": {
+                    "headline": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "display": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "body": [
+                            "Manrope"
+                    ],
+                    "label": [
+                            "Manrope"
+                    ]
+            },
+            "fontSize": {}
+    },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #FAF7F3; color: #2B211D; }
+        .card { background-color: #FFFDF9; border: 1px solid #dfc0b1; border-radius: 0.75rem; }
+    </style>
+</head>
+<body class="font-body antialiased flex">
+<!-- SideNavBar -->
+<aside class="bg-surface dark:bg-on-secondary-fixed text-primary dark:text-primary-fixed-dim font-body text-label-sm font-medium tracking-wide fixed left-0 top-0 h-screen w-[240px] border-r border-outline-variant dark:border-on-secondary-fixed-variant flex flex-col p-4 space-y-2 z-20">
+<div class="mb-8 px-2 flex items-center gap-3">
+<img alt="NexaShopping Admin Logo" class="w-8 h-8 rounded" data-alt="A clean, minimalist logo for NexaShopping, featuring a stylized shopping bag or geometric shapes in warm orange and dark espresso tones, set against a pristine white background. High-quality vector style, flat design, suitable for a premium B2B SaaS platform dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7JUB0SwwCVvxZon4pVcd8K-Lpm5wV-Rkke9y-388UI6gNVZD2ZgNDtktYghMnDbXh7WLNrkoL9PcNNhBECGKFfXDnLjoDce2y_cluNPsouJwHqYXua59lAkbF2XGQzJEHSdEAv-epSwTye86ZNYL0oNBNhM-t_YMBJ8d3eqWz221blvbTfwivQmLa5qPtPUm9DMgKkiOmH6SNx1RPvZ0D7iD2QHjjH_PWRdC0bp6lKlP3XI-9emX9wPZvnWerur8WnRMSPSREkBc"/>
+<div>
+<h1 class="font-headline text-xl font-bold text-on-surface dark:text-primary-fixed leading-tight">NexaShopping</h1>
+<p class="text-xs text-on-surface-variant dark:text-on-secondary-fixed-variant">Admin Operations</p>
+</div>
+</div>
+<button class="bg-primary-container text-on-primary-container hover:bg-primary-container/90 transition-colors w-full py-2.5 px-4 rounded-lg font-bold flex items-center justify-center gap-2 mb-6">
+<span class="material-symbols-outlined" style="font-size: 18px;">add</span>
+            New Operation
+        </button>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container dark:hover:bg-on-secondary-fixed-variant transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary-container transition-colors">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container dark:hover:bg-on-secondary-fixed-variant transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary-container transition-colors">inventory_2</span>
+                Products
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary dark:text-primary-fixed-dim font-bold border-r-4 border-primary dark:border-primary-fixed-dim bg-surface-container-low opacity-80 duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">category</span>
+                Categories
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container dark:hover:bg-on-secondary-fixed-variant transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary-container transition-colors">warehouse</span>
+                Inventory
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container dark:hover:bg-on-secondary-fixed-variant transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary-container transition-colors">receipt_long</span>
+                Orders
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container dark:hover:bg-on-secondary-fixed-variant transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary-container transition-colors">manage_accounts</span>
+                Accounts
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container dark:hover:bg-on-secondary-fixed-variant transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary-container transition-colors">payments</span>
+                Settlements
+            </a>
+</nav>
+<div class="mt-auto pt-4 border-t border-outline-variant dark:border-on-secondary-fixed-variant space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container dark:hover:bg-on-secondary-fixed-variant transition-colors group text-sm" href="#">
+<span class="material-symbols-outlined text-base group-hover:text-primary-container transition-colors">settings</span>
+                Settings
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container dark:hover:bg-on-secondary-fixed-variant transition-colors group text-sm" href="#">
+<span class="material-symbols-outlined text-base group-hover:text-primary-container transition-colors">help</span>
+                Support
+            </a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[240px] flex-1 flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="bg-surface-bright dark:bg-surface-dim font-headline text-label-md font-semibold border-b border-outline-variant dark:border-on-secondary-fixed-variant shadow-sm dark:shadow-none flex justify-between items-center w-full px-8 py-3 h-16 sticky top-0 z-10">
+<div class="flex items-center gap-6 flex-1">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="w-full bg-surface-container-highest border-none rounded-full py-1.5 pl-9 pr-4 text-sm focus:ring-2 focus:ring-primary-container placeholder-on-surface-variant text-on-surface font-body" placeholder="Search operations..." type="text"/>
+</div>
+<nav class="hidden md:flex gap-6">
+<a class="text-on-surface-variant dark:text-on-secondary-fixed-variant hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">Overview</a>
+<a class="text-on-surface-variant dark:text-on-secondary-fixed-variant hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">Analytics</a>
+<a class="text-on-surface-variant dark:text-on-secondary-fixed-variant hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">Reports</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1.5 rounded-full hover:bg-surface-container"><span class="material-symbols-outlined">notifications</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1.5 rounded-full hover:bg-surface-container"><span class="material-symbols-outlined">mail</span></button>
+<img alt="Administrator Profile" class="w-8 h-8 rounded-full border border-outline-variant cursor-pointer hover:ring-2 hover:ring-primary-container transition-all" data-alt="A professional headshot of an administrator, modern corporate style, warm lighting, smiling slightly, set against a neutral gray background. High resolution, suitable for a profile avatar in a web application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEdJp20K1WHdlt1T7YWrTWN1GndJwCQ4alMc5TZ0RWvNNXULk8O5CXyKCZEjV518tBH54z4uMmW6kHbXRMSBHvnaytAMZFO5oSAKkTwXNcLdQJ2MmfFlFi1ECKaohQMFjPERgrJamFtJQ2rS6ev9ShUoT_cdgFSrQKz79kbcV8HSLHWAb3niKpGKtZD-aSN2eexxgDQ0yeZQVjAjot-IWNcOQMI4p79ODnTo_CjgH5NRGuS6gwJFsk1kEzsTcEXhB8HkTF-fYUVlA"/>
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-8 flex-1 overflow-auto">
+<!-- Header Section -->
+<div class="mb-8">
+<nav aria-label="Breadcrumb" class="flex items-center text-sm text-outline font-body mb-2">
+<a class="hover:text-primary transition-colors" href="#">Dashboard</a>
+<span class="material-symbols-outlined text-sm mx-1">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Catalog</a>
+<span class="material-symbols-outlined text-sm mx-1">chevron_right</span>
+<span class="text-on-surface font-medium">Categories</span>
+</nav>
+<h2 class="font-headline text-3xl font-bold text-on-surface mb-1">Categories</h2>
+<p class="font-body text-on-surface-variant text-sm">Manage your product taxonomy and define category-specific attributes.</p>
+</div>
+<!-- Two Column Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left Column: List & Attributes -->
+<div class="lg:col-span-2 space-y-8">
+<!-- Categories List Card -->
+<div class="card overflow-hidden">
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-bright">
+<div class="relative w-72">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="w-full bg-surface border border-outline-variant rounded-md py-1.5 pl-9 pr-4 text-sm focus:ring-1 focus:ring-primary focus:border-primary placeholder-on-surface-variant font-body" placeholder="Search categories..." type="text"/>
+</div>
+<button class="text-on-surface-variant hover:text-primary p-1.5 rounded-md hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-xl">filter_list</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body text-sm">
+<thead class="bg-surface-container-lowest text-on-surface-variant text-xs uppercase font-semibold border-b border-outline-variant">
+<tr>
+<th class="px-4 py-3 font-medium">Status</th>
+<th class="px-4 py-3 font-medium">Category Name</th>
+<th class="px-4 py-3 font-medium">Slug</th>
+<th class="px-4 py-3 font-medium">Products</th>
+<th class="px-4 py-3 w-10"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/50">
+<!-- Selected Row -->
+<tr class="bg-surface-container-low hover:bg-surface-container transition-colors group cursor-pointer border-l-4 border-primary">
+<td class="px-4 py-3">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium bg-tertiary-container/20 text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Active
+                                            </span>
+</td>
+<td class="px-4 py-3 font-semibold text-on-surface">Audio</td>
+<td class="px-4 py-3 text-on-surface-variant font-mono text-xs">audio-gear</td>
+<td class="px-4 py-3 text-on-surface-variant">124</td>
+<td class="px-4 py-3 text-right">
+<button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity"><span class="material-symbols-outlined text-lg">more_horiz</span></button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors group cursor-pointer border-l-4 border-transparent">
+<td class="px-4 py-3">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium bg-tertiary-container/20 text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Active
+                                            </span>
+</td>
+<td class="px-4 py-3 font-medium text-on-surface">Smart Home</td>
+<td class="px-4 py-3 text-on-surface-variant font-mono text-xs">smart-home</td>
+<td class="px-4 py-3 text-on-surface-variant">89</td>
+<td class="px-4 py-3 text-right">
+<button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity"><span class="material-symbols-outlined text-lg">more_horiz</span></button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors group cursor-pointer border-l-4 border-transparent">
+<td class="px-4 py-3">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium bg-tertiary-container/20 text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Active
+                                            </span>
+</td>
+<td class="px-4 py-3 font-medium text-on-surface">Accessories</td>
+<td class="px-4 py-3 text-on-surface-variant font-mono text-xs">accessories</td>
+<td class="px-4 py-3 text-on-surface-variant">342</td>
+<td class="px-4 py-3 text-right">
+<button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity"><span class="material-symbols-outlined text-lg">more_horiz</span></button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors group cursor-pointer border-l-4 border-transparent">
+<td class="px-4 py-3">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium bg-surface-variant text-on-surface-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-on-surface-variant"></span> Inactive
+                                            </span>
+</td>
+<td class="px-4 py-3 font-medium text-on-surface text-opacity-60">Wearables</td>
+<td class="px-4 py-3 text-on-surface-variant font-mono text-xs text-opacity-60">wearables</td>
+<td class="px-4 py-3 text-on-surface-variant text-opacity-60">0</td>
+<td class="px-4 py-3 text-right">
+<button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity"><span class="material-symbols-outlined text-lg">more_horiz</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Attributes Card -->
+<div class="card p-6">
+<div class="flex justify-between items-end mb-6 border-b border-outline-variant pb-4">
+<div>
+<h3 class="font-headline text-lg font-bold text-on-surface flex items-center gap-2">
+                                    Attributes for 'Audio'
+                                    <span class="bg-surface-container-high text-on-surface-variant text-xs px-2 py-0.5 rounded font-mono font-medium">audio-gear</span>
+</h3>
+<p class="text-sm text-on-surface-variant mt-1">Define custom fields specifically for products in this category.</p>
+</div>
+</div>
+<!-- Existing Attributes List -->
+<div class="space-y-3 mb-8">
+<div class="flex items-center justify-between p-3 rounded-lg border border-outline-variant bg-surface-bright hover:border-primary/50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="bg-surface-container p-2 rounded-md text-primary">
+<span class="material-symbols-outlined text-xl">palette</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-semibold text-sm text-on-surface">Colour</span>
+<span class="font-mono text-xs text-outline">code: color</span>
+</div>
+<div class="flex gap-2 mt-1">
+<span class="inline-block bg-surface-container-low text-xs px-1.5 py-0.5 rounded text-on-surface-variant border border-outline-variant/50">Type: Enum</span>
+<span class="inline-block bg-surface-container-low text-xs px-1.5 py-0.5 rounded text-on-surface-variant border border-outline-variant/50">Filterable: Yes</span>
+<span class="inline-block bg-primary/10 text-xs px-1.5 py-0.5 rounded text-primary border border-primary/20">Variant-axis: Yes</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-xs text-on-surface-variant">4 options</span>
+<button class="text-on-surface-variant hover:text-error transition-colors p-1"><span class="material-symbols-outlined text-sm">delete</span></button>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 rounded-lg border border-outline-variant bg-surface-bright hover:border-primary/50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="bg-surface-container p-2 rounded-md text-primary">
+<span class="material-symbols-outlined text-xl">hearing_disabled</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-semibold text-sm text-on-surface">Noise Cancellation</span>
+<span class="font-mono text-xs text-outline">code: noiseCancel</span>
+</div>
+<div class="flex gap-2 mt-1">
+<span class="inline-block bg-surface-container-low text-xs px-1.5 py-0.5 rounded text-on-surface-variant border border-outline-variant/50">Type: Boolean</span>
+<span class="inline-block bg-surface-container-low text-xs px-1.5 py-0.5 rounded text-on-surface-variant border border-outline-variant/50">Filterable: Yes</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="text-on-surface-variant hover:text-error transition-colors p-1"><span class="material-symbols-outlined text-sm">delete</span></button>
+</div>
+</div>
+</div>
+<!-- Add Attribute Form Inline -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant p-4">
+<h4 class="font-headline text-sm font-semibold mb-4 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">add_circle</span>
+                                Add New Attribute
+                            </h4>
+<div class="grid grid-cols-2 gap-4 mb-4">
+<div>
+<label class="block text-xs font-medium text-on-surface-variant mb-1">Name</label>
+<input class="w-full bg-surface border border-outline-variant rounded-md py-1.5 px-3 text-sm focus:ring-1 focus:ring-primary focus:border-primary" placeholder="e.g. Connectivity" type="text"/>
+</div>
+<div>
+<label class="block text-xs font-medium text-on-surface-variant mb-1">Code (camelCase)</label>
+<input class="w-full bg-surface border border-outline-variant rounded-md py-1.5 px-3 text-sm focus:ring-1 focus:ring-primary focus:border-primary font-mono text-xs" placeholder="e.g. connectivityType" type="text"/>
+</div>
+<div>
+<label class="block text-xs font-medium text-on-surface-variant mb-1">Type</label>
+<select class="w-full bg-surface border border-outline-variant rounded-md py-1.5 px-3 text-sm focus:ring-1 focus:ring-primary focus:border-primary">
+<option>Enum (Multiple Choice)</option>
+<option>Text</option>
+<option>Number</option>
+<option>Boolean (Yes/No)</option>
+</select>
+</div>
+<div class="flex items-center gap-2 pt-5">
+<input class="rounded border-outline-variant text-primary focus:ring-primary bg-surface" id="variantAxis" type="checkbox"/>
+<label class="text-sm text-on-surface-variant cursor-pointer" for="variantAxis">Use as Variant Axis</label>
+</div>
+</div>
+<div class="mb-4">
+<label class="block text-xs font-medium text-on-surface-variant mb-1">Options (comma separated)</label>
+<textarea class="w-full bg-surface border border-outline-variant rounded-md py-1.5 px-3 text-sm focus:ring-1 focus:ring-primary focus:border-primary resize-none" placeholder="e.g. Bluetooth, Wired, Wireless" rows="2"></textarea>
+</div>
+<div class="flex justify-end">
+<button class="bg-surface-container text-primary border border-primary/20 hover:bg-primary hover:text-on-primary transition-colors text-sm font-semibold py-1.5 px-4 rounded-md">
+                                    Add Attribute
+                                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Creation -->
+<div class="space-y-6">
+<div class="card p-6 sticky top-24">
+<h3 class="font-headline text-lg font-bold text-on-surface mb-6 border-b border-outline-variant pb-3">New Category</h3>
+<form class="space-y-4 font-body">
+<div>
+<label class="block text-sm font-semibold text-on-surface mb-1">Category Name</label>
+<input class="w-full bg-surface-bright border border-outline-variant rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-primary-container focus:border-primary-container transition-shadow" placeholder="e.g. Computing" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-semibold text-on-surface mb-1">Slug</label>
+<div class="flex items-center">
+<span class="bg-surface-container-low border border-r-0 border-outline-variant rounded-l-md py-2 px-3 text-sm text-on-surface-variant border-opacity-50">/cat/</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-r-md py-2 px-3 text-sm font-mono focus:ring-2 focus:ring-primary-container focus:border-primary-container transition-shadow" placeholder="computing" type="text"/>
+</div>
+<p class="text-xs text-outline mt-1">Auto-generated from name, edit if needed.</p>
+</div>
+<div>
+<label class="block text-sm font-semibold text-on-surface mb-1">Status</label>
+<select class="w-full bg-surface-bright border border-outline-variant rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-primary-container focus:border-primary-container transition-shadow">
+<option value="active">Active (Visible to customers)</option>
+<option value="draft">Draft (Hidden)</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-semibold text-on-surface mb-1">Description <span class="font-normal text-on-surface-variant text-xs">(Optional)</span></label>
+<textarea class="w-full bg-surface-bright border border-outline-variant rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-primary-container focus:border-primary-container transition-shadow resize-none" placeholder="Brief description for SEO and internal reference..." rows="3"></textarea>
+</div>
+<div class="pt-4 border-t border-outline-variant/50">
+<button class="w-full bg-primary-container text-on-primary-container hover:bg-primary-container/90 transition-colors py-2.5 rounded-lg font-bold text-sm flex justify-center items-center gap-2" type="button">
+                                    Create Category
+                                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

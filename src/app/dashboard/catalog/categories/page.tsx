@@ -10,7 +10,6 @@ import {
 import { ApiError } from "@/lib/api";
 import { Button, Card, EmptyState, ErrorState, Input, Label, Select, Spinner } from "@/components/ui";
 import type { AttributeType } from "@/lib/types";
-import "./categories-modern.css";
 
 export default function CategoriesPage() {
   const categories = useCategories();
@@ -23,17 +22,17 @@ export default function CategoriesPage() {
   );
 
   return (
-    <div className="admin-categories mx-auto grid w-full max-w-6xl grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
+    <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
       <div>
-        <h1 className="text-xl font-semibold">Categories</h1>
-        <p className="mt-1 text-sm text-ink-soft">
+        <h1 className="font-display text-2xl font-bold text-on-surface">Categories</h1>
+        <p className="mt-1 text-sm text-on-surface-variant">
           Categories organise products. Each one can define attributes — some are just
           filters, others (variant axes) are what make a product multi-variant.
         </p>
 
         <div className="mt-5">
           {categories.isLoading ? (
-            <div className="grid place-items-center py-16 text-ink-soft">
+            <div className="grid place-items-center py-16 text-on-surface-variant">
               <Spinner className="h-5 w-5" />
             </div>
           ) : categories.isError ? (
@@ -41,12 +40,50 @@ export default function CategoriesPage() {
           ) : categories.data!.categories.length === 0 ? (
             <EmptyState title="No categories yet" hint="Create the first one on the right." />
           ) : (
-            <Card className="admin-categories__table-card overflow-hidden">
-              <div className="admin-categories__table-toolbar"><div className="admin-categories__search"><SearchIcon /><input aria-label="Search categories" placeholder="Search categories..." value={query} onChange={(event) => setQuery(event.target.value)} /></div><select aria-label="Filter categories" value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as typeof statusFilter)}><option value="ALL">All states</option><option value="ACTIVE">Active</option><option value="INACTIVE">Inactive</option></select></div>
-              <div className="admin-categories__table-wrap"><table><thead><tr><th>Status</th><th>Category name</th><th>Slug</th><th>Position</th></tr></thead><tbody>
-                {categoryRows.map((c) => <tr key={c.id} onClick={() => setSelected(c.id)} className={selected === c.id ? "is-selected" : ""}><td><span className={`admin-categories__status ${c.isActive ? "is-active" : ""}`}>{c.isActive ? "Active" : "Inactive"}</span></td><td className="category-name">{c.name}</td><td className="slug">/{c.slug}</td><td>{c.position + 1}</td></tr>)}
-              </tbody></table></div>
-              {!categoryRows.length && <p className="admin-categories__empty">No categories match your filters.</p>}
+            <Card className="overflow-hidden">
+              <div className="flex flex-col gap-2 border-b border-outline-variant p-3 sm:flex-row sm:items-center sm:justify-between">
+                <div className="relative flex-1 sm:max-w-xs">
+                  <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-on-surface-variant" />
+                  <Input aria-label="Search categories" className="pl-9" placeholder="Search categories..." value={query} onChange={(event) => setQuery(event.target.value)} />
+                </div>
+                <Select aria-label="Filter categories" className="sm:w-40" value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as typeof statusFilter)}>
+                  <option value="ALL">All states</option>
+                  <option value="ACTIVE">Active</option>
+                  <option value="INACTIVE">Inactive</option>
+                </Select>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-outline-variant text-left text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant">
+                      <th className="px-4 py-3">Status</th>
+                      <th className="px-4 py-3">Category name</th>
+                      <th className="px-4 py-3">Slug</th>
+                      <th className="px-4 py-3">Position</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-outline-variant">
+                    {categoryRows.map((c) => (
+                      <tr
+                        key={c.id}
+                        onClick={() => setSelected(c.id)}
+                        className={`cursor-pointer transition-colors hover:bg-surface-container-high ${selected === c.id ? "bg-surface-container-high" : ""}`}
+                      >
+                        <td className="px-4 py-3">
+                          <span className={`inline-flex items-center gap-1.5 text-xs font-medium ${c.isActive ? "text-emerald-600" : "text-on-surface-variant"}`}>
+                            <span className={`h-1.5 w-1.5 rounded-full ${c.isActive ? "bg-emerald-500" : "bg-outline"}`} />
+                            {c.isActive ? "Active" : "Inactive"}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 font-semibold text-on-surface">{c.name}</td>
+                        <td className="px-4 py-3 font-mono text-xs text-on-surface-variant">/{c.slug}</td>
+                        <td className="px-4 py-3 text-on-surface-variant">{c.position + 1}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              {!categoryRows.length && <p className="p-6 text-center text-sm text-on-surface-variant">No categories match your filters.</p>}
             </Card>
           )}
         </div>
@@ -59,7 +96,14 @@ export default function CategoriesPage() {
   );
 }
 
-function SearchIcon() { return <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" /><path d="m15.3 15.3 4.5 4.5" /></svg>; }
+function SearchIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className={className} aria-hidden="true">
+      <circle cx="10.5" cy="10.5" r="6.2" />
+      <path d="m15.3 15.3 4.5 4.5" strokeLinecap="round" />
+    </svg>
+  );
+}
 
 function NewCategoryForm() {
   const create = useCreateCategory();
@@ -79,7 +123,7 @@ function NewCategoryForm() {
 
   return (
     <Card className="h-fit p-5">
-      <p className="text-sm font-medium">New category</p>
+      <p className="font-display text-base font-bold text-on-surface">New category</p>
       <form onSubmit={onSubmit} className="mt-3 space-y-3">
         <div>
           <Label>Name</Label>
@@ -126,26 +170,26 @@ function AttributesPanel({ categoryId, categoryName }: { categoryId: string; cat
 
   return (
     <Card className="mt-4 p-5">
-      <p className="text-sm font-medium">Attributes — {categoryName}</p>
-      <p className="mt-1 text-xs text-ink-soft">
+      <p className="font-display text-base font-bold text-on-surface">Attributes — {categoryName}</p>
+      <p className="mt-1 text-xs text-on-surface-variant">
         Mark an attribute as a variant axis (e.g. Size, Colour) to use it when building product variants.
       </p>
 
       <div className="mt-4">
         {attrs.isLoading ? (
-          <Spinner className="h-4 w-4 text-ink-soft" />
+          <Spinner className="h-4 w-4 text-on-surface-variant" />
         ) : attrs.data!.attributes.length === 0 ? (
-          <p className="text-sm text-ink-soft">No attributes defined yet.</p>
+          <p className="text-sm text-on-surface-variant">No attributes defined yet.</p>
         ) : (
           <ul className="flex flex-wrap gap-2">
             {attrs.data!.attributes.map((a) => (
               <li
                 key={a.id}
-                className="flex items-center gap-1.5 rounded-full border border-line bg-canvas px-2.5 py-1 text-xs"
+                className="flex items-center gap-1.5 rounded-full border border-outline-variant bg-surface-container-high px-2.5 py-1 text-xs"
               >
-                <span className="font-medium">{a.name}</span>
-                {a.isVariantAxis && <span className="text-brand">axis</span>}
-                {a.options.length > 0 && <span className="text-ink-soft">({a.options.length} options)</span>}
+                <span className="font-medium text-on-surface">{a.name}</span>
+                {a.isVariantAxis && <span className="text-primary">axis</span>}
+                {a.options.length > 0 && <span className="text-on-surface-variant">({a.options.length} options)</span>}
               </li>
             ))}
           </ul>
@@ -171,12 +215,12 @@ function AttributesPanel({ categoryId, categoryName }: { categoryId: string; cat
           </Select>
         </div>
         <div className="flex items-end pb-2">
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 text-sm text-on-surface">
             <input
               type="checkbox"
               checked={isVariantAxis}
               onChange={(e) => setIsVariantAxis(e.target.checked)}
-              className="h-4 w-4 rounded border-line accent-[var(--brand)]"
+              className="h-4 w-4 rounded border-outline-variant accent-[var(--md-primary)]"
             />
             Variant axis
           </label>

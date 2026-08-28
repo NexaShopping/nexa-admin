@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>NexaShopping - Categories</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface": "#fff8f6",
+                      "tertiary-container": "#2eac7d",
+                      "inverse-primary": "#ffb68f",
+                      "secondary": "#675c55",
+                      "on-primary-fixed-variant": "#773200",
+                      "surface-container": "#fdeae3",
+                      "on-error-container": "#93000a",
+                      "primary-container": "#f2751f",
+                      "surface-variant": "#f1dfd8",
+                      "on-tertiary": "#ffffff",
+                      "error": "#ba1a1a",
+                      "primary": "#9c4400",
+                      "surface-container-high": "#f7e4de",
+                      "outline": "#8b7265",
+                      "surface-tint": "#9c4400",
+                      "on-secondary-fixed-variant": "#4e453e",
+                      "primary-fixed-dim": "#ffb68f",
+                      "on-surface": "#231916",
+                      "on-primary-container": "#552200",
+                      "on-secondary-fixed": "#211a14",
+                      "secondary-container": "#ebddd3",
+                      "outline-variant": "#dfc0b1",
+                      "inverse-surface": "#392e2a",
+                      "on-primary-fixed": "#331200",
+                      "background": "#fff8f6",
+                      "surface-container-highest": "#f1dfd8",
+                      "on-tertiary-fixed-variant": "#005137",
+                      "on-secondary-container": "#6b6159",
+                      "tertiary-fixed": "#83f9c3",
+                      "on-tertiary-fixed": "#002114",
+                      "inverse-on-surface": "#ffede7",
+                      "surface-container-low": "#fff1ec",
+                      "on-tertiary-container": "#003925",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-fixed-dim": "#66dca9",
+                      "surface-bright": "#fff8f6",
+                      "secondary-fixed": "#eee0d6",
+                      "on-secondary": "#ffffff",
+                      "on-background": "#231916",
+                      "on-surface-variant": "#584237",
+                      "surface-dim": "#e9d6d0",
+                      "on-primary": "#ffffff",
+                      "primary-fixed": "#ffdbca",
+                      "on-error": "#ffffff",
+                      "tertiary": "#006c4a",
+                      "secondary-fixed-dim": "#d2c4bb",
+                      "error-container": "#ffdad6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {},
+              "fontFamily": {
+                      "headline": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "display": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body": [
+                              "Manrope"
+                      ],
+                      "label": [
+                              "Manrope"
+                      ]
+              },
+              "fontSize": {}
+      },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #FAF7F3;
+            color: #2B211D;
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Hide scrollbar for clean mobile look while allowing scrolling */
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+      </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body bg-background text-on-background antialiased pb-24 overflow-x-hidden w-full max-w-[390px] mx-auto min-h-screen relative shadow-[0_0_20px_rgba(0,0,0,0.05)] bg-surface-container-low">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none fixed top-0 w-full z-50 flex items-center justify-between px-4 h-16 max-w-[390px] mx-auto">
+<button aria-label="Menu" class="w-10 h-10 flex items-center justify-center text-primary dark:text-primary-fixed-dim rounded-full hover:bg-surface-container dark:hover:bg-inverse-surface transition-colors active:scale-95 duration-100 ease-in-out">
+<span class="material-symbols-outlined text-[24px]">menu</span>
+</button>
+<div class="font-headline font-bold text-xl text-primary dark:text-primary-fixed-dim tracking-tight">
+            NexaShopping
+        </div>
+<button class="text-primary dark:text-primary-fixed-dim font-headline font-semibold text-sm hover:bg-surface-container dark:hover:bg-inverse-surface transition-colors active:scale-95 duration-100 ease-in-out px-3 py-2 rounded-lg flex items-center gap-1">
+<span class="hidden sm:inline">New product</span>
+<span class="material-symbols-outlined sm:hidden text-[24px]">add</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-20 px-4 flex flex-col gap-6">
+<!-- Content Header -->
+<section class="flex flex-col gap-2">
+<nav aria-label="Breadcrumb" class="flex items-center text-xs text-on-surface-variant font-medium gap-1">
+<span>Dashboard</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span>Catalog</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-semibold">Categories</span>
+</nav>
+<div class="flex flex-col gap-1">
+<h1 class="font-headline font-bold text-2xl text-on-surface tracking-tight">Categories</h1>
+<p class="text-sm text-on-surface-variant font-body">Manage product taxonomy and define category-specific attributes.</p>
+</div>
+</section>
+<!-- Category List Card -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/30 flex flex-col overflow-hidden">
+<div class="p-3 border-b border-outline-variant/30">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-[20px]">search</span>
+<input class="w-full pl-10 pr-3 py-2 bg-surface-container-low border-none rounded-lg text-sm text-on-surface focus:ring-1 focus:ring-primary placeholder:text-outline transition-all" placeholder="Search categories..." type="text"/>
+</div>
+</div>
+<div class="flex flex-col">
+<!-- Selected Row -->
+<div class="flex items-center justify-between p-3 border-b border-outline-variant/20 bg-primary-container/10 border-l-4 border-l-primary cursor-pointer active:bg-primary-container/20 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-tertiary-container shadow-[0_0_4px_rgba(46,172,125,0.4)]"></div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline font-semibold text-sm text-on-surface truncate">Audio</span>
+<span class="text-xs text-on-surface-variant font-medium truncate">audio-gear</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="bg-surface-variant text-on-surface-variant text-[10px] font-bold px-2 py-0.5 rounded-full">124</span>
+<span class="material-symbols-outlined text-outline text-[20px]">chevron_right</span>
+</div>
+</div>
+<!-- Unselected Row 1 -->
+<div class="flex items-center justify-between p-3 border-b border-outline-variant/20 cursor-pointer hover:bg-surface-container-low active:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-tertiary-container"></div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline font-medium text-sm text-on-surface truncate">Laptops</span>
+<span class="text-xs text-on-surface-variant truncate">laptops-pcs</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="bg-surface-container-high text-on-surface-variant text-[10px] font-bold px-2 py-0.5 rounded-full">87</span>
+<span class="material-symbols-outlined text-outline text-[20px]">chevron_right</span>
+</div>
+</div>
+<!-- Unselected Row 2 (Inactive) -->
+<div class="flex items-center justify-between p-3 cursor-pointer hover:bg-surface-container-low active:bg-surface-container-low transition-colors opacity-70">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline font-medium text-sm text-on-surface truncate">Tablets</span>
+<span class="text-xs text-on-surface-variant truncate">smart-tablets-devices</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="bg-surface-container-high text-on-surface-variant text-[10px] font-bold px-2 py-0.5 rounded-full">0</span>
+<span class="material-symbols-outlined text-outline text-[20px]">chevron_right</span>
+</div>
+</div>
+</div>
+<div class="p-3 border-t border-outline-variant/30 flex justify-center">
+<button class="text-xs font-bold text-primary flex items-center gap-1 active:scale-95 transition-transform">View All <span class="material-symbols-outlined text-[16px]">expand_more</span></button>
+</div>
+</section>
+<!-- Attributes Card (Contextual for 'Audio') -->
+<section class="bg-surface-container-lowest rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.02)] border border-outline-variant/30 flex flex-col p-4 gap-4 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full -z-10 blur-xl"></div>
+<div class="flex items-center justify-between">
+<h2 class="font-headline font-semibold text-base text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">tune</span>
+                    Attributes for Audio
+                </h2>
+<button class="w-8 h-8 rounded-full bg-surface-container-low flex items-center justify-center text-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Attribute 1 -->
+<div class="bg-surface-container-low p-3 rounded-lg border border-outline-variant/20 flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<div class="flex flex-col">
+<span class="font-semibold text-sm text-on-surface">Colour</span>
+<span class="text-[11px] text-on-surface-variant font-mono">code: color</span>
+</div>
+<span class="bg-secondary-container text-on-secondary-container text-[10px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider">Enum</span>
+</div>
+<div class="flex flex-wrap gap-1 mt-1">
+<span class="text-[10px] bg-surface-container-high border border-outline-variant/30 text-on-surface-variant px-1.5 py-0.5 rounded flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">filter_alt</span> Filterable</span>
+<span class="text-[10px] bg-primary-container/10 border border-primary/20 text-primary px-1.5 py-0.5 rounded flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">style</span> Variant</span>
+<span class="text-[10px] bg-surface-container-high border border-outline-variant/30 text-on-surface-variant px-1.5 py-0.5 rounded ml-auto">4 options</span>
+</div>
+</div>
+<!-- Attribute 2 -->
+<div class="bg-surface-container-low p-3 rounded-lg border border-outline-variant/20 flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<div class="flex flex-col">
+<span class="font-semibold text-sm text-on-surface">Noise Cancellation</span>
+<span class="text-[11px] text-on-surface-variant font-mono">code: noiseCancel</span>
+</div>
+<span class="bg-surface-variant text-on-surface-variant text-[10px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider">Boolean</span>
+</div>
+<div class="flex flex-wrap gap-1 mt-1">
+<span class="text-[10px] bg-surface-container-high border border-outline-variant/30 text-on-surface-variant px-1.5 py-0.5 rounded flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">filter_alt</span> Filterable</span>
+<div class="ml-auto flex items-center gap-1 text-[11px] font-medium text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-outline-variant inline-block"></span> Yes / No
+                        </div>
+</div>
+</div>
+</div>
+</section>
+<!-- Add Attribute Form -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/30 p-4 flex flex-col gap-4">
+<h3 class="font-headline font-semibold text-sm text-on-surface uppercase tracking-wider text-on-surface-variant">Quick Add Attribute</h3>
+<div class="flex flex-col gap-3">
+<div>
+<label class="block text-xs font-semibold text-on-surface-variant mb-1 ml-1">Name</label>
+<input class="w-full bg-surface-container-low border border-outline-variant/50 rounded-lg text-sm px-3 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-outline-variant" placeholder="e.g. Battery Life" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block text-xs font-semibold text-on-surface-variant mb-1 ml-1">Code</label>
+<input class="w-full bg-surface-container-low border border-outline-variant/50 rounded-lg text-sm px-3 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-outline-variant font-mono text-[13px]" placeholder="batteryLife" type="text"/>
+</div>
+<div>
+<label class="block text-xs font-semibold text-on-surface-variant mb-1 ml-1">Type</label>
+<div class="relative">
+<select class="w-full bg-surface-container-low border border-outline-variant/50 rounded-lg text-sm px-3 py-2.5 appearance-none focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-on-surface pr-8">
+<option>String</option>
+<option>Number</option>
+<option>Boolean</option>
+<option>Enum</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-outline pointer-events-none text-[20px]">expand_more</span>
+</div>
+</div>
+</div>
+<label class="flex items-center gap-2 mt-1 p-2 rounded-lg border border-outline-variant/30 bg-surface-container-low/50 cursor-pointer hover:bg-surface-container-low transition-colors">
+<input class="rounded text-primary focus:ring-primary border-outline-variant w-4 h-4 rounded-sm" type="checkbox"/>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-on-surface">Use as Variant Axis</span>
+<span class="text-[10px] text-on-surface-variant">Allows creating SKUs based on this attribute</span>
+</div>
+</label>
+<button class="w-full bg-surface-container-high border border-outline-variant/50 text-on-surface font-headline font-semibold text-sm py-2.5 rounded-lg mt-1 hover:bg-surface-variant active:scale-[0.98] transition-all flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add_circle</span> Add Attribute
+                 </button>
+</div>
+</section>
+<!-- New Category Form -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/30 p-4 flex flex-col gap-4 mb-8">
+<div class="flex items-center gap-2 border-b border-outline-variant/20 pb-3">
+<div class="w-8 h-8 rounded-lg bg-secondary-container text-on-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">category</span>
+</div>
+<h2 class="font-headline font-semibold text-base text-on-surface">New Category</h2>
+</div>
+<div class="flex flex-col gap-4">
+<div>
+<label class="block text-xs font-semibold text-on-surface-variant mb-1 ml-1">Category Name</label>
+<input class="w-full bg-surface-container-low border border-outline-variant/50 rounded-lg text-sm px-3 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-outline-variant" placeholder="e.g. Smart Watches" type="text"/>
+</div>
+<div>
+<label class="block text-xs font-semibold text-on-surface-variant mb-1 ml-1">URL Slug</label>
+<div class="flex items-center">
+<span class="bg-surface-container-high border border-r-0 border-outline-variant/50 rounded-l-lg text-xs text-on-surface-variant px-3 py-3 font-mono h-[42px] flex items-center">/cat/</span>
+<input class="w-full bg-surface-container-low border border-outline-variant/50 rounded-r-lg text-sm px-3 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-outline-variant font-mono h-[42px]" placeholder="smart-watches" type="text"/>
+</div>
+</div>
+<div>
+<label class="block text-xs font-semibold text-on-surface-variant mb-1 ml-1">Status</label>
+<div class="relative">
+<select class="w-full bg-surface-container-low border border-outline-variant/50 rounded-lg text-sm px-3 py-2.5 appearance-none focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-on-surface pr-8 font-semibold">
+<option value="active">Active (Visible)</option>
+<option value="inactive">Inactive (Hidden)</option>
+<option value="draft">Draft</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-outline pointer-events-none text-[20px]">expand_more</span>
+</div>
+</div>
+<div>
+<label class="block text-xs font-semibold text-on-surface-variant mb-1 ml-1">Description <span class="font-normal text-[10px]">(Optional)</span></label>
+<textarea class="w-full bg-surface-container-low border border-outline-variant/50 rounded-lg text-sm px-3 py-2 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-outline-variant resize-none" placeholder="Brief description for SEO..." rows="2"></textarea>
+</div>
+<button class="w-full bg-primary text-on-primary font-headline font-bold text-sm py-3.5 rounded-xl shadow-[0_4px_14px_rgba(242,117,31,0.25)] hover:bg-primary/90 active:scale-[0.98] transition-all flex justify-center items-center gap-2 mt-2">
+                    Create Category
+                </button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-surface dark:bg-surface-dim border-t border-outline-variant dark:border-outline bg-surface/90 backdrop-blur-md shadow-[0_-2px_10px_rgba(0,0,0,0.05)] fixed bottom-0 left-0 w-full h-16 flex justify-around items-center px-4 pb-safe z-50 rounded-t-xl max-w-[390px] mx-auto right-0">
+<!-- Dashboard (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim active:scale-90 transition-transform w-16" href="#">
+<span class="material-symbols-outlined text-[24px] mb-0.5">dashboard</span>
+<span class="font-label text-[10px] font-medium">Dashboard</span>
+</a>
+<!-- Inventory/Categories (Active Semantic Mapping based on Intent) -->
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim bg-primary-fixed/30 rounded-xl px-3 py-1 hover:text-primary dark:hover:text-primary-fixed-dim active:scale-90 transition-transform w-16" href="#">
+<span class="material-symbols-outlined text-[24px] mb-0.5" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="font-label text-[10px] font-medium">Catalog</span>
+</a>
+<!-- Orders (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim active:scale-90 transition-transform w-16" href="#">
+<span class="material-symbols-outlined text-[24px] mb-0.5">shopping_cart</span>
+<span class="font-label text-[10px] font-medium">Orders</span>
+</a>
+<!-- More (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim active:scale-90 transition-transform w-16" href="#">
+<span class="material-symbols-outlined text-[24px] mb-0.5">more_horiz</span>
+<span class="font-label text-[10px] font-medium">More</span>
+</a>
+</nav>
+</body></html>

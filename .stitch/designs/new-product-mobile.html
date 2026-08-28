@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaShopping - New Product</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#fff8f6",
+                        "primary-fixed-dim": "#ffb68f",
+                        "on-tertiary-fixed-variant": "#005137",
+                        "on-tertiary-container": "#003925",
+                        "inverse-surface": "#392e2a",
+                        "on-primary-fixed": "#331200",
+                        "secondary-fixed-dim": "#d2c4bb",
+                        "secondary": "#675c55",
+                        "on-background": "#231916",
+                        "secondary-container": "#ebddd3",
+                        "on-secondary-fixed": "#211a14",
+                        "tertiary-container": "#2eac7d",
+                        "surface-variant": "#f1dfd8",
+                        "surface-dim": "#e9d6d0",
+                        "tertiary-fixed": "#83f9c3",
+                        "surface-tint": "#9c4400",
+                        "secondary-fixed": "#eee0d6",
+                        "error": "#ba1a1a",
+                        "primary": "#9c4400",
+                        "outline": "#8b7265",
+                        "on-error-container": "#93000a",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#584237",
+                        "surface-container": "#fdeae3",
+                        "on-surface": "#231916",
+                        "background": "#fff8f6",
+                        "on-primary-fixed-variant": "#773200",
+                        "tertiary-fixed-dim": "#66dca9",
+                        "primary-container": "#f2751f",
+                        "on-tertiary": "#ffffff",
+                        "inverse-on-surface": "#ffede7",
+                        "surface-container-low": "#fff1ec",
+                        "surface-bright": "#fff8f6",
+                        "on-secondary-container": "#6b6159",
+                        "surface-container-highest": "#f1dfd8",
+                        "surface-container-high": "#f7e4de",
+                        "outline-variant": "#dfc0b1",
+                        "on-primary-container": "#552200",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#ffb68f",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#ffdbca",
+                        "on-secondary-fixed-variant": "#4e453e",
+                        "tertiary": "#006c4a",
+                        "on-tertiary-fixed": "#002114"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "display": ["Plus Jakarta Sans"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #FAF7F3; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .card { background-color: #FFF8F6; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body text-on-surface antialiased bg-[#FAF7F3] min-h-screen pb-24 md:pb-0 pt-16 md:pt-0 flex md:flex-row flex-col">
+<!-- NavigationDrawer (Mobile - Hidden, Desktop - Visible) -->
+<nav class="hidden md:flex bg-surface-container-low dark:bg-inverse-surface border-r border-outline-variant h-full w-[280px] rounded-r-xl shadow-xl dark:shadow-none transition-all duration-200 fixed inset-y-0 left-0 z-50 flex-col py-6 overflow-y-auto">
+<div class="px-6 mb-8">
+<h1 class="font-headline font-bold text-primary text-2xl">NexaShopping</h1>
+</div>
+<div class="px-6 mb-8 flex items-center gap-4">
+<img alt="Admin User Profile" class="w-12 h-12 rounded-full object-cover border border-outline-variant" data-alt="A professional headshot of an administrative user in a corporate setting, warm lighting, wearing smart casual attire, neutral background, high quality portrait photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuvoSUI85Z0EHdLl5z9yp1Af4gj0R7QyHjl1GX9pXlo4kMSaTY373T52ZjcANZT4NkteLw5HkM8TeZPmvY0seZ9-0ONt1-LB3DPgm9pFDeCY91s4Iay8luf-7M4x9bA_KY4Zi8PHHwJwfhLB0MkahCDCPV6fEW9N21UUPkjEofVnEIL39PTF2TkHsfOmDOUTypprVuS0x9ureJgjIVacQU_fdYqmvKzaukyOleYvmb3QAEFjgWC-2buUyHltuwPcLCQ18x4rif99o"/>
+<div>
+<p class="font-headline font-bold text-on-surface">Nexa Admin</p>
+<p class="font-body text-body-sm text-on-surface-variant">operations@nexa.com</p>
+<span class="inline-block mt-1 bg-surface-variant text-on-surface-variant text-[10px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wide">Super Admin</span>
+</div>
+</div>
+<ul class="flex-1 space-y-2 font-label font-medium text-label-lg">
+<li>
+<a class="text-on-surface-variant dark:text-surface-variant mx-2 px-4 py-3 flex items-center gap-3 hover:bg-secondary-container dark:hover:bg-secondary rounded-full transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                    Dashboard
+                </a>
+</li>
+<li>
+<a class="text-on-surface-variant dark:text-surface-variant mx-2 px-4 py-3 flex items-center gap-3 hover:bg-secondary-container dark:hover:bg-secondary rounded-full transition-colors" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+                    Inventory
+                </a>
+</li>
+<li>
+<a class="text-on-surface-variant dark:text-surface-variant mx-2 px-4 py-3 flex items-center gap-3 hover:bg-secondary-container dark:hover:bg-secondary rounded-full transition-colors" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+                    Orders
+                </a>
+</li>
+<li>
+<a class="text-on-surface-variant dark:text-surface-variant mx-2 px-4 py-3 flex items-center gap-3 hover:bg-secondary-container dark:hover:bg-secondary rounded-full transition-colors" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+                    Analytics
+                </a>
+</li>
+<li>
+<a class="text-on-surface-variant dark:text-surface-variant mx-2 px-4 py-3 flex items-center gap-3 hover:bg-secondary-container dark:hover:bg-secondary rounded-full transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+                    Settings
+                </a>
+</li>
+</ul>
+</nav>
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none fixed top-0 w-full z-50 md:hidden">
+<div class="flex items-center justify-between px-4 h-16 w-full max-w-screen-xl mx-auto">
+<button class="p-2 text-primary dark:text-primary-fixed-dim hover:bg-surface-container dark:hover:bg-inverse-surface rounded-full transition-colors active:scale-95 duration-100 ease-in-out">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-headline font-bold text-xl text-primary dark:text-primary-fixed-dim">NexaShopping</h1>
+<button class="font-label font-medium text-sm text-primary dark:text-primary-fixed-dim hover:bg-surface-container dark:hover:bg-inverse-surface px-3 py-1.5 rounded-full transition-colors active:scale-95 duration-100 ease-in-out flex items-center gap-1">
+                New product
+            </button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full max-w-screen-md mx-auto md:ml-[280px] p-4 md:p-8 flex flex-col gap-6 overflow-x-hidden">
+<!-- Page Header -->
+<div class="mb-2">
+<div class="flex items-center text-sm text-on-surface-variant font-body mb-2 space-x-2">
+<span>Inventory</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="font-medium text-on-surface">New product</span>
+</div>
+<h2 class="font-headline font-bold text-3xl text-on-surface">New product</h2>
+</div>
+<!-- Product Details Card -->
+<section class="card rounded-xl border border-outline-variant p-5 shadow-sm flex flex-col gap-5">
+<h3 class="font-headline font-semibold text-lg text-on-surface border-b border-outline-variant pb-3">Product Details</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+<div class="flex flex-col gap-1">
+<label class="font-label font-medium text-sm text-on-surface-variant">Category</label>
+<div class="relative">
+<select class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2.5 font-body text-on-surface appearance-none focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors">
+<option value="">Select category...</option>
+<option value="electronics">Electronics</option>
+<option value="apparel">Apparel</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label font-medium text-sm text-on-surface-variant">Brand</label>
+<input class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2.5 font-body text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="e.g. Acme Corp" type="text"/>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label font-medium text-sm text-on-surface-variant">Product Name</label>
+<input class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2.5 font-body text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="Enter product name" type="text"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label font-medium text-sm text-on-surface-variant">Short Description</label>
+<input class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2.5 font-body text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="Brief summary" type="text"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label font-medium text-sm text-on-surface-variant">Full Description</label>
+<textarea class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2.5 font-body text-on-surface resize-y focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="Detailed description..." rows="4"></textarea>
+</div>
+</section>
+<!-- Product Media Card -->
+<section class="card rounded-xl border border-outline-variant p-5 shadow-sm flex flex-col gap-5">
+<h3 class="font-headline font-semibold text-lg text-on-surface border-b border-outline-variant pb-3">Product Media</h3>
+<div class="border-2 border-dashed border-outline-variant rounded-lg p-8 flex flex-col items-center justify-center gap-3 bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-primary-container/20 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">upload_file</span>
+</div>
+<div class="text-center">
+<p class="font-label font-medium text-on-surface">Click to upload or drag &amp; drop</p>
+<p class="font-body text-sm text-on-surface-variant mt-1">SVG, PNG, JPG or GIF (max. 800x400px)</p>
+</div>
+</div>
+<div class="flex overflow-x-auto gap-4 pb-2 snap-x">
+<div class="shrink-0 w-24 h-24 rounded-lg bg-surface-variant border border-outline-variant relative group snap-start">
+<img alt="Preview 1" class="w-full h-full object-cover rounded-lg" data-alt="A clean, minimalist product photograph of a modern electronic device on a stark white background, studio lighting, high resolution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBCZuFkgYzC-ISsX2h7f2qCAU-b-XpbE5GZ3nlTvu-LtVc36fQHsQ75ogb9xAGLjfXqFisFD8U76pW9sHQlrA64MaIAM0dL7g_DyHJB3YPsYzMG-UOtITaVvKBTlCK-YFWJFDuZvKSE2WeWk5BpTv77GaJVV4rDGKyftFGcFWC5Vf6VIDbPYi7AI0suwV8gbAQIxFKjukm2BvdptEKX4iY7VK57FNoNvjOq6Q8m4uT-oKp7hsdIXbSykM7TlAvMN4c3N6F4MTUYK8"/>
+<button class="absolute top-1 right-1 bg-error/90 text-on-error rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+<div class="shrink-0 w-24 h-24 rounded-lg bg-surface-variant border border-outline-variant relative group snap-start">
+<img alt="Preview 2" class="w-full h-full object-cover rounded-lg" data-alt="A secondary angle of a clean, minimalist modern electronic device, detailed close up on materials, studio lighting, stark white background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiJDL88vZfanX19RXmplq5AGSU8fcq3jLzgKr3U78frihcFy0QwBjOADEMulmKWQdn6EAjYgWkrYagB_5RYdnhVVTgkwQRd8UmhPVImFj71MAtuEvizNgfjAQ94csAqP2FEozIxJTSIjiNRD1Wkx8l_eeSNFOdgYilYElqQcCmWAULCLedhv8M9fFp1hNjrkKIx_u_ri9o2ie20wy8hAFzVlFhVltQOrj8BOs183-xvaY9itsMbgGsIf3hlhKZ7qGAH_2eetRDyKY"/>
+<button class="absolute top-1 right-1 bg-error/90 text-on-error rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Variants Card -->
+<section class="card rounded-xl border border-outline-variant p-5 shadow-sm flex flex-col gap-4">
+<div class="flex items-center justify-between border-b border-outline-variant pb-3">
+<h3 class="font-headline font-semibold text-lg text-on-surface">Variants</h3>
+<button class="text-primary hover:bg-primary/10 px-3 py-1.5 rounded-lg font-label font-medium text-sm transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                    Add variant
+                </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full min-w-[500px] text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant text-sm font-label text-on-surface-variant">
+<th class="py-2 px-3 font-medium">SKU</th>
+<th class="py-2 px-3 font-medium">Variant Name</th>
+<th class="py-2 px-3 font-medium">Options</th>
+<th class="py-2 px-3 font-medium">Price</th>
+<th class="py-2 px-3 font-medium text-right">Action</th>
+</tr>
+</thead>
+<tbody class="font-body text-sm text-on-surface divide-y divide-outline-variant/50">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-3">NEX-01-BLK</td>
+<td class="py-3 px-3 font-medium">Standard Black</td>
+<td class="py-3 px-3">
+<span class="bg-surface-variant text-on-surface-variant text-xs px-2 py-1 rounded-md">Color: Black</span>
+</td>
+<td class="py-3 px-3">
+<input class="w-20 bg-surface border border-outline-variant rounded px-2 py-1 text-sm" type="text" value="99.00"/>
+</td>
+<td class="py-3 px-3 text-right">
+<button class="text-on-surface-variant hover:text-error transition-colors p-1">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-3">NEX-01-WHT</td>
+<td class="py-3 px-3 font-medium">Standard White</td>
+<td class="py-3 px-3">
+<span class="bg-surface-variant text-on-surface-variant text-xs px-2 py-1 rounded-md">Color: White</span>
+</td>
+<td class="py-3 px-3">
+<input class="w-20 bg-surface border border-outline-variant rounded px-2 py-1 text-sm" type="text" value="99.00"/>
+</td>
+<td class="py-3 px-3 text-right">
+<button class="text-on-surface-variant hover:text-error transition-colors p-1">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Publish Card -->
+<section class="card rounded-xl border border-outline-variant p-5 shadow-sm flex flex-col gap-5">
+<div class="flex items-center justify-between">
+<h3 class="font-headline font-semibold text-lg text-on-surface">Publish</h3>
+<span class="bg-secondary-container text-on-secondary-container font-label font-bold text-xs px-2.5 py-1 rounded-full uppercase tracking-wider">Draft</span>
+</div>
+<div class="bg-surface-container-low border border-outline-variant rounded-lg p-4 font-body text-sm space-y-2">
+<div class="flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-[#28A879] text-[20px]">check_circle</span>
+                    Basic details complete
+                </div>
+<div class="flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-[#28A879] text-[20px]">check_circle</span>
+                    Media uploaded
+                </div>
+<div class="flex items-center gap-2 text-[#D99626]">
+<span class="material-symbols-outlined text-[20px]">radio_button_unchecked</span>
+                    Pricing not set for all variants
+                </div>
+</div>
+<div class="flex flex-col sm:flex-row gap-3 pt-2">
+<button class="w-full sm:w-auto bg-primary text-on-primary font-label font-bold text-sm px-6 py-3 rounded-lg hover:bg-surface-tint transition-colors shadow-sm active:scale-[0.98]">
+                    Create product
+                </button>
+<button class="w-full sm:w-auto bg-surface border border-outline-variant text-on-surface font-label font-bold text-sm px-6 py-3 rounded-lg hover:bg-surface-container-low transition-colors active:scale-[0.98]">
+                    Cancel
+                </button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only - Transactional/Deep Page so it should technically be suppressed based on rules, but adding as requested by prompt constraint if needed, though instruction says use TopAppBar. Omitting BottomNavBar as this is a sub-page with a 'Cancel' action implying departure from main flow, strictly following Semantic Shell Mandate). -->
+</body></html>

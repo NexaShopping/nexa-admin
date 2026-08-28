@@ -8,6 +8,55 @@
   --line: #e6e2da;
   --brand: #f2751f; /* NexaShopping orange */
   --brand-strong: #d9601c;
+
+  /* Stitch design system (Material 3) — synced from the admin Stitch project. */
+  --md-on-secondary-fixed-variant: #4e453e;
+  --md-tertiary-fixed: #83f9c3;
+  --md-tertiary: #006c4a;
+  --md-surface-container-high: #f7e4de;
+  --md-on-surface-variant: #584237;
+  --md-on-secondary-container: #6b6159;
+  --md-secondary: #675c55;
+  --md-surface-container: #fdeae3;
+  --md-on-surface: #231916;
+  --md-surface-dim: #e9d6d0;
+  --md-background: #fff8f6;
+  --md-surface-container-lowest: #ffffff;
+  --md-primary-container: #f2751f;
+  --md-outline-variant: #dfc0b1;
+  --md-primary-fixed: #ffdbca;
+  --md-on-primary: #ffffff;
+  --md-on-tertiary-fixed: #002114;
+  --md-on-primary-fixed-variant: #773200;
+  --md-error: #ba1a1a;
+  --md-surface-tint: #9c4400;
+  --md-surface-container-low: #fff1ec;
+  --md-inverse-primary: #ffb68f;
+  --md-error-container: #ffdad6;
+  --md-primary: #9c4400;
+  --md-tertiary-fixed-dim: #66dca9;
+  --md-surface-container-highest: #f1dfd8;
+  --md-secondary-fixed: #eee0d6;
+  --md-on-tertiary-fixed-variant: #005137;
+  --md-on-background: #231916;
+  --md-on-secondary-fixed: #211a14;
+  --md-on-error: #ffffff;
+  --md-primary-fixed-dim: #ffb68f;
+  --md-surface-bright: #fff8f6;
+  --md-on-primary-container: #552200;
+  --md-surface: #fff8f6;
+  --md-on-primary-fixed: #331200;
+  --md-on-error-container: #93000a;
+  --md-inverse-on-surface: #ffede7;
+  --md-secondary-container: #ebddd3;
+  --md-on-secondary: #ffffff;
+  --md-surface-variant: #f1dfd8;
+  --md-inverse-surface: #392e2a;
+  --md-outline: #8b7265;
+  --md-secondary-fixed-dim: #d2c4bb;
+  --md-on-tertiary: #ffffff;
+  --md-on-tertiary-container: #003925;
+  --md-tertiary-container: #2eac7d;
 }
 
 @theme inline {
@@ -20,6 +69,60 @@
   --color-brand-strong: var(--brand-strong);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Stitch design system (Material 3) */
+  --color-on-secondary-fixed-variant: var(--md-on-secondary-fixed-variant);
+  --color-tertiary-fixed: var(--md-tertiary-fixed);
+  --color-tertiary: var(--md-tertiary);
+  --color-surface-container-high: var(--md-surface-container-high);
+  --color-on-surface-variant: var(--md-on-surface-variant);
+  --color-on-secondary-container: var(--md-on-secondary-container);
+  --color-secondary: var(--md-secondary);
+  --color-surface-container: var(--md-surface-container);
+  --color-on-surface: var(--md-on-surface);
+  --color-surface-dim: var(--md-surface-dim);
+  --color-surface-container-lowest: var(--md-surface-container-lowest);
+  --color-primary-container: var(--md-primary-container);
+  --color-outline-variant: var(--md-outline-variant);
+  --color-primary-fixed: var(--md-primary-fixed);
+  --color-on-primary: var(--md-on-primary);
+  --color-on-tertiary-fixed: var(--md-on-tertiary-fixed);
+  --color-on-primary-fixed-variant: var(--md-on-primary-fixed-variant);
+  --color-error: var(--md-error);
+  --color-surface-tint: var(--md-surface-tint);
+  --color-surface-container-low: var(--md-surface-container-low);
+  --color-inverse-primary: var(--md-inverse-primary);
+  --color-error-container: var(--md-error-container);
+  --color-primary: var(--md-primary);
+  --color-tertiary-fixed-dim: var(--md-tertiary-fixed-dim);
+  --color-surface-container-highest: var(--md-surface-container-highest);
+  --color-secondary-fixed: var(--md-secondary-fixed);
+  --color-on-tertiary-fixed-variant: var(--md-on-tertiary-fixed-variant);
+  --color-on-background: var(--md-on-background);
+  --color-on-secondary-fixed: var(--md-on-secondary-fixed);
+  --color-on-error: var(--md-on-error);
+  --color-primary-fixed-dim: var(--md-primary-fixed-dim);
+  --color-surface-bright: var(--md-surface-bright);
+  --color-on-primary-container: var(--md-on-primary-container);
+  --color-background: var(--md-background);
+  --color-md-surface: var(--md-surface);
+  --color-on-primary-fixed: var(--md-on-primary-fixed);
+  --color-on-error-container: var(--md-on-error-container);
+  --color-inverse-on-surface: var(--md-inverse-on-surface);
+  --color-secondary-container: var(--md-secondary-container);
+  --color-on-secondary: var(--md-on-secondary);
+  --color-surface-variant: var(--md-surface-variant);
+  --color-inverse-surface: var(--md-inverse-surface);
+  --color-outline: var(--md-outline);
+  --color-secondary-fixed-dim: var(--md-secondary-fixed-dim);
+  --color-on-tertiary: var(--md-on-tertiary);
+  --color-on-tertiary-container: var(--md-on-tertiary-container);
+  --color-tertiary-container: var(--md-tertiary-container);
+
+  --font-headline: "Plus Jakarta Sans", sans-serif;
+  --font-display: "Plus Jakarta Sans", sans-serif;
+  --font-body: "Manrope", sans-serif;
+  --font-label: "Manrope", sans-serif;
 }
 
 body {

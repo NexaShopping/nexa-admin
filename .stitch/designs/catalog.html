@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Products - NexaShopping Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-container": "#f2751f",
+                        "surface-container-highest": "#f1dfd8",
+                        "surface-tint": "#9c4400",
+                        "primary-fixed": "#ffdbca",
+                        "inverse-primary": "#ffb68f",
+                        "secondary-container": "#ebddd3",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#ffb68f",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#552200",
+                        "on-tertiary-container": "#003925",
+                        "on-background": "#231916",
+                        "on-surface": "#231916",
+                        "tertiary-fixed-dim": "#66dca9",
+                        "inverse-on-surface": "#ffede7",
+                        "error": "#ba1a1a",
+                        "primary": "#9c4400",
+                        "on-secondary-fixed": "#211a14",
+                        "on-error": "#ffffff",
+                        "on-surface-variant": "#584237",
+                        "surface-bright": "#fff8f6",
+                        "surface": "#fff8f6",
+                        "on-secondary-fixed-variant": "#4e453e",
+                        "surface-container-low": "#fff1ec",
+                        "secondary": "#675c55",
+                        "tertiary": "#006c4a",
+                        "on-secondary-container": "#6b6159",
+                        "on-primary-fixed-variant": "#773200",
+                        "tertiary-fixed": "#83f9c3",
+                        "surface-container-high": "#f7e4de",
+                        "on-tertiary-fixed-variant": "#005137",
+                        "surface-variant": "#f1dfd8",
+                        "error-container": "#ffdad6",
+                        "background": "#fff8f6",
+                        "on-tertiary-fixed": "#002114",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed": "#eee0d6",
+                        "outline": "#8b7265",
+                        "surface-dim": "#e9d6d0",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#2eac7d",
+                        "outline-variant": "#dfc0b1",
+                        "surface-container": "#fdeae3",
+                        "inverse-surface": "#392e2a",
+                        "on-primary-fixed": "#331200",
+                        "secondary-fixed-dim": "#d2c4bb",
+                        "success": "#28A879",
+                        "warning": "#D99626",
+                        "canvas": "#FAF7F3",
+                        "card": "#FFFDF9"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        "2xl": "1rem",
+                        full: "9999px"
+                    },
+                    fontFamily: {
+                        headline: ["Plus Jakarta Sans", "sans-serif"],
+                        display: ["Plus Jakarta Sans", "sans-serif"],
+                        body: ["Manrope", "sans-serif"],
+                        label: ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        body { background-color: theme('colors.canvas'); }
+    </style>
+</head>
+<body class="text-on-background font-body antialiased flex">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-screen fixed left-0 top-0 w-[240px] bg-surface-container-lowest border-r border-outline-variant shadow-sm z-20">
+<div class="flex flex-col h-full p-4">
+<!-- Brand -->
+<div class="mb-8 px-3">
+<h1 class="font-headline text-xl font-extrabold text-primary">NexaShopping</h1>
+<p class="font-label text-sm font-medium text-outline">Admin Workspace</p>
+</div>
+<!-- CTA -->
+<button class="w-full flex items-center justify-center gap-2 bg-primary-container text-on-primary-container font-semibold rounded-lg px-4 py-2.5 mb-6 hover:bg-surface-tint hover:text-white transition-colors">
+<span class="material-symbols-outlined text-lg">add</span>
+                New product
+            </button>
+<!-- Navigation -->
+<nav class="flex-1 flex flex-col gap-1 overflow-y-auto">
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-3 py-2 rounded-lg hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="font-label text-sm font-medium">Overview</span>
+</a>
+<a class="flex items-center gap-3 bg-primary-container text-on-primary-container rounded-lg px-3 py-2 font-semibold opacity-90 scale-[0.99] transition-transform" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="font-label text-sm font-medium">Products</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-3 py-2 rounded-lg hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">category</span>
+<span class="font-label text-sm font-medium">Categories</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-3 py-2 rounded-lg hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">layers</span>
+<span class="font-label text-sm font-medium">Inventory</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-3 py-2 rounded-lg hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+<span class="font-label text-sm font-medium">Orders</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-3 py-2 rounded-lg hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">group</span>
+<span class="font-label text-sm font-medium">Accounts</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-3 py-2 rounded-lg hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+<span class="font-label text-sm font-medium">Settlements</span>
+</a>
+</nav>
+<!-- Footer Navigation -->
+<div class="pt-4 border-t border-outline-variant mt-auto flex flex-col gap-1">
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-3 py-2 rounded-lg hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="font-label text-sm font-medium">Profile Settings</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface px-3 py-2 rounded-lg hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+<span class="font-label text-sm font-medium">Logout</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-[240px] flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-10 bg-surface border-b border-outline-variant flex justify-between items-center px-8 py-4">
+<div class="flex flex-col">
+<div class="flex items-center gap-3 mb-1">
+<h2 class="font-headline text-2xl font-bold text-primary">Products</h2>
+</div>
+<p class="font-label text-sm text-outline">Manage products, variants, media, and selling status</p>
+</div>
+<div class="flex items-center gap-6">
+<!-- Navigation Links -->
+<nav class="hidden lg:flex items-center gap-6 mr-4">
+<a class="text-on-surface-variant hover:text-primary font-label text-sm transition-all hover:bg-surface-container-low px-2 py-1 rounded" href="#">Dashboard</a>
+<a class="text-primary font-bold font-label text-sm border-b-2 border-primary scale-95 duration-150 px-2 py-1" href="#">Products</a>
+</nav>
+<!-- Search -->
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="w-64 bg-surface-container-lowest border border-outline-variant rounded-full pl-10 pr-4 py-2 text-sm font-label focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-shadow placeholder-outline" placeholder="Search by product, brand, or SKU..." type="text"/>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-3 border-l border-outline-variant pl-6">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<button class="ml-2 w-8 h-8 rounded-full overflow-hidden border border-outline-variant hover:ring-2 hover:ring-primary-container transition-all">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate admin user in a well-lit office, high quality, neutral background, B2B aesthetic, subtle warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCApp9GaPWH-feHs_tGUX4-Fm_KPV4dOSCiklURaYEgbVEApyjH2i8vsD6V9lrSZG7W_mXf8R0SrBq1wKGOrd9yn4vgyFrfyTAlueHq81zTd58NeoJQB3bXYMYw1QjdLVAvHIM2rLegL71sPE1hWY2-hpDbTXV7kzQI4wodRDdUwYrsgTnWYIolxBhQAzydKbJvL181QiSwt--kjuVxT-VeXZ2tyQmJjWtiV0J4vp7f5FKIHy8Zfz9t7ZtEryY6fHYQPnr4r9EHTE0"/>
+</button>
+<button class="ml-2 hidden sm:flex items-center gap-2 bg-primary text-on-primary font-semibold rounded-lg px-4 py-2 text-sm hover:bg-surface-tint transition-colors">
+                        New product
+                    </button>
+</div>
+</div>
+</header>
+<!-- Catalog Content -->
+<div class="p-8 flex-1 flex flex-col max-w-[1600px] w-full mx-auto">
+<!-- Toolbar Card -->
+<div class="bg-card rounded-xl border border-outline-variant p-4 shadow-sm mb-6 flex flex-wrap lg:flex-nowrap items-center gap-4">
+<div class="relative flex-1 min-w-[250px]">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="w-full bg-surface border border-outline-variant rounded-lg pl-10 pr-4 py-2 text-sm font-label focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-shadow placeholder-outline" placeholder="Search by product, brand, or SKU..." type="text"/>
+</div>
+<div class="flex items-center gap-3 flex-wrap sm:flex-nowrap">
+<select class="bg-surface border border-outline-variant text-on-background text-sm rounded-lg focus:ring-primary-container focus:border-primary-container block w-full p-2 font-label pr-8 appearance-none cursor-pointer">
+<option>All Categories</option>
+<option>Electronics</option>
+<option>Apparel</option>
+<option>Office</option>
+</select>
+<select class="bg-surface border border-outline-variant text-on-background text-sm rounded-lg focus:ring-primary-container focus:border-primary-container block w-full p-2 font-label pr-8 appearance-none cursor-pointer">
+<option>All Statuses</option>
+<option>Active</option>
+<option>Draft</option>
+<option>Archived</option>
+</select>
+<div class="flex items-center bg-surface border border-outline-variant rounded-lg p-1">
+<button class="p-1.5 bg-primary-container text-on-primary-container rounded shadow-sm flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">grid_view</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-on-background rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">view_list</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-5 flex-1 content-start">
+<!-- Product Card 1 -->
+<div class="bg-card rounded-xl border border-outline-variant overflow-hidden flex flex-col group hover:border-primary-container hover:-translate-y-1 transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer">
+<div class="aspect-square relative bg-surface border-b border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A sleek, modern premium mechanical keyboard with dark grey and orange accents, sitting on a clean, minimal light warm desk setting, professional studio lighting, high resolution, e-commerce product photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAz9vuUQDnm1GUYUu2YZzdPx-5pKHhGt7CP4Pk5hJ8M6AKJ_7p-cyYt0ratXwPIucdBtOzz8ASr_y5FOysYoqI4WAbzVzvSwB9BZOuyJ4HGYqtz9HRxjcc_RwhudEixbnwMpJPoQk3RfsdyyNB5ZwTFjTDdZctFsr3X_3wzaAEeYV3zwRr4himBVd138Xefmfev-aPMdgGtWVCGxCgh6YhlOLVGabBBnji9v0AtSeeO-0YcAhF_TVQKJYA0pWVBKx1QhIHKFERgyRI"/>
+<div class="absolute top-2 right-2 bg-success text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">Active</div>
+</div>
+<div class="p-3 flex flex-col flex-1">
+<span class="text-[11px] font-label font-semibold text-outline uppercase tracking-wider mb-1">Keychron</span>
+<h3 class="font-headline text-[14px] font-bold text-on-background leading-tight mb-2 line-clamp-2">K8 Pro Wireless Mechanical Keyboard</h3>
+<div class="mt-auto">
+<div class="text-[12px] font-label text-outline mb-2">Electronics • 4 Variants</div>
+<div class="font-headline font-bold text-on-background text-[15px]">$99.00 - $119.00</div>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-card rounded-xl border border-outline-variant overflow-hidden flex flex-col group hover:border-primary-container hover:-translate-y-1 transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer">
+<div class="aspect-square relative bg-surface border-b border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A minimalist ceramic coffee mug in matte white, set against a pristine, soft warm neutral background, sharp focus, professional product photography, high-end lifestyle e-commerce styling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmR1qv-rNHk1CqgG3l2v-tKD5yqLFcxa4bVgrCKkXbgn9iGKdipjrNAM79sRcRdb897KUc2_GoEmSE6Be-1C9wymcYn85OoboG4v0WsCGeCtd8qW3UTXIEO9QDB0yCCqNzJyEHO5frWT2b4zsR5_1tLeAAEik8_ARa87cGXwFL9TQ23sftXndOF70s3ZeeQrta7-BHZBfranub8xMDt2S09sVyHwtfSQYN9BXf3OijfFPxKEyNVBcIdRtvVeix3Q7gKTYzfil0QbA"/>
+<div class="absolute top-2 right-2 bg-warning text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">Draft</div>
+</div>
+<div class="p-3 flex flex-col flex-1">
+<span class="text-[11px] font-label font-semibold text-outline uppercase tracking-wider mb-1">Fellow</span>
+<h3 class="font-headline text-[14px] font-bold text-on-background leading-tight mb-2 line-clamp-2">Joey Double Wall Ceramic Mug</h3>
+<div class="mt-auto">
+<div class="text-[12px] font-label text-outline mb-2">Home Goods • 2 Variants</div>
+<div class="font-headline font-bold text-on-background text-[15px]">$25.00</div>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="bg-card rounded-xl border border-outline-variant overflow-hidden flex flex-col group hover:border-primary-container hover:-translate-y-1 transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer">
+<div class="aspect-square relative bg-surface border-b border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A pair of high-fidelity over-ear noise cancelling headphones in matte black, resting on a clean wooden surface with soft diffused natural light, premium audio equipment, sharp details" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkPOoCyqdKbR5B9vk7W3dynn-a71uy818oSxO2ocAu93gL5tSQgPXZOBla_KG67QZLMExq1BTB6OYf1tTZIlKCbRU2d80QiuoSE2fUSRbdAfbyx_QqStQcWGtumblw6O9p1FeEtaLysZL1-vqPRY0IGD9Elr7hTuygrQh847ahkonhIdUMsrWcT__kBO77j3ULdwx1jWX5J5LCeD94jL-gtGOYGRmRgv20MhUji-AkcrbugqsKxFnUwcOJGCAp5MPc56tCERi7ro8"/>
+<div class="absolute top-2 right-2 bg-success text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">Active</div>
+</div>
+<div class="p-3 flex flex-col flex-1">
+<span class="text-[11px] font-label font-semibold text-outline uppercase tracking-wider mb-1">Sony</span>
+<h3 class="font-headline text-[14px] font-bold text-on-background leading-tight mb-2 line-clamp-2">WH-1000XM5 Wireless Headphones</h3>
+<div class="mt-auto">
+<div class="text-[12px] font-label text-outline mb-2">Electronics • 3 Variants</div>
+<div class="font-headline font-bold text-on-background text-[15px]">$348.00</div>
+</div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="bg-card rounded-xl border border-outline-variant overflow-hidden flex flex-col group hover:border-primary-container hover:-translate-y-1 transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer">
+<div class="aspect-square relative bg-surface border-b border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A premium ergonomic office chair in mesh grey, isolated on a light warm neutral background, professional studio lighting highlighting the design contours, high-end office furniture e-commerce" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxrnFH8q3hyA-ffAPOoQIjsCnZotIft-xKZkxnWQVM-zxsXSaA5kN-s0-o8JG9bPUtaQt1i_t2q7owGSoq2t0VEqfbcbNfPCyIOCajTh844y5E8btnXvGnz8tl4X-TUYFTAcNM43MUglPJnnJX_0jmbhAfFM9vlMsLoOJS_OqEQ462MIEa_Nu5Ax2XU85ymzioMHeOv_a5qYyy48LUyTKNtoIN5v2ZEF1k9NSVRfIzkjo52oCvXlLEhKNDucq0cOXCtG1DYhwhjQA"/>
+<div class="absolute top-2 right-2 bg-secondary text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">Archived</div>
+</div>
+<div class="p-3 flex flex-col flex-1">
+<span class="text-[11px] font-label font-semibold text-outline uppercase tracking-wider mb-1">Herman Miller</span>
+<h3 class="font-headline text-[14px] font-bold text-on-background leading-tight mb-2 line-clamp-2">Aeron Chair - Remastered</h3>
+<div class="mt-auto">
+<div class="text-[12px] font-label text-outline mb-2">Office • 0 Variants</div>
+<div class="font-headline font-bold text-on-background text-[15px] text-outline line-through">$1,200.00</div>
+</div>
+</div>
+</div>
+<!-- Product Card 5 -->
+<div class="bg-card rounded-xl border border-outline-variant overflow-hidden flex flex-col group hover:border-primary-container hover:-translate-y-1 transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer">
+<div class="aspect-square relative bg-surface border-b border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A sleek minimalist smartwatch with a tan leather band and a dark screen face, sitting on a white marble texture, bright clean light-mode aesthetic, crisp macro product photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHdRqHR1WS8R62c0nbqHrH2TaCkLktsEYSypL7nTAfuNv9wyWU7JDTSIJiITmn-sqsGvQWmjqDRxJ9kDTX9cmua-sUco-5iBEriqZVI-Im9TqxRORulfeZjVT-pJGfW7m-W_Ines_ZWsL-4JPgmUfqFioczgnH0K0NpmiIYcBeB-9NB7by77UcQkG43euOrCOaOqgLZIY5zJgbfNa1bNzhazVOZZOe23FA3rslTgnIfqG3etsqZdxbRcYyue9SSVscRWiWYDN2snM"/>
+<div class="absolute top-2 right-2 bg-success text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">Active</div>
+</div>
+<div class="p-3 flex flex-col flex-1">
+<span class="text-[11px] font-label font-semibold text-outline uppercase tracking-wider mb-1">Garmin</span>
+<h3 class="font-headline text-[14px] font-bold text-on-background leading-tight mb-2 line-clamp-2">Venu 2 Plus Smartwatch</h3>
+<div class="mt-auto">
+<div class="text-[12px] font-label text-outline mb-2">Wearables • 6 Variants</div>
+<div class="font-headline font-bold text-on-background text-[15px]">$449.99</div>
+</div>
+</div>
+</div>
+<!-- Product Card 6 -->
+<div class="bg-card rounded-xl border border-outline-variant overflow-hidden flex flex-col group hover:border-primary-container hover:-translate-y-1 transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer">
+<div class="aspect-square relative bg-surface border-b border-outline-variant flex items-center justify-center bg-surface-container-low text-outline">
+<span class="material-symbols-outlined text-[48px] opacity-50">image</span>
+<div class="absolute top-2 right-2 bg-warning text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">Draft</div>
+</div>
+<div class="p-3 flex flex-col flex-1">
+<span class="text-[11px] font-label font-semibold text-outline uppercase tracking-wider mb-1">Unbranded</span>
+<h3 class="font-headline text-[14px] font-bold text-on-background leading-tight mb-2 line-clamp-2">USB-C to HDMI Adapter Hub</h3>
+<div class="mt-auto">
+<div class="text-[12px] font-label text-outline mb-2">Accessories • 1 Variant</div>
+<div class="font-headline font-bold text-on-background text-[15px]">$19.99</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Pagination -->
+<div class="mt-8 pt-4 border-t border-outline-variant flex items-center justify-between">
+<div class="font-label text-sm text-outline">
+                    Showing <span class="font-semibold text-on-background">1-20</span> of <span class="font-semibold text-on-background">1,240</span> items
+                </div>
+<div class="flex items-center gap-2">
+<button class="px-4 py-2 text-sm font-label font-medium border border-outline-variant rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled="">
+                        Previous
+                    </button>
+<button class="px-4 py-2 text-sm font-label font-medium border border-outline-variant rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-background transition-colors">
+                        Next
+                    </button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

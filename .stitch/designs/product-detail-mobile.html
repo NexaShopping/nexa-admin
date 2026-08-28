@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>NexaShopping - Product Detail</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Plus Jakarta Sans & Manrope -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#2eac7d",
+                    "primary-fixed-dim": "#ffb68f",
+                    "surface-container-high": "#f7e4de",
+                    "on-error-container": "#93000a",
+                    "surface-bright": "#fff8f6",
+                    "on-error": "#ffffff",
+                    "on-surface": "#231916",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed": "#002114",
+                    "surface-tint": "#9c4400",
+                    "surface-dim": "#e9d6d0",
+                    "on-tertiary-container": "#003925",
+                    "on-primary-fixed": "#331200",
+                    "surface-container-highest": "#f1dfd8",
+                    "tertiary-fixed-dim": "#66dca9",
+                    "surface-container": "#fdeae3",
+                    "secondary-container": "#ebddd3",
+                    "on-secondary-fixed-variant": "#4e453e",
+                    "on-background": "#231916",
+                    "primary-fixed": "#ffdbca",
+                    "on-tertiary-fixed-variant": "#005137",
+                    "error": "#ba1a1a",
+                    "inverse-surface": "#392e2a",
+                    "inverse-on-surface": "#ffede7",
+                    "on-tertiary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "surface": "#fff8f6",
+                    "on-primary-container": "#552200",
+                    "on-surface-variant": "#584237",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#eee0d6",
+                    "secondary": "#675c55",
+                    "inverse-primary": "#ffb68f",
+                    "background": "#fff8f6",
+                    "on-secondary-fixed": "#211a14",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed": "#83f9c3",
+                    "on-secondary-container": "#6b6159",
+                    "surface-container-low": "#fff1ec",
+                    "tertiary": "#006c4a",
+                    "outline": "#8b7265",
+                    "outline-variant": "#dfc0b1",
+                    "secondary-fixed-dim": "#d2c4bb",
+                    "primary-container": "#f2751f",
+                    "surface-variant": "#f1dfd8",
+                    "primary": "#9c4400",
+                    "on-primary-fixed-variant": "#773200"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {},
+            "fontFamily": {
+                    "headline": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "display": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "body": [
+                            "Manrope"
+                    ],
+                    "label": [
+                            "Manrope"
+                    ]
+            },
+            "fontSize": {}
+    },
+        },
+      }
+    </script>
+<style>
+        /* Hide scrollbar for clean horizontal scrolling */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased pb-safe max-w-[390px] mx-auto min-h-screen relative overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant shadow-sm flex items-center justify-between px-4 h-16 max-w-[390px] mx-auto">
+<button aria-label="Menu" class="p-2 -ml-2 text-primary active:scale-95 duration-100 ease-in-out hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="font-headline font-bold text-xl text-primary">NexaShopping</h1>
+<button class="p-2 -mr-2 text-primary active:scale-95 duration-100 ease-in-out hover:bg-surface-container rounded-full transition-colors font-label font-medium text-sm">
+            New product
+        </button>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-20 px-4 pb-24">
+<!-- Breadcrumb -->
+<nav aria-label="Breadcrumb" class="flex items-center space-x-2 text-xs font-label text-on-surface-variant mb-6">
+<a class="hover:text-primary transition-colors" href="#">Dashboard</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Products</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface font-semibold">Product details</span>
+</nav>
+<!-- Product Header Section -->
+<div class="mb-6">
+<div class="flex items-start justify-between mb-2">
+<div>
+<span class="text-xs font-label text-on-surface-variant uppercase tracking-wider font-semibold">Sony</span>
+<h2 class="font-headline font-bold text-2xl text-on-surface leading-tight mt-1">WH-1000XM5 Headphones</h2>
+</div>
+<div class="relative">
+<button class="p-1 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors active:scale-95" id="overflow-btn">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+<!-- Overflow Menu Dropdown (Hidden by default, shown for design completeness) -->
+<div class="absolute right-0 mt-2 w-48 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg py-2 z-20 hidden" id="overflow-menu">
+<button class="w-full text-left px-4 py-2 text-sm font-label hover:bg-surface-container flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">publish</span> Publish
+                        </button>
+<button class="w-full text-left px-4 py-2 text-sm font-label hover:bg-surface-container flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">edit_document</span> Move to draft
+                        </button>
+<button class="w-full text-left px-4 py-2 text-sm font-label hover:bg-surface-container flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">archive</span> Archive
+                        </button>
+<hr class="border-outline-variant my-1"/>
+<button class="w-full text-left px-4 py-2 text-sm font-label text-error hover:bg-error-container flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">delete</span> Delete
+                        </button>
+</div>
+</div>
+</div>
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-tertiary-container/20 border border-tertiary-container/30">
+<span class="w-2 h-2 rounded-full bg-tertiary-container"></span>
+<span class="text-[11px] font-label font-bold text-tertiary-container uppercase tracking-wide">Active</span>
+</div>
+</div>
+<!-- Product Details Card -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 mb-6 shadow-sm">
+<h3 class="font-headline font-semibold text-lg mb-4 flex items-center gap-2 border-b border-outline-variant pb-3">
+<span class="material-symbols-outlined text-primary">info</span>
+                Product Details
+            </h3>
+<div class="space-y-4">
+<div>
+<label class="block text-xs font-label text-on-surface-variant font-medium mb-1.5">Brand</label>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2.5 text-sm font-body text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" type="text" value="Sony"/>
+</div>
+<div>
+<label class="block text-xs font-label text-on-surface-variant font-medium mb-1.5">Product Name</label>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2.5 text-sm font-body text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" type="text" value="WH-1000XM5 Headphones"/>
+</div>
+<div>
+<label class="block text-xs font-label text-on-surface-variant font-medium mb-1.5">Short Description</label>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2.5 text-sm font-body text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" type="text" value="Industry-leading noise cancellation"/>
+</div>
+<div>
+<label class="block text-xs font-label text-on-surface-variant font-medium mb-1.5">Full Description</label>
+<textarea class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2.5 text-sm font-body text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none" rows="4">Industry-leading noise cancellation optimized to you. Magnificent Sound, engineered to perfection. Crystal clear hands-free calling. Up to 30-hour battery life with quick charging.</textarea>
+</div>
+</div>
+<div class="mt-6 flex items-center justify-end gap-3 pt-4 border-t border-outline-variant">
+<button class="px-4 py-2 text-sm font-label font-semibold text-on-surface-variant hover:bg-surface-container rounded-lg transition-colors active:scale-95">Cancel</button>
+<button class="px-4 py-2 text-sm font-label font-semibold bg-primary-container text-on-surface rounded-lg shadow-sm hover:bg-primary-container/90 transition-colors active:scale-95">Save Changes</button>
+</div>
+</section>
+<!-- Product Media Card -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 mb-6 shadow-sm">
+<div class="flex items-center justify-between mb-4 border-b border-outline-variant pb-3">
+<h3 class="font-headline font-semibold text-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">image</span>
+                    Media
+                </h3>
+<span class="text-xs font-label font-semibold text-on-surface-variant bg-surface-container px-2 py-1 rounded-md">2/10</span>
+</div>
+<!-- Large Primary Preview -->
+<div class="relative w-full aspect-square rounded-lg border border-outline-variant overflow-hidden mb-4 bg-surface-container-low flex items-center justify-center group">
+<!-- Using DATA:IMAGE:IMAGE_1 as requested -->
+<img class="w-full h-full object-cover" src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<div class="absolute top-2 left-2 bg-surface/90 backdrop-blur-sm px-2 py-1 rounded text-[10px] font-bold text-on-surface uppercase tracking-wider shadow-sm border border-outline-variant/50">Primary</div>
+</div>
+<!-- Actions for Primary Image -->
+<div class="flex gap-2 mb-5">
+<button class="flex-1 border border-outline-variant text-on-surface-variant text-xs font-semibold py-2 rounded-lg flex justify-center items-center gap-1.5 hover:bg-surface-container active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[16px]">star</span> Make primary
+                </button>
+<button class="flex-1 border border-error/30 text-error text-xs font-semibold py-2 rounded-lg flex justify-center items-center gap-1.5 hover:bg-error-container active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[16px]">delete</span> Delete
+                </button>
+</div>
+<!-- Thumbnail Strip -->
+<div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+<div class="flex-shrink-0 w-20 h-20 rounded-lg border-2 border-primary overflow-hidden relative">
+<img class="w-full h-full object-cover" src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+</div>
+<div class="flex-shrink-0 w-20 h-20 rounded-lg border border-outline-variant overflow-hidden bg-surface-container-low flex items-center justify-center">
+<img class="w-full h-full object-cover" data-alt="A sleek silver premium over-ear headphone photographed in a minimalist studio setting with bright, even lighting against a warm neutral background, capturing high-end product details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQkSKggH-Rt6Ufo2eQveNn0ZuI6J213-nLDbEE6roOdwFpUhwfbzZGhpi5ERbn4hUY2FWIuM08yK5tytFfaPtjogNpwRnIsKiILTt4PgDlFQe57yVm5zW06CjXha0TS0vR3OaO4B0UQ_u3HyEXQqekAf6s__rdaPaTCsg1WW60lGK3bYn5lxRgV1LMHLwTLpw1NW5JLpmOwrlnxy9I27tHWNIBZ_2pKi9B_LvmpcNhp2KqSsdu-sovJpvyz5WO8hPMR13TWp8lc30"/>
+</div>
+<button class="flex-shrink-0 w-20 h-20 rounded-lg border border-dashed border-outline hover:border-primary bg-surface-container-low flex flex-col items-center justify-center text-primary transition-colors">
+<span class="material-symbols-outlined mb-1 text-xl">add_photo_alternate</span>
+<span class="text-[10px] font-semibold">Add</span>
+</button>
+</div>
+<!-- Upload Progress -->
+<div class="mt-4 p-3 rounded-lg border border-outline-variant bg-surface-container-low">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2 overflow-hidden">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">image</span>
+<span class="text-xs font-label font-medium text-on-surface truncate">sony_wh_side.jpg</span>
+</div>
+<span class="text-[10px] font-bold text-primary">75%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-[75%] transition-all duration-300"></div>
+</div>
+</div>
+<button class="w-full mt-4 py-2.5 border-2 border-dashed border-outline hover:border-primary text-sm font-label font-semibold text-primary rounded-lg flex justify-center items-center gap-2 hover:bg-surface-container transition-all active:scale-95">
+<span class="material-symbols-outlined text-[18px]">upload</span> Add images
+            </button>
+</section>
+<!-- Variants Card -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-0 mb-6 shadow-sm overflow-hidden">
+<div class="p-5 border-b border-outline-variant flex items-center justify-between">
+<h3 class="font-headline font-semibold text-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">style</span>
+                    Variants
+                </h3>
+</div>
+<div class="divide-y divide-outline-variant">
+<!-- Variant Row 1 -->
+<div class="p-4 hover:bg-surface-container-low transition-colors">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<div class="w-4 h-4 rounded-full bg-[#111111] border border-outline-variant shadow-sm"></div>
+<span class="font-label font-bold text-sm text-on-surface">Midnight Black</span>
+</div>
+<span class="text-xs font-mono font-medium text-on-surface-variant bg-surface-variant px-1.5 py-0.5 rounded">SNY-WH-BK</span>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-3">
+<div class="bg-surface p-2 rounded border border-outline-variant/50">
+<span class="block text-[10px] uppercase font-bold text-on-surface-variant mb-0.5">Options</span>
+<span class="text-xs font-label font-medium">NC: Yes</span>
+</div>
+<div class="bg-surface p-2 rounded border border-outline-variant/50">
+<span class="block text-[10px] uppercase font-bold text-on-surface-variant mb-0.5">Price (MRP)</span>
+<span class="text-xs font-label font-bold text-primary-container">$348.00</span>
+</div>
+</div>
+<div class="mt-3 flex justify-end gap-2">
+<button class="p-1.5 text-on-surface-variant hover:text-primary rounded transition-colors border border-transparent hover:border-outline-variant"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+</div>
+</div>
+<!-- Variant Row 2 -->
+<div class="p-4 hover:bg-surface-container-low transition-colors">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<div class="w-4 h-4 rounded-full bg-[#E5E5E5] border border-outline-variant shadow-sm"></div>
+<span class="font-label font-bold text-sm text-on-surface">Silver</span>
+</div>
+<span class="text-xs font-mono font-medium text-on-surface-variant bg-surface-variant px-1.5 py-0.5 rounded">SNY-WH-SL</span>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-3">
+<div class="bg-surface p-2 rounded border border-outline-variant/50">
+<span class="block text-[10px] uppercase font-bold text-on-surface-variant mb-0.5">Options</span>
+<span class="text-xs font-label font-medium">NC: Yes</span>
+</div>
+<div class="bg-surface p-2 rounded border border-outline-variant/50">
+<span class="block text-[10px] uppercase font-bold text-on-surface-variant mb-0.5">Price (MRP)</span>
+<span class="text-xs font-label font-bold text-primary-container">$348.00</span>
+</div>
+</div>
+<div class="mt-3 flex justify-end gap-2">
+<button class="p-1.5 text-on-surface-variant hover:text-primary rounded transition-colors border border-transparent hover:border-outline-variant"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+</div>
+</div>
+</div>
+<div class="p-4 bg-surface-container-low border-t border-outline-variant">
+<button class="w-full py-2 bg-surface border border-outline text-sm font-label font-semibold text-on-surface rounded-lg flex justify-center items-center gap-2 hover:bg-surface-variant transition-colors active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">add</span> Add variant
+                </button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Suppressed for this detailed view as per logic, replacing with sticky action bar if needed, but instructions ask for BottomNavBar shell mapping. However, rule says: "Suppress the navigation to prioritize the content canvas if task-focused". This is an Editor screen (Task-Focused). I will omit Bottom Nav as per Shell Visibility Rule.) -->
+<script>
+        // Simple toggle for overflow menu
+        document.getElementById('overflow-btn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            const menu = document.getElementById('overflow-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function() {
+            const menu = document.getElementById('overflow-menu');
+            if (!menu.classList.contains('hidden')) {
+                menu.classList.add('hidden');
+            }
+        });
+    </script>
+</body></html>

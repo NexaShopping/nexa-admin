@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Orders Management | NexaShopping</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed-variant": "#773200",
+                      "surface-variant": "#f1dfd8",
+                      "secondary-container": "#ebddd3",
+                      "on-secondary-fixed-variant": "#4e453e",
+                      "surface": "#fff8f6",
+                      "surface-container-lowest": "#ffffff",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed-dim": "#66dca9",
+                      "tertiary-container": "#2eac7d",
+                      "surface-container-low": "#fff1ec",
+                      "inverse-on-surface": "#ffede7",
+                      "tertiary": "#006c4a",
+                      "on-secondary": "#ffffff",
+                      "tertiary-fixed": "#83f9c3",
+                      "inverse-primary": "#ffb68f",
+                      "on-tertiary-fixed-variant": "#005137",
+                      "on-primary-fixed": "#331200",
+                      "on-secondary-container": "#6b6159",
+                      "surface-container": "#fdeae3",
+                      "secondary-fixed-dim": "#d2c4bb",
+                      "secondary": "#675c55",
+                      "on-secondary-fixed": "#211a14",
+                      "surface-container-high": "#f7e4de",
+                      "primary-fixed": "#ffdbca",
+                      "primary-container": "#f2751f",
+                      "outline-variant": "#dfc0b1",
+                      "outline": "#8b7265",
+                      "primary": "#9c4400",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-container": "#552200",
+                      "on-background": "#231916",
+                      "background": "#fff8f6",
+                      "secondary-fixed": "#eee0d6",
+                      "surface-container-highest": "#f1dfd8",
+                      "surface-dim": "#e9d6d0",
+                      "error-container": "#ffdad6",
+                      "on-tertiary-fixed": "#002114",
+                      "on-primary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "on-tertiary-container": "#003925",
+                      "on-surface": "#231916",
+                      "primary-fixed-dim": "#ffb68f",
+                      "surface-tint": "#9c4400",
+                      "surface-bright": "#fff8f6",
+                      "on-error-container": "#93000a",
+                      "on-surface-variant": "#584237",
+                      "inverse-surface": "#392e2a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {},
+              "fontFamily": {
+                      "headline": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "display": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body": [
+                              "Manrope"
+                      ],
+                      "label": [
+                              "Manrope"
+                      ]
+              },
+              "fontSize": {}
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            background-color: #FAF7F3;
+            color: #231916;
+        }
+        /* Custom scrollbar for a premium feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #dfc0b1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8b7265;
+        }
+    </style>
+</head>
+<body class="font-body antialiased min-h-screen overflow-x-hidden flex">
+<!-- SideNavBar -->
+<nav class="bg-surface dark:bg-inverse-surface fixed left-0 top-0 h-full w-[240px] border-r border-outline-variant dark:border-on-surface-variant shadow-sm z-40 hidden md:flex flex-col py-6 px-4">
+<!-- Brand Header -->
+<div class="mb-8 px-2 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-on-primary font-headline font-bold text-xl">
+                N
+            </div>
+<div>
+<h1 class="text-xl font-headline font-black text-on-surface dark:text-surface-bright leading-tight">NexaShopping</h1>
+<p class="font-body text-body-sm text-outline">Admin Operations</p>
+</div>
+</div>
+<!-- Main Navigation -->
+<div class="flex-1 overflow-y-auto space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-on-surface-variant transition-all duration-200 active:scale-95 rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-body text-body-md font-medium">Overview</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-on-surface-variant transition-all duration-200 active:scale-95 rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">inventory_2</span>
+<span class="font-body text-body-md font-medium">Products</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-on-surface-variant transition-all duration-200 active:scale-95 rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">category</span>
+<span class="font-body text-body-md font-medium">Categories</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-on-surface-variant transition-all duration-200 active:scale-95 rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">layers</span>
+<span class="font-body text-body-md font-medium">Inventory</span>
+</a>
+<!-- Active Tab -->
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg transition-all duration-200 active:scale-95 shadow-sm font-bold" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shopping_cart</span>
+<span class="font-headline text-headline-sm">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-on-surface-variant transition-all duration-200 active:scale-95 rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">group</span>
+<span class="font-body text-body-md font-medium">Accounts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-on-surface-variant transition-all duration-200 active:scale-95 rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">payments</span>
+<span class="font-body text-body-md font-medium">Settlements</span>
+</a>
+</div>
+<!-- Footer Actions -->
+<div class="mt-auto space-y-4 pt-6 border-t border-outline-variant/50">
+<button class="w-full py-2.5 px-4 bg-primary text-on-primary rounded-lg font-headline font-bold text-sm shadow-sm hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">download</span>
+                Generate Report
+            </button>
+<div class="space-y-1">
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg text-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">settings</span>
+<span class="font-body font-medium">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg text-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">help</span>
+<span class="font-body font-medium">Support</span>
+</a>
+</div>
+</div>
+</nav>
+<!-- Main Layout Container -->
+<div class="flex-1 flex flex-col md:ml-[240px] min-w-0 transition-all duration-300 relative">
+<!-- TopNavBar -->
+<header class="bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md fixed top-0 right-0 w-[calc(100%-240px)] z-30 border-b border-outline-variant/50 flex justify-between items-center h-16 px-8 transition-all duration-300">
+<!-- Left: Navigation Links / Breadcrumbs (Replacing product name per instructions) -->
+<div class="flex items-center gap-6">
+<!-- Mobile Menu Button (Hidden on desktop) -->
+<button class="md:hidden text-on-surface p-2 -ml-2 rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<nav class="hidden sm:flex items-center gap-6">
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors cursor-pointer focus:ring-2 focus:ring-primary/20 font-headline text-label-lg" href="#">Overview</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors cursor-pointer focus:ring-2 focus:ring-primary/20 font-headline text-label-lg" href="#">Analytics</a>
+</nav>
+</div>
+<!-- Right: Actions & Profile -->
+<div class="flex items-center gap-4">
+<button class="hidden lg:flex items-center gap-2 px-4 py-2 bg-surface-container-high text-on-surface rounded-lg font-headline font-semibold text-sm hover:bg-outline-variant/30 transition-colors border border-outline-variant/50">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                    Download Data
+                </button>
+<div class="flex items-center gap-1 border-l border-outline-variant/50 pl-4">
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-high rounded-full transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-primary-container rounded-full border border-surface"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest border border-outline-variant overflow-hidden ml-2 cursor-pointer flex-shrink-0">
+<img alt="Admin User Profile" class="w-full h-full object-cover" data-alt="Close up professional headshot of a corporate admin user, bright studio lighting, neutral background, high quality, sharp focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaJxodNJnhazGTzVum1BDogNAmuYxWpIYVurVlNfoazVHW2Owa1hIJKMSg6q6J_llzCGd-J3yAL5Z99nlUebBMKUpKn9mLiCYrkkXLbe4gObo95uTatUzzotSrZICw4rGXIMu7wnHQRGsbnlUm9JXYF2EfU-h0NqZXD2NE9T-uv8iO1t0IcKI2kcABV741m9Icpl3Ck7RRCAURMNe7yYnRUJ7ROoYCknjYiUS1Jp3uDw2Y9spriCWY5w9_4RWylXRKVuXPSq7GQsk"/>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 pt-24 px-8 pb-12 flex gap-6 w-full max-w-7xl mx-auto">
+<!-- Left Canvas (Main Content) -->
+<div class="flex-1 min-w-0 flex flex-col gap-8 transition-all duration-300" id="main-content-area">
+<!-- Page Header -->
+<div>
+<div class="flex items-center gap-2 text-sm text-outline font-body mb-2">
+<span class="hover:text-primary cursor-pointer transition-colors">Dashboard</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-on-surface font-medium">Orders</span>
+</div>
+<h2 class="font-headline text-3xl font-extrabold text-on-surface tracking-tight mb-2">Orders</h2>
+<p class="font-body text-on-surface-variant text-base">Review customer purchases, payment state, fulfillment, and order actions.</p>
+</div>
+<!-- Metrics Strip -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Metric Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-5 border border-outline-variant/60 shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="font-headline font-semibold text-on-surface-variant text-sm">Total Orders</span>
+<span class="p-1.5 bg-surface-container-high rounded-lg text-primary">
+<span class="material-symbols-outlined text-[20px]">shopping_bag</span>
+</span>
+</div>
+<div>
+<div class="text-2xl font-headline font-bold text-on-surface">1,248</div>
+<div class="flex items-center gap-1 mt-1 text-xs">
+<span class="text-tertiary-container flex items-center font-medium"><span class="material-symbols-outlined text-[14px]">arrow_upward</span> 12.5%</span>
+<span class="text-outline">vs last month</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-outline-variant/30 to-transparent group-hover:via-primary/30 transition-all"></div>
+</div>
+<!-- Metric Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-5 border border-outline-variant/60 shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="font-headline font-semibold text-on-surface-variant text-sm">Pending Payment</span>
+<span class="p-1.5 bg-surface-container-high rounded-lg text-[#D99626]">
+<span class="material-symbols-outlined text-[20px]">pending_actions</span>
+</span>
+</div>
+<div>
+<div class="text-2xl font-headline font-bold text-on-surface">42</div>
+<div class="flex items-center gap-1 mt-1 text-xs">
+<span class="text-outline font-medium">Requires attention</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-outline-variant/30 to-transparent transition-all"></div>
+</div>
+<!-- Metric Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-5 border border-outline-variant/60 shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="font-headline font-semibold text-on-surface-variant text-sm">Processing</span>
+<span class="p-1.5 bg-surface-container-high rounded-lg text-primary">
+<span class="material-symbols-outlined text-[20px]">inventory</span>
+</span>
+</div>
+<div>
+<div class="text-2xl font-headline font-bold text-on-surface">156</div>
+<div class="flex items-center gap-1 mt-1 text-xs">
+<span class="text-outline font-medium">Being fulfilled</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-outline-variant/30 to-transparent transition-all"></div>
+</div>
+<!-- Metric Card 4 -->
+<div class="bg-surface-container-lowest rounded-xl p-5 border border-outline-variant/60 shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="font-headline font-semibold text-on-surface-variant text-sm">Completed</span>
+<span class="p-1.5 bg-surface-container-high rounded-lg text-tertiary-container">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</span>
+</div>
+<div>
+<div class="text-2xl font-headline font-bold text-on-surface">1,050</div>
+<div class="flex items-center gap-1 mt-1 text-xs">
+<span class="text-tertiary-container flex items-center font-medium"><span class="material-symbols-outlined text-[14px]">arrow_upward</span> 8.2%</span>
+<span class="text-outline">vs last month</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-outline-variant/30 to-transparent transition-all"></div>
+</div>
+</div>
+<!-- Table Section -->
+<div class="bg-surface-container-lowest rounded-[12px] border border-outline-variant shadow-sm flex flex-col overflow-hidden">
+<!-- Toolbar -->
+<div class="p-4 border-b border-outline-variant/60 flex flex-wrap items-center justify-between gap-4 bg-surface-container-lowest">
+<!-- Search -->
+<div class="relative w-full max-w-sm">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface border border-outline-variant rounded-lg text-sm font-body text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all" placeholder="Search orders, customers..." type="text"/>
+</div>
+<!-- Filters -->
+<div class="flex flex-wrap items-center gap-3">
+<!-- Status Dropdown -->
+<div class="relative inline-block text-left">
+<button class="inline-flex justify-between items-center w-full rounded-lg border border-outline-variant shadow-sm px-3 py-2 bg-surface-container-lowest text-sm font-medium text-on-surface hover:bg-surface focus:outline-none transition-colors" type="button">
+<span class="text-outline mr-2">Status:</span> All
+                                    <span class="material-symbols-outlined ml-2 -mr-1 h-5 w-5 text-outline">expand_more</span>
+</button>
+<!-- Dropdown panel (hidden by default) -->
+<div class="hidden origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-surface-container-lowest ring-1 ring-black ring-opacity-5 focus:outline-none z-10 border border-outline-variant">
+<div class="py-1">
+<a class="block px-4 py-2 text-sm text-on-surface bg-surface-container-high font-medium" href="#">All</a>
+<a class="block px-4 py-2 text-sm text-on-surface-variant hover:bg-surface-container-highest transition-colors" href="#">Pending</a>
+<a class="block px-4 py-2 text-sm text-on-surface-variant hover:bg-surface-container-highest transition-colors" href="#">Paid</a>
+<a class="block px-4 py-2 text-sm text-on-surface-variant hover:bg-surface-container-highest transition-colors" href="#">Cancelled</a>
+</div>
+</div>
+</div>
+<!-- Payment Dropdown -->
+<div class="relative inline-block text-left">
+<button class="inline-flex justify-between items-center w-full rounded-lg border border-outline-variant shadow-sm px-3 py-2 bg-surface-container-lowest text-sm font-medium text-on-surface hover:bg-surface focus:outline-none transition-colors" type="button">
+<span class="text-outline mr-2">Payment:</span> All
+                                    <span class="material-symbols-outlined ml-2 -mr-1 h-5 w-5 text-outline">expand_more</span>
+</button>
+</div>
+<!-- Date Dropdown -->
+<div class="relative inline-block text-left">
+<button class="inline-flex justify-between items-center w-full rounded-lg border border-outline-variant shadow-sm px-3 py-2 bg-surface-container-lowest text-sm font-medium text-on-surface hover:bg-surface focus:outline-none transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px] mr-2 text-outline">calendar_today</span>
+                                    Last 30 Days
+                                    <span class="material-symbols-outlined ml-2 -mr-1 h-5 w-5 text-outline">expand_more</span>
+</button>
+</div>
+<!-- Clear Filters -->
+<button class="text-sm font-headline font-semibold text-primary hover:text-on-primary-container transition-colors px-2">
+                                Clear Filters
+                            </button>
+</div>
+</div>
+<!-- Table -->
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-outline-variant/60">
+<thead class="bg-surface">
+<tr>
+<th class="px-6 py-3 text-left text-xs font-headline font-bold text-on-surface-variant uppercase tracking-wider" scope="col">Order #</th>
+<th class="px-6 py-3 text-left text-xs font-headline font-bold text-on-surface-variant uppercase tracking-wider" scope="col">Customer</th>
+<th class="px-6 py-3 text-left text-xs font-headline font-bold text-on-surface-variant uppercase tracking-wider" scope="col">Items</th>
+<th class="px-6 py-3 text-left text-xs font-headline font-bold text-on-surface-variant uppercase tracking-wider" scope="col">Total</th>
+<th class="px-6 py-3 text-left text-xs font-headline font-bold text-on-surface-variant uppercase tracking-wider" scope="col">Payment Status</th>
+<th class="px-6 py-3 text-left text-xs font-headline font-bold text-on-surface-variant uppercase tracking-wider" scope="col">Fulfillment</th>
+<th class="px-6 py-3 text-left text-xs font-headline font-bold text-on-surface-variant uppercase tracking-wider" scope="col">Created</th>
+<th class="px-6 py-3 text-right text-xs font-headline font-bold text-on-surface-variant uppercase tracking-wider" scope="col">Action</th>
+</tr>
+</thead>
+<tbody class="bg-surface-container-lowest divide-y divide-outline-variant/40">
+<!-- Row 1 (Selected/Active) -->
+<tr class="hover:bg-surface-container-highest transition-colors bg-surface/50 border-l-2 border-l-primary cursor-pointer" onclick="toggleDrawer()">
+<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-on-surface">#ORD-9082</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-8 w-8 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant font-headline font-bold text-xs mr-3">
+                                                JD
+                                            </div>
+<div class="text-sm font-medium text-on-surface">John Doe</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-on-surface-variant">3</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-on-surface">$345.00</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-md bg-[#006C4A]/10 text-[#006C4A] border border-[#006C4A]/20">
+                                            Paid
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-md bg-surface-variant text-on-surface-variant border border-outline-variant/50">
+                                            Processing
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-outline">Oct 24, 2:30 PM</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<button class="text-outline hover:text-primary transition-colors p-1 rounded-md hover:bg-surface-container-high">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-highest transition-colors cursor-pointer border-l-2 border-l-transparent" onclick="toggleDrawer()">
+<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-on-surface">#ORD-9081</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-8 w-8 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant font-headline font-bold text-xs mr-3">
+                                                AS
+                                            </div>
+<div class="text-sm font-medium text-on-surface">Alice Smith</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-on-surface-variant">1</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-on-surface">$120.50</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-md bg-[#D99626]/10 text-[#D99626] border border-[#D99626]/20">
+                                            Pending
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-md bg-surface-variant text-on-surface-variant border border-outline-variant/50">
+                                            Unfulfilled
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-outline">Oct 24, 11:15 AM</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<button class="text-outline hover:text-primary transition-colors p-1 rounded-md hover:bg-surface-container-high">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-highest transition-colors cursor-pointer border-l-2 border-l-transparent" onclick="toggleDrawer()">
+<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-on-surface">#ORD-9080</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-8 w-8 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant font-headline font-bold text-xs mr-3">
+                                                RJ
+                                            </div>
+<div class="text-sm font-medium text-on-surface">Robert Jones</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-on-surface-variant">5</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-on-surface">$890.00</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-md bg-[#006C4A]/10 text-[#006C4A] border border-[#006C4A]/20">
+                                            Paid
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-md bg-[#006C4A]/10 text-[#006C4A] border border-[#006C4A]/20">
+                                            Fulfilled
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-outline">Oct 23, 4:45 PM</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<button class="text-outline hover:text-primary transition-colors p-1 rounded-md hover:bg-surface-container-high">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-highest transition-colors cursor-pointer border-l-2 border-l-transparent" onclick="toggleDrawer()">
+<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-on-surface">#ORD-9079</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-8 w-8 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant font-headline font-bold text-xs mr-3">
+                                                EW
+                                            </div>
+<div class="text-sm font-medium text-on-surface">Emma Watson</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-on-surface-variant">2</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-on-surface">$15.99</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-md bg-error/10 text-error border border-error/20">
+                                            Failed
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-md bg-surface-variant text-on-surface-variant border border-outline-variant/50">
+                                            Unfulfilled
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-outline">Oct 23, 9:20 AM</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<button class="text-outline hover:text-primary transition-colors p-1 rounded-md hover:bg-surface-container-high">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination (Simplified) -->
+<div class="px-4 py-3 border-t border-outline-variant/60 flex items-center justify-between bg-surface sm:px-6">
+<div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+<div>
+<p class="text-sm text-outline">
+                                    Showing <span class="font-medium text-on-surface">1</span> to <span class="font-medium text-on-surface">4</span> of <span class="font-medium text-on-surface">1,248</span> results
+                                </p>
+</div>
+<div>
+<nav aria-label="Pagination" class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+<a class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-outline-variant bg-surface-container-lowest text-sm font-medium text-outline hover:bg-surface" href="#">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</a>
+<a aria-current="page" class="z-10 bg-primary-container/10 border-primary text-primary relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                        1
+                                    </a>
+<a class="bg-surface-container-lowest border-outline-variant text-on-surface-variant hover:bg-surface relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                        2
+                                    </a>
+<a class="bg-surface-container-lowest border-outline-variant text-on-surface-variant hover:bg-surface relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                        3
+                                    </a>
+<a class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-outline-variant bg-surface-container-lowest text-sm font-medium text-outline hover:bg-surface" href="#">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</a>
+</nav>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Detail Drawer (Peek state) -->
+<aside class="w-80 flex-shrink-0 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm hidden xl:flex flex-col h-[calc(100vh-8rem)] sticky top-24 overflow-hidden transition-all duration-300" id="detail-drawer">
+<!-- Drawer Header -->
+<div class="px-5 py-4 border-b border-outline-variant/60 flex items-center justify-between bg-surface">
+<h3 class="font-headline font-bold text-lg text-on-surface">Order Details</h3>
+<button class="text-outline hover:text-on-surface transition-colors rounded-full p-1 hover:bg-surface-container-high" onclick="toggleDrawer()">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Drawer Content (Scrollable) -->
+<div class="flex-1 overflow-y-auto p-5 space-y-6">
+<!-- Order Summary Header -->
+<div class="flex items-start justify-between">
+<div>
+<div class="text-xl font-headline font-bold text-on-surface">#ORD-9082</div>
+<div class="text-sm text-outline mt-1">Placed on Oct 24, 2023 at 2:30 PM</div>
+</div>
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-md bg-[#006C4A]/10 text-[#006C4A] border border-[#006C4A]/20">
+                            Paid
+                        </span>
+</div>
+<!-- Customer Info -->
+<div class="bg-surface rounded-lg p-4 border border-outline-variant/40">
+<h4 class="font-headline font-semibold text-sm text-on-surface-variant mb-3 uppercase tracking-wider">Customer</h4>
+<div class="flex items-center mb-3">
+<div class="h-10 w-10 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant font-headline font-bold text-sm mr-3">
+                                JD
+                            </div>
+<div>
+<div class="text-sm font-semibold text-on-surface">John Doe</div>
+<div class="text-xs text-outline">john.doe@example.com</div>
+</div>
+</div>
+<div class="text-sm text-on-surface space-y-1">
+<div class="flex gap-2"><span class="material-symbols-outlined text-[16px] text-outline">phone</span> +1 (555) 123-4567</div>
+<div class="flex gap-2 items-start"><span class="material-symbols-outlined text-[16px] text-outline mt-0.5">location_on</span> <span>123 Commerce St, Suite 400<br/>New York, NY 10012</span></div>
+</div>
+</div>
+<!-- Line Items -->
+<div>
+<h4 class="font-headline font-semibold text-sm text-on-surface-variant mb-3 uppercase tracking-wider">Items (3)</h4>
+<div class="space-y-3">
+<div class="flex items-start gap-3 pb-3 border-b border-outline-variant/40">
+<div class="h-12 w-12 rounded bg-surface-container border border-outline-variant flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-outline">inventory_2</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="text-sm font-medium text-on-surface truncate">Premium Wireless Headphones</div>
+<div class="text-xs text-outline mt-0.5">SKU: WH-1002 • Qty: 1</div>
+</div>
+<div class="text-sm font-medium text-on-surface">$250.00</div>
+</div>
+<div class="flex items-start gap-3 pb-3 border-b border-outline-variant/40">
+<div class="h-12 w-12 rounded bg-surface-container border border-outline-variant flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-outline">inventory_2</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="text-sm font-medium text-on-surface truncate">Protective Carrying Case</div>
+<div class="text-xs text-outline mt-0.5">SKU: CC-501 • Qty: 1</div>
+</div>
+<div class="text-sm font-medium text-on-surface">$45.00</div>
+</div>
+</div>
+</div>
+<!-- Totals -->
+<div class="bg-surface rounded-lg p-4 border border-outline-variant/40 space-y-2 text-sm">
+<div class="flex justify-between text-on-surface-variant">
+<span>Subtotal</span>
+<span>$295.00</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Shipping (Express)</span>
+<span>$15.00</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Tax</span>
+<span>$35.00</span>
+</div>
+<div class="pt-2 mt-2 border-t border-outline-variant/40 flex justify-between font-headline font-bold text-base text-on-surface">
+<span>Total</span>
+<span>$345.00</span>
+</div>
+</div>
+</div>
+<!-- Drawer Footer Actions -->
+<div class="p-4 border-t border-outline-variant/60 bg-surface flex gap-3">
+<button class="flex-1 py-2 px-4 bg-surface-container-highest text-on-surface border border-outline-variant rounded-lg font-headline font-semibold text-sm hover:bg-outline-variant/30 transition-colors">
+                        Refund
+                    </button>
+<button class="flex-1 py-2 px-4 bg-primary text-on-primary rounded-lg font-headline font-bold text-sm shadow-sm hover:bg-primary/90 transition-colors">
+                        Fulfill Order
+                    </button>
+</div>
+</aside>
+</main>
+</div>
+<!-- Simple script to toggle drawer visibility for demonstration -->
+<script>
+        function toggleDrawer() {
+            const drawer = document.getElementById('detail-drawer');
+            if (drawer.classList.contains('hidden')) {
+                drawer.classList.remove('hidden');
+                drawer.classList.add('xl:flex');
+            } else {
+                drawer.classList.add('hidden');
+                drawer.classList.remove('xl:flex');
+            }
+        }
+    </script>
+</body></html>

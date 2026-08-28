@@ -1,0 +1,20 @@
+{
+  "projectId": "6188057660030812944",
+  "title": "NexaShopping Admin",
+  "deviceType": "AGNOSTIC",
+  "lastSyncTime": "2026-08-28T00:00:00Z",
+  "screens": {
+    "dashboard-overview": { "id": "dd57df2e0e2d4b47bc03addea6715cab", "label": "NexaShopping Admin Dashboard Overview", "device": "DESKTOP", "targetRoute": "src/app/dashboard/page.tsx" },
+    "catalog": { "id": "83cc0b587eb844e5855b5079fe813a45", "label": "NexaShopping Admin Catalog", "device": "DESKTOP", "targetRoute": "src/app/dashboard/catalog/page.tsx" },
+    "categories": { "id": "0c69dc7432b84724b118abdbeba9dd8a", "label": "NexaShopping Admin Categories Management", "device": "DESKTOP", "targetRoute": "src/app/dashboard/catalog/categories" },
+    "new-product": { "id": "1d5f1d00a96f464bb3e982337206dc1f", "label": "NexaShopping Admin - New Product", "device": "DESKTOP", "targetRoute": "src/app/dashboard/catalog/new" },
+    "inventory": { "id": "887ec8d77cb5497f8fe2dc6782be261b", "label": "NexaShopping Admin Inventory Management", "device": "DESKTOP", "targetRoute": "src/app/dashboard/inventory/page.tsx" },
+    "product-detail": { "id": "e532c6d78bd9419eb5768c04e4f95d96", "label": "Product Detail & Editor: WH-1000XM5 Headphones", "device": "DESKTOP", "targetRoute": "src/app/dashboard/catalog/[id]" },
+    "accounts": { "id": "e7600e30978d44bfae7f3c729a0c1a8e", "label": "NexaShopping Admin Accounts Management", "device": "DESKTOP", "targetRoute": "src/app/dashboard/accounts/page.tsx" },
+    "categories-mobile": { "id": "ec4c3e5630a74d54a3d45c82e7fc9e53", "label": "NexaShopping Categories Mobile Admin", "device": "MOBILE", "targetRoute": "src/app/dashboard/catalog/categories (responsive)" },
+    "orders": { "id": "013609bcc4274fc882eb8983c9bb6fd5", "label": "NexaShopping Admin Orders Management", "device": "DESKTOP", "targetRoute": "src/app/dashboard/orders/page.tsx" },
+    "settlements": { "id": "f1c959a68a6b40f5a34984e251061be7", "label": "NexaShopping Admin Settlements Management", "device": "DESKTOP", "targetRoute": "src/app/dashboard/settlements/page.tsx" },
+    "new-product-mobile": { "id": "305dbf5bdd3240e08b12f5c5a5dbb356", "label": "New Product (Mobile)", "device": "MOBILE", "targetRoute": "src/app/dashboard/catalog/new (responsive)" },
+    "product-detail-mobile": { "id": "a04ac43df26d4765b758fbc11ac290e7", "label": "Product Detail & Editor (Mobile)", "device": "MOBILE", "targetRoute": "src/app/dashboard/catalog/[id] (responsive)" }
+  }
+}

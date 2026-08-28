@@ -4,7 +4,6 @@ import { useState } from "react";
 import { api } from "@/lib/api";
 import { Button, Select, Input } from "@/components/ui";
 import { SettlementTable } from "@/features/settlements/settlement-table";
-import "./settlements-modern.css";
 
 async function downloadFile(path: string, filename: string) {
   const blob = await api.download(path);
@@ -35,8 +34,8 @@ function SettlementsExport() {
 
   return (
     <div className="flex flex-wrap items-end gap-2">
-      <label className="flex flex-col gap-1 text-xs text-ink-soft">From<Input type="date" className="h-8" value={from} max={to} onChange={(e) => setFrom(e.target.value)} aria-label="Settlements export from date" /></label>
-      <label className="flex flex-col gap-1 text-xs text-ink-soft">To<Input type="date" className="h-8" value={to} min={from} max={todayIso} onChange={(e) => setTo(e.target.value)} aria-label="Settlements export to date" /></label>
+      <label className="flex flex-col gap-1 text-xs text-on-surface-variant">From<Input type="date" className="h-8" value={from} max={to} onChange={(e) => setFrom(e.target.value)} aria-label="Settlements export from date" /></label>
+      <label className="flex flex-col gap-1 text-xs text-on-surface-variant">To<Input type="date" className="h-8" value={to} min={from} max={todayIso} onChange={(e) => setTo(e.target.value)} aria-label="Settlements export to date" /></label>
       <Select className="h-8" value={format} onChange={(e) => setFormat(e.target.value as "csv" | "pdf")} aria-label="Export format"><option value="csv">CSV</option><option value="pdf">PDF</option></Select>
       <Button size="sm" variant="secondary" disabled={exporting || from > to} onClick={() => void exportSettlements()}>{exporting ? "Exporting…" : "Export"}</Button>
     </div>
@@ -45,12 +44,12 @@ function SettlementsExport() {
 
 export default function SettlementsPage() {
   return (
-    <div className="admin-settlements mx-auto w-full max-w-7xl">
+    <div className="mx-auto w-full max-w-7xl">
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="text-xs font-medium uppercase tracking-[0.18em] text-brand">Money owed to distributors</p>
-          <h1 className="mt-2 text-2xl font-semibold">Settlements</h1>
-          <p className="mt-1 max-w-2xl text-sm text-ink-soft">PhonePe-paid customer orders wait here until delivery. Record the bank or UPI payout only after they become payable.</p>
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-primary">Money owed to distributors</p>
+          <h1 className="mt-2 font-display text-2xl font-bold text-on-surface">Settlements</h1>
+          <p className="mt-1 max-w-2xl text-sm text-on-surface-variant">PhonePe-paid customer orders wait here until delivery. Record the bank or UPI payout only after they become payable.</p>
         </div>
         <SettlementsExport />
       </div>
