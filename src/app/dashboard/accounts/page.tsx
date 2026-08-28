@@ -139,7 +139,7 @@ function AccountsPageInner() {
                 </tbody>
               </table>
             </div>
-            <div className="flex flex-col gap-3 sm:hidden">{accounts.map((a) => <button type="button" key={a.id} onClick={() => setSelectedId(a.id)} className={`rounded-xl border p-3 text-left ${selectedId === a.id ? "border-primary bg-primary/5" : "border-outline-variant bg-surface-container-lowest"}`}><div className="flex items-center justify-between gap-2"><span className="font-medium text-on-surface">{a.name ?? "—"}</span><StatusPill status={a.status} /></div><p className="mt-0.5 text-xs text-on-surface-variant">{a.email ?? a.phone ?? "—"}</p><div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-on-surface-variant"><span>Role <b className="text-on-surface">{a.role.toLowerCase()}</b></span><span>{a.distributor?.businessName ?? "Account"}</span></div></button>)}</div>
+            <div className="flex flex-col gap-3 sm:hidden">{accounts.map((a) => <button type="button" key={a.id} onClick={() => setSelectedId(a.id)} className={`rounded-xl border p-3 text-left ${selectedId === a.id ? "border-primary bg-primary/5" : "border-outline-variant bg-surface-container-lowest"}`}><div className="flex items-center justify-between gap-2"><span className="min-w-0 flex-1 truncate font-medium text-on-surface">{a.name ?? "—"}</span><StatusPill status={a.status} /></div><p className="mt-0.5 text-xs text-on-surface-variant">{a.email ?? a.phone ?? "—"}</p><div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-on-surface-variant"><span>Role <b className="text-on-surface">{a.role.toLowerCase()}</b></span><span>{a.distributor?.businessName ?? "Account"}</span></div></button>)}</div>
             </>
           )}
 

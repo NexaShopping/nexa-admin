@@ -52,7 +52,7 @@ export default function CategoriesPage() {
                   <option value="INACTIVE">Inactive</option>
                 </Select>
               </div>
-              <div className="overflow-x-auto">
+              <div className="hidden overflow-x-auto sm:block">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-outline-variant text-left text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant">
@@ -82,6 +82,26 @@ export default function CategoriesPage() {
                     ))}
                   </tbody>
                 </table>
+              </div>
+              <div className="flex flex-col gap-2 p-2 sm:hidden">
+                {categoryRows.map((c) => (
+                  <button
+                    key={c.id}
+                    type="button"
+                    onClick={() => setSelected(c.id)}
+                    className={`rounded-xl border p-3 text-left ${selected === c.id ? "border-primary bg-primary/5" : "border-outline-variant bg-surface-container-lowest"}`}
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="min-w-0 flex-1 truncate font-semibold text-on-surface">{c.name}</span>
+                      <span className={`inline-flex shrink-0 items-center gap-1.5 text-xs font-medium ${c.isActive ? "text-emerald-600" : "text-on-surface-variant"}`}>
+                        <span className={`h-1.5 w-1.5 rounded-full ${c.isActive ? "bg-emerald-500" : "bg-outline"}`} />
+                        {c.isActive ? "Active" : "Inactive"}
+                      </span>
+                    </div>
+                    <p className="mt-0.5 truncate font-mono text-xs text-on-surface-variant">/{c.slug}</p>
+                    <p className="mt-1 text-xs text-on-surface-variant">Position {c.position + 1}</p>
+                  </button>
+                ))}
               </div>
               {!categoryRows.length && <p className="p-6 text-center text-sm text-on-surface-variant">No categories match your filters.</p>}
             </Card>

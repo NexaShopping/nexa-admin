@@ -150,12 +150,12 @@ export function BarChart({ data, valueFormatter, emptyLabel = "No data yet" }: R
 
   return (
     <div>
-      <div className="flex h-[160px] items-end gap-3 px-1">
+      <div className="flex h-[160px] items-end gap-1.5 px-1 sm:gap-3">
         {data.map((d, i) => {
           const heightPct = Math.max((d.value / max) * 100, d.value > 0 ? 4 : 0);
           return (
-            <div key={d.label} className="flex flex-1 flex-col items-center gap-1.5">
-              <span className="text-[11px] font-medium text-on-surface tabular-nums">{formatValue(d.value, valueFormatter)}</span>
+            <div key={d.label} className="flex min-w-0 flex-1 flex-col items-center gap-1.5">
+              <span className="truncate text-[11px] font-medium text-on-surface tabular-nums">{formatValue(d.value, valueFormatter)}</span>
               <div className="flex h-full w-full items-end">
                 <div
                   role="img"
@@ -170,9 +170,9 @@ export function BarChart({ data, valueFormatter, emptyLabel = "No data yet" }: R
           );
         })}
       </div>
-      <div className="mt-2 flex gap-3 px-1">
+      <div className="mt-2 flex gap-1.5 px-1 sm:gap-3">
         {data.map((d) => (
-          <span key={d.label} className="flex-1 truncate text-center text-[10px] text-on-surface-variant">{d.label}</span>
+          <span key={d.label} className="min-w-0 flex-1 truncate text-center text-[10px] text-on-surface-variant">{d.label}</span>
         ))}
       </div>
     </div>
