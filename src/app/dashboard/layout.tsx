@@ -16,8 +16,18 @@ const NAV = [
   { href: "/dashboard/inventory", label: "Inventory", icon: StackIcon },
   { href: "/dashboard/orders", label: "Orders", icon: OrdersIcon },
   { href: "/dashboard/accounts", label: "Accounts", icon: UsersIcon },
+  { href: "/dashboard/accounts?role=DISTRIBUTOR", label: "Credit", icon: CreditIcon },
   { href: "/dashboard/settlements", label: "Settlements", icon: MoneyIcon },
 ];
+
+// "Accounts" and "Credit" both point at /dashboard/accounts (Credit pre-filters by role via
+// a query param) and so highlight together while there — reading the query param here to
+// tell them apart would need a Suspense boundary around the whole shell for every page, which
+// isn't worth it for a cosmetic distinction.
+function navActive(pathname: string, href: string) {
+  const base = href.split("?")[0]!;
+  return base === "/dashboard" ? pathname === base : pathname.startsWith(base);
+}
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { status, account, logout } = useAuth();
@@ -57,7 +67,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <nav className="admin-sidebar__nav">
           <p className="admin-sidebar__label">Workspace</p>
           {NAV.map((item) => {
-            const active = item.href === "/dashboard" ? pathname === item.href : pathname.startsWith(item.href);
+            const active = navActive(pathname, item.href);
             const Icon = item.icon;
             return (
               <Link key={item.href} href={item.href} className={`admin-sidebar__link ${active ? "is-active" : ""}`}>
@@ -69,8 +79,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </nav>
         <div className="admin-sidebar__footer">
           <div className="admin-sidebar__account">
-            <span className="admin-sidebar__account-avatar">{profileInitial}</span>
-            <span className="admin-sidebar__account-copy"><strong>{displayName}</strong><small>{account?.email ?? "Admin"}</small></span>
+            <Link href="/dashboard/profile" className="admin-sidebar__account-link">
+              <span className="admin-sidebar__account-avatar">{profileInitial}</span>
+              <span className="admin-sidebar__account-copy"><strong>{displayName}</strong><small>{account?.email ?? "Admin"}</small></span>
+            </Link>
             <button type="button" onClick={handleLogout} disabled={signingOut} aria-label="Log out"><CloseIcon className="h-4 w-4" /></button>
           </div>
         </div>
@@ -104,12 +116,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <nav className="admin-sidebar__nav admin-sidebar__nav--mobile">
               <p className="admin-sidebar__label">Workspace</p>
               {NAV.map((item) => {
-                const active = item.href === "/dashboard" ? pathname === item.href : pathname.startsWith(item.href);
+                const active = navActive(pathname, item.href);
                 const Icon = item.icon;
                 return <Link key={item.href} href={item.href} onClick={() => setMobileMenuOpen(false)} className={`admin-sidebar__link ${active ? "is-active" : ""}`}><Icon className="h-5 w-5" />{item.label}</Link>;
               })}
             </nav>
             <div className="admin-sidebar__footer admin-sidebar__footer--mobile">
+              <Link href="/dashboard/profile" onClick={() => setMobileMenuOpen(false)} className={`admin-sidebar__link ${pathname === "/dashboard/profile" ? "is-active" : ""}`}><UserIcon className="h-5 w-5" />My profile</Link>
               <button type="button" onClick={() => { setMobileMenuOpen(false); void handleLogout(); }} disabled={signingOut} className="admin-sidebar__logout"><CloseIcon className="h-4 w-4" />{signingOut ? "Signing out…" : "Log out"}</button>
             </div>
           </div>
@@ -204,4 +217,23 @@ function TagIcon({ className }: { className?: string }) {
 
 function MoneyIcon({ className }: { className?: string }) {
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className={className}><rect x="3.5" y="5" width="17" height="14" rx="2" /><path d="M3.5 9h17M8 14h3" strokeLinecap="round" /></svg>;
+}
+
+function CreditIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className={className}>
+      <rect x="3.5" y="5.5" width="17" height="13" rx="2" />
+      <path d="M3.5 9.5h17" strokeLinecap="round" />
+      <path d="M6.5 14.5h4" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function UserIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className={className}>
+      <circle cx="12" cy="8.5" r="3.5" />
+      <path d="M4.5 20c0-3.6 3-6.5 7.5-6.5s7.5 2.9 7.5 6.5" strokeLinecap="round" />
+    </svg>
+  );
 }

@@ -20,6 +20,7 @@ interface AuthContextValue {
   account: AuthAccount | null;
   loginWithGoogle: () => Promise<void>;
   logout: () => Promise<void>;
+  refreshAccount: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -67,8 +68,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setStatus("anon");
   }, []);
 
+  // Re-reads the current account from the server — used after a self profile edit so the
+  // sidebar and every other consumer of `account` picks up the new name/avatar immediately,
+  // without waiting for a full page reload.
+  const refreshAccount = useCallback(async () => {
+    const data = await api.get<MeResponse>("/auth/me");
+    setAccount(data.account);
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ status, account, loginWithGoogle, logout }}>
+    <AuthContext.Provider value={{ status, account, loginWithGoogle, logout, refreshAccount }}>
       {children}
     </AuthContext.Provider>
   );

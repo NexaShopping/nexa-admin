@@ -4,9 +4,59 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { useProducts } from "@/features/catalog/api";
-import { useInventory } from "@/features/inventory/api";
+import { useInventory, useRecentLedger } from "@/features/inventory/api";
 import { useOrders } from "@/features/orders/api";
 import { useSettlements } from "@/features/settlements/api";
+import { formatMoney } from "@/lib/money";
+import { BarChart, DonutChart, LineChart, type ChartDatum } from "@/components/charts";
+import type { OrderStatus } from "@/lib/types";
+
+// Palette validated with the dataviz skill's scripts/validate_palette.js.
+const STATUS_GOOD = "#0ca30c";
+const STATUS_WARNING = "#fab219";
+const STATUS_SERIOUS = "#ec835a";
+const STATUS_CRITICAL = "#d03b3b";
+const CAT_BLUE = "#2a78d6";
+const CAT_AQUA = "#1baf7a";
+const CAT_YELLOW = "#eda100";
+const CAT_GREEN = "#008300";
+const MUTED = "#898781";
+
+const ORDER_STATUS_COLOR: Record<OrderStatus, string> = {
+  AWAITING_PAYMENT: CAT_YELLOW,
+  CONFIRMED: CAT_BLUE,
+  SHIPPED: CAT_AQUA,
+  DELIVERED: CAT_GREEN,
+  CANCELLED: MUTED,
+};
+
+const ORDER_STATUS_LABEL: Record<OrderStatus, string> = {
+  AWAITING_PAYMENT: "Awaiting payment",
+  CONFIRMED: "Confirmed",
+  SHIPPED: "Shipped",
+  DELIVERED: "Delivered",
+  CANCELLED: "Cancelled",
+};
+
+function moneyValue(n: number) {
+  return formatMoney(n.toFixed(2));
+}
+
+interface ChartCardProps {
+  title: string;
+  subtitle: string;
+  children: ReactNode;
+}
+
+function ChartCard({ title, subtitle, children }: Readonly<ChartCardProps>) {
+  return (
+    <div className="rounded-xl border border-outline-variant bg-surface-container-lowest p-5">
+      <h3 className="font-display text-sm font-bold text-on-surface">{title}</h3>
+      <p className="text-xs text-on-surface-variant">{subtitle}</p>
+      <div className="mt-4">{children}</div>
+    </div>
+  );
+}
 
 interface MetricTileProps {
   label: string;
@@ -68,19 +118,53 @@ function OperationalAlert({ title, detail, actionHref, actionLabel }: Readonly<O
 export default function DashboardPage() {
   const { account } = useAuth();
   const { data: productsData } = useProducts({});
-  const { data: inventoryData } = useInventory({ lowStock: true });
+  const { data: lowStockData } = useInventory({ lowStock: true });
+  const { data: allStockData } = useInventory({});
   const { data: ordersData } = useOrders({ role: "seller" });
-  const { data: settlementsData } = useSettlements("PAYABLE");
+  const { data: allSettlementsData } = useSettlements();
+  const { data: ledgerData } = useRecentLedger(20);
 
   const products = productsData?.data.products ?? [];
   const activeProducts = products.filter((p) => p.status === "ACTIVE").length;
   const catalogHealth = products.length ? Math.round((activeProducts / products.length) * 100) : 0;
 
-  const lowStockItems = inventoryData?.data.items ?? [];
-  const openOrders = ordersData?.data.orders.filter((o) => o.status !== "DELIVERED" && o.status !== "CANCELLED") ?? [];
-  const payablesPending = settlementsData?.payables ?? [];
+  const lowStockItems = lowStockData?.data.items ?? [];
+  const orders = ordersData?.data.orders ?? [];
+  const openOrders = orders.filter((o) => o.status !== "DELIVERED" && o.status !== "CANCELLED");
+  const allPayables = allSettlementsData?.payables ?? [];
+  const payablesPending = allPayables.filter((p) => p.status === "PAYABLE");
 
   const firstName = account?.name?.trim().split(" ")[0];
+
+  // Inventory health: same onHand/lowStockAt logic the Inventory page itself uses, over
+  // whatever page of stock items is currently loaded.
+  const stockItems = allStockData?.data.items ?? [];
+  const inventoryHealthData: ChartDatum[] = [
+    { label: "Healthy", value: stockItems.filter((i) => i.lowStockAt === null || i.available > i.lowStockAt).length, color: STATUS_GOOD },
+    { label: "Low stock", value: stockItems.filter((i) => i.lowStockAt !== null && i.available <= i.lowStockAt && i.available > 0).length, color: STATUS_WARNING },
+    { label: "Out of stock", value: stockItems.filter((i) => i.available <= 0).length, color: STATUS_CRITICAL },
+  ];
+
+  const orderStatusData: ChartDatum[] = (Object.keys(ORDER_STATUS_LABEL) as OrderStatus[]).map((status) => ({
+    label: ORDER_STATUS_LABEL[status],
+    value: orders.filter((o) => o.status === status).length,
+    color: ORDER_STATUS_COLOR[status],
+  }));
+
+  const settlementsChartData: ChartDatum[] = [
+    { label: "Payable now", value: allPayables.filter((p) => p.status === "PAYABLE").reduce((sum, p) => sum + Number(p.amount), 0), color: STATUS_WARNING },
+    { label: "Held", value: allPayables.filter((p) => p.status === "HELD").reduce((sum, p) => sum + Number(p.amount), 0), color: STATUS_SERIOUS },
+    { label: "Paid this period", value: allPayables.filter((p) => p.status === "PAID").reduce((sum, p) => sum + Number(p.amount), 0), color: STATUS_GOOD },
+  ];
+
+  // Oldest-first running total of unit deltas across the most recent ledger entries — a real
+  // (if short) trend line, not a fabricated one; the API only exposes a capped recent window.
+  const ledgerEntries = [...(ledgerData?.entries ?? [])].reverse();
+  const ledgerLineData = ledgerEntries.reduce<Array<{ label: string; value: number }>>((acc, entry) => {
+    const runningStock = (acc.at(-1)?.value ?? 0) + entry.delta;
+    acc.push({ label: new Date(entry.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short" }), value: runningStock });
+    return acc;
+  }, []);
 
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
@@ -152,6 +236,25 @@ export default function DashboardPage() {
             <QuickAction href="/dashboard/inventory" label="Inventory" icon={<StackIcon />} />
             <QuickAction href="/dashboard/orders" label="Orders" icon={<OrdersIcon />} />
           </div>
+        </div>
+      </div>
+
+      <div>
+        <h2 className="font-display text-lg font-bold text-on-surface">Business health</h2>
+        <p className="text-sm text-on-surface-variant">Live snapshots from catalog, inventory, orders, and settlements.</p>
+        <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <ChartCard title="Inventory health" subtitle="Stock items by availability">
+            <DonutChart data={inventoryHealthData} />
+          </ChartCard>
+          <ChartCard title="Orders by status" subtitle="Sales to distributors, current page">
+            <BarChart data={orderStatusData} />
+          </ChartCard>
+          <ChartCard title="Settlements" subtitle="Distributor payables by state">
+            <DonutChart data={settlementsChartData} variant="pie" valueFormatter={moneyValue} />
+          </ChartCard>
+          <ChartCard title="Recent stock movement" subtitle="Running total, last 20 ledger entries">
+            <LineChart data={ledgerLineData} color={CAT_BLUE} />
+          </ChartCard>
         </div>
       </div>
     </div>

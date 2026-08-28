@@ -1,15 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useAccounts, useCreateDistributor, useUpdateAccount, type AccountFilters } from "@/features/accounts/api";
 import { useAuth } from "@/lib/auth-context";
 import { ApiError } from "@/lib/api";
 import { Button, Card, EmptyState, ErrorState, Input, Label, Select, Spinner } from "@/components/ui";
 import type { AccountSummary, AccountStatus, Role } from "@/lib/types";
 
+const ROLES: Role[] = ["ADMIN", "COADMIN", "DISTRIBUTOR", "CUSTOMER"];
+
 export default function AccountsPage() {
-  const [filters, setFilters] = useState<AccountFilters>({});
+  return (
+    <Suspense fallback={<div className="grid place-items-center py-20 text-on-surface-variant"><Spinner className="h-5 w-5" /></div>}>
+      <AccountsPageInner />
+    </Suspense>
+  );
+}
+
+function AccountsPageInner() {
+  const searchParams = useSearchParams();
+  const roleParam = searchParams.get("role");
+  const initialRole = ROLES.includes(roleParam as Role) ? (roleParam as Role) : undefined;
+  const [filters, setFilters] = useState<AccountFilters>({ role: initialRole });
   const [qInput, setQInput] = useState("");
   const [cursors, setCursors] = useState<string[]>([]);
   const cursor = cursors.at(-1);

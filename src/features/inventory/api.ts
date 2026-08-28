@@ -3,6 +3,7 @@ import { api } from "@/lib/api";
 import type {
   AdjustStockBody,
   ReceiveStockBody,
+  RecentLedgerEntry,
   StockItemView,
   StockLedgerEntry,
   TransferStockBody,
@@ -74,5 +75,12 @@ export function useLedger(id: string, cursor?: string) {
     queryKey: ["ledger", id, cursor],
     queryFn: () => api.getPage<{ entries: StockLedgerEntry[] }>(`/inventory/${id}/ledger${qs}`),
     enabled: Boolean(id),
+  });
+}
+
+export function useRecentLedger(limit = 20) {
+  return useQuery({
+    queryKey: ["ledger-recent", limit],
+    queryFn: () => api.get<{ entries: RecentLedgerEntry[] }>(`/inventory/ledger/recent?limit=${limit}`),
   });
 }
