@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { Spinner } from "@/components/ui";
 import "./admin-shell.css";
@@ -21,12 +21,57 @@ const NAV = [
 ];
 
 // "Accounts" and "Credit" both point at /dashboard/accounts (Credit pre-filters by role via
-// a query param) and so highlight together while there — reading the query param here to
-// tell them apart would need a Suspense boundary around the whole shell for every page, which
-// isn't worth it for a cosmetic distinction.
-function navActive(pathname: string, href: string) {
-  const base = href.split("?")[0]!;
-  return base === "/dashboard" ? pathname === base : pathname.startsWith(base);
+// a query param); an item with a `role` param is only active when that param matches, so the
+// two never highlight together.
+function navActive(pathname: string, href: string, currentRole: string | null) {
+  const [base, query] = href.split("?");
+  if (base === "/dashboard") return pathname === base;
+  if (pathname !== base) return false;
+  const wantRole = new URLSearchParams(query).get("role");
+  return wantRole ? currentRole === wantRole : !currentRole;
+}
+
+// useSearchParams() forces whatever calls it to bail out of static prerendering unless it
+// sits under its own Suspense boundary — isolated here so only the nav links (not the whole
+// dashboard shell) pay that cost.
+function NavLinks({ items, pathname, mobile, onNavigate }: Readonly<{
+  items: typeof NAV;
+  pathname: string;
+  mobile: boolean;
+  onNavigate?: () => void;
+}>) {
+  const searchParams = useSearchParams();
+  const currentRole = searchParams.get("role");
+  return (
+    <>
+      {items.map((item) => {
+        const active = navActive(pathname, item.href, currentRole);
+        const Icon = item.icon;
+        return (
+          <Link key={item.href} href={item.href} onClick={onNavigate} className={`admin-sidebar__link ${active ? "is-active" : ""}`}>
+            <Icon className={mobile ? "h-5 w-5" : "h-4 w-4"} />
+            {item.label}
+          </Link>
+        );
+      })}
+    </>
+  );
+}
+
+function NavFallback({ items, mobile }: Readonly<{ items: typeof NAV; mobile: boolean }>) {
+  return (
+    <>
+      {items.map((item) => {
+        const Icon = item.icon;
+        return (
+          <span key={item.href} className="admin-sidebar__link">
+            <Icon className={mobile ? "h-5 w-5" : "h-4 w-4"} />
+            {item.label}
+          </span>
+        );
+      })}
+    </>
+  );
 }
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -66,16 +111,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </div>
         <nav className="admin-sidebar__nav">
           <p className="admin-sidebar__label">Workspace</p>
-          {NAV.map((item) => {
-            const active = navActive(pathname, item.href);
-            const Icon = item.icon;
-            return (
-              <Link key={item.href} href={item.href} className={`admin-sidebar__link ${active ? "is-active" : ""}`}>
-                <Icon className="h-4 w-4" />
-                {item.label}
-              </Link>
-            );
-          })}
+          <Suspense fallback={<NavFallback items={NAV} mobile={false} />}>
+            <NavLinks items={NAV} pathname={pathname} mobile={false} />
+          </Suspense>
         </nav>
         <div className="admin-sidebar__footer">
           <div className="admin-sidebar__account">
@@ -115,11 +153,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <div className="admin-mobile-drawer__head"><div><strong>Nexa<span>Shopping</span></strong><small>Admin workspace</small></div><button type="button" onClick={() => setMobileMenuOpen(false)} aria-label="Close navigation"><CloseIcon className="h-5 w-5" /></button></div>
             <nav className="admin-sidebar__nav admin-sidebar__nav--mobile">
               <p className="admin-sidebar__label">Workspace</p>
-              {NAV.map((item) => {
-                const active = navActive(pathname, item.href);
-                const Icon = item.icon;
-                return <Link key={item.href} href={item.href} onClick={() => setMobileMenuOpen(false)} className={`admin-sidebar__link ${active ? "is-active" : ""}`}><Icon className="h-5 w-5" />{item.label}</Link>;
-              })}
+              <Suspense fallback={<NavFallback items={NAV} mobile />}>
+                <NavLinks items={NAV} pathname={pathname} mobile onNavigate={() => setMobileMenuOpen(false)} />
+              </Suspense>
             </nav>
             <div className="admin-sidebar__footer admin-sidebar__footer--mobile">
               <Link href="/dashboard/profile" onClick={() => setMobileMenuOpen(false)} className={`admin-sidebar__link ${pathname === "/dashboard/profile" ? "is-active" : ""}`}><UserIcon className="h-5 w-5" />My profile</Link>
