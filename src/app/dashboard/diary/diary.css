@@ -37,6 +37,10 @@
 .diary-muted { max-width:160px; color:#9a877e; font-size:11px; }
 .diary-pagination { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:18px; color:#89766c; font-size:11px; }
 .diary-pagination > div { display:flex; gap:6px; }
+.diary-create { scroll-margin-top:24px; }
+.diary-create__steps { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
+.diary-create__steps span { border:1px solid #eadfd7; border-radius:999px; background:#fff5ed; padding:7px 11px; color:#ad4c13; font-size:11px; font-weight:700; }
+.diary-create__status { margin-bottom:16px; border-left:3px solid #f2751f; background:#fff5ed; padding:10px 13px; color:#5b4a42; font-size:12px; }
 .diary-create__form { display:grid; grid-template-columns:2fr 1fr 1.35fr; gap:14px; align-items:end; }
 .diary-create__form > button { grid-column:3; justify-self:end; }
 .diary-create__note { grid-column:1 / 3; }

@@ -62,7 +62,7 @@ export default function DiaryPage() {
           <h1>Diary management</h1>
           <p>Review cash entries, record confirmed handovers, and trace every correction.</p>
         </div>
-        <a href="#new-entry" className="diary-head__action">Record cash receipt</a>
+        <a href="#start-diary" className="diary-head__action">Start diary</a>
       </div>
 
       {overview.isLoading ? <div className="diary-loading"><Spinner className="h-5 w-5" /></div> : overview.isError ? (
@@ -83,6 +83,8 @@ export default function DiaryPage() {
         <strong>Recent activity</strong>
         <div>{overview.data.recentEntries.slice(0, 3).map((entry) => <span key={entry.id}>{entry.referenceCode} · {personLabel(entry.customer)} · <StatusBadge status={entry.status} /></span>)}</div>
       </section>}
+
+      <CreateEntry />
 
       <section className="diary-panel" aria-labelledby="entries-heading">
         <div className="diary-panel__head">
@@ -123,7 +125,6 @@ export default function DiaryPage() {
         ) : <EmptyState title="No diary entries found" hint="Try a different date or status, or record a confirmed cash receipt." />}
       </section>
 
-      <CreateEntry />
       {action && <ReviewDialog action={action} onClose={() => setAction(null)} />}
       {historyId && <CustomerHistory id={historyId} onClose={() => setHistoryId(null)} />}
     </div>
@@ -141,6 +142,8 @@ function CreateEntry() {
   const [receipt, setReceipt] = useState<string | null>(null);
   const requestKey = useRef<string | null>(null);
   const customers = useDiaryCustomers(search);
+  const history = useDiaryCustomer(customer?.id ?? null, 1);
+  const hasEntries = (history.data?.meta?.total ?? history.data?.data.entries.length ?? 0) > 0;
 
   function prepare(event: FormEvent) {
     event.preventDefault();
@@ -164,9 +167,11 @@ function CreateEntry() {
     } catch { /* error shown in dialog */ }
   }
 
-  return <section id="new-entry" className="diary-panel diary-create" aria-labelledby="new-entry-heading">
-    <div className="diary-panel__head"><div><h2 id="new-entry-heading">Record a cash receipt</h2><p>One actual handover becomes one approved entry after confirmation.</p></div></div>
+  return <section id="start-diary" className="diary-panel diary-create" aria-labelledby="start-diary-heading">
+    <div className="diary-panel__head"><div><h2 id="start-diary-heading">Start a customer diary</h2><p>Select an active customer, then record their first actual cash installment. Use the same flow for later receipts.</p></div></div>
+    <div className="diary-create__steps" aria-label="Diary start steps"><span>1. Select customer</span><span>2. Enter cash receipt</span><span>3. Confirm</span></div>
     {receipt && <p className="diary-success" role="status">Receipt {receipt} recorded and approved.</p>}
+    {customer && <p className="diary-create__status" role="status">{history.isLoading ? "Checking this customer’s diary…" : history.isError ? "Could not check existing diary records. You can still record a confirmed cash receipt." : hasEntries ? "This customer already has diary entries. The receipt below will add another entry." : "No diary entries yet. Their first confirmed cash receipt will start the diary."}</p>}
     <form onSubmit={prepare} className="diary-create__form">
       <div className="diary-customer-search"><label htmlFor="diary-customer">Customer</label><Input id="diary-customer" value={customer ? personLabel(customer) : search} onChange={(event) => { setCustomer(null); setSearch(event.target.value); }} placeholder="Search customer by name or phone" required />
         {!customer && search.trim().length >= 2 && <div className="diary-search-results" role="listbox" aria-label="Matching customers">
@@ -176,7 +181,7 @@ function CreateEntry() {
       <div><label htmlFor="diary-amount">Amount (INR)</label><Input id="diary-amount" type="number" min="0.01" max="999999999999.99" step="0.01" value={amount} onChange={(event) => setAmount(event.target.value)} placeholder="2000.00" required /></div>
       <div><label htmlFor="diary-date">Cash received (IST)</label><Input id="diary-date" type="datetime-local" value={receivedAt} max={initialIstDateTime()} onChange={(event) => setReceivedAt(event.target.value)} required /></div>
       <div className="diary-create__note"><label htmlFor="diary-note">Note (optional)</label><Input id="diary-note" value={notes} maxLength={500} onChange={(event) => setNotes(event.target.value)} placeholder="Cash handover details" /></div>
-      <Button type="submit" disabled={!customer || create.isPending}>Review receipt</Button>
+      <Button type="submit" disabled={!customer || create.isPending}>Review cash installment</Button>
     </form>
     {confirming && <div className="diary-backdrop" role="presentation"><div className="diary-dialog" role="dialog" aria-modal="true" aria-labelledby="diary-confirm-title">
       <h3 id="diary-confirm-title">Confirm cash received</h3><p>This will immediately approve one {formatMoney(amount)} cash receipt for <strong>{customer && personLabel(customer)}</strong>, received on {formatIst(toIstIso(receivedAt))}. Approved amounts cannot be edited; corrections require a reversal.</p>

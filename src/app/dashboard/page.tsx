@@ -235,6 +235,7 @@ export default function DashboardPage() {
             <QuickAction href="/dashboard/catalog/categories" label="Categories" icon={<TagIcon />} />
             <QuickAction href="/dashboard/inventory" label="Inventory" icon={<StackIcon />} />
             <QuickAction href="/dashboard/orders" label="Orders" icon={<OrdersIcon />} />
+            {account?.role === "ADMIN" && <QuickAction href="/dashboard/diary#start-diary" label="Start diary" icon={<DiaryIcon />} />}
           </div>
         </div>
       </div>
@@ -294,6 +295,15 @@ function OrdersIcon() {
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-5 w-5">
       <path d="M6 3.5h9l3.5 3.5V19a1.5 1.5 0 0 1-1.5 1.5H6A1.5 1.5 0 0 1 4.5 19V5A1.5 1.5 0 0 1 6 3.5Z" strokeLinejoin="round" />
       <path d="M15 3.5V7h3.5M8 11.5h8M8 15h5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function DiaryIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-5 w-5" aria-hidden="true">
+      <path d="M6 3.5h11a2 2 0 0 1 2 2v15H6a2 2 0 0 1-2-2v-13a2 2 0 0 1 2-2Z" strokeLinejoin="round" />
+      <path d="M6 20.5V3.5M9 9h7M9 13h5" strokeLinecap="round" />
     </svg>
   );
 }
