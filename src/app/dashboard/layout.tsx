@@ -18,6 +18,7 @@ const NAV = [
   { href: "/dashboard/accounts", label: "Accounts", icon: UsersIcon },
   { href: "/dashboard/accounts?role=DISTRIBUTOR", label: "Credit", icon: CreditIcon },
   { href: "/dashboard/settlements", label: "Settlements", icon: MoneyIcon },
+  { href: "/dashboard/diary", label: "Diary", icon: DiaryIcon },
 ];
 
 // "Accounts" and "Credit" both point at /dashboard/accounts (Credit pre-filters by role via
@@ -101,6 +102,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   const displayName = account?.name?.trim() || account?.email || "Admin";
   const profileInitial = displayName.charAt(0).toUpperCase();
+  const navItems = account?.role === "ADMIN" ? NAV : NAV.filter((item) => item.href !== "/dashboard/diary");
 
   return (
     <div className="admin-shell flex h-screen w-full min-w-0 flex-1 overflow-hidden">
@@ -111,8 +113,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </div>
         <nav className="admin-sidebar__nav">
           <p className="admin-sidebar__label">Workspace</p>
-          <Suspense fallback={<NavFallback items={NAV} mobile={false} />}>
-            <NavLinks items={NAV} pathname={pathname} mobile={false} />
+          <Suspense fallback={<NavFallback items={navItems} mobile={false} />}>
+            <NavLinks items={navItems} pathname={pathname} mobile={false} />
           </Suspense>
         </nav>
         <div className="admin-sidebar__footer">
@@ -153,8 +155,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <div className="admin-mobile-drawer__head"><div><strong>Nexa<span>Shopping</span></strong><small>Admin workspace</small></div><button type="button" onClick={() => setMobileMenuOpen(false)} aria-label="Close navigation"><CloseIcon className="h-5 w-5" /></button></div>
             <nav className="admin-sidebar__nav admin-sidebar__nav--mobile">
               <p className="admin-sidebar__label">Workspace</p>
-              <Suspense fallback={<NavFallback items={NAV} mobile />}>
-                <NavLinks items={NAV} pathname={pathname} mobile onNavigate={() => setMobileMenuOpen(false)} />
+              <Suspense fallback={<NavFallback items={navItems} mobile />}>
+                <NavLinks items={navItems} pathname={pathname} mobile onNavigate={() => setMobileMenuOpen(false)} />
               </Suspense>
             </nav>
             <div className="admin-sidebar__footer admin-sidebar__footer--mobile">
@@ -263,6 +265,10 @@ function CreditIcon({ className }: { className?: string }) {
       <path d="M6.5 14.5h4" strokeLinecap="round" />
     </svg>
   );
+}
+
+function DiaryIcon({ className }: { className?: string }) {
+  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className={className}><rect x="5" y="3.5" width="15" height="17" rx="2" /><path d="M9 3.5v17M12 9h5M12 13h5M12 17h3" strokeLinecap="round" /></svg>;
 }
 
 function UserIcon({ className }: { className?: string }) {

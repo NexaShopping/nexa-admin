@@ -66,6 +66,10 @@ const statusTones: Record<string, string> = {
   DRAFT: "bg-amber-50 text-amber-700 border-amber-200",
   ACTIVE: "bg-emerald-50 text-emerald-700 border-emerald-200",
   ARCHIVED: "bg-neutral-100 text-neutral-600 border-neutral-200",
+  PENDING: "bg-amber-50 text-amber-700 border-amber-200",
+  APPROVED: "bg-emerald-50 text-emerald-700 border-emerald-200",
+  REJECTED: "bg-red-50 text-red-700 border-red-200",
+  REVERSED: "bg-neutral-100 text-neutral-600 border-neutral-300",
 };
 
 export function StatusBadge({ status }: { status: string }) {
