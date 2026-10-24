@@ -39,7 +39,7 @@ export function useAccount(id: string | undefined) {
 export function useCreateDistributor() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (body: CreateDistributorBody) => api.post<{ account: AccountSummary }>("/accounts/distributors", body),
+    mutationFn: (body: CreateDistributorBody) => api.post<{ account: AccountSummary; welcomeEmailSent?: boolean }>("/accounts/distributors", body),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["accounts"] }),
   });
 }
@@ -47,7 +47,13 @@ export function useCreateDistributor() {
 export function useUpdateAccount(id: string) {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (body: UpdateAccountBody) => api.patch<{ account: AccountSummary }>(`/accounts/${id}`, body),
+    mutationFn: (body: UpdateAccountBody) => api.patch<{ account: AccountSummary; welcomeEmailSent?: boolean }>(`/accounts/${id}`, body),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["accounts"] }),
+  });
+}
+
+export function useResendWelcomeEmail(id: string) {
+  return useMutation({
+    mutationFn: () => api.post<{ ok: true }>(`/accounts/${id}/welcome-email`, {}),
   });
 }

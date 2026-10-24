@@ -3,7 +3,7 @@
 import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useAccounts, useCreateDistributor, useUpdateAccount, type AccountFilters } from "@/features/accounts/api";
+import { useAccounts, useCreateDistributor, useResendWelcomeEmail, useUpdateAccount, type AccountFilters } from "@/features/accounts/api";
 import { useAuth } from "@/lib/auth-context";
 import { ApiError } from "@/lib/api";
 import { Button, Card, EmptyState, ErrorState, Input, Label, Select, Spinner } from "@/components/ui";
@@ -29,6 +29,7 @@ function AccountsPageInner() {
   const cursor = cursors.at(-1);
   const [selectedId, setSelectedId] = useState<string | null | undefined>(undefined);
   const [showCreate, setShowCreate] = useState(false);
+  const [notice, setNotice] = useState<string | null>(null);
 
   const { data, isLoading, isError, error, refetch, isFetching } = useAccounts(filters, cursor);
   const accounts = data?.data.accounts ?? [];
@@ -57,11 +58,12 @@ function AccountsPageInner() {
         <Button onClick={() => setShowCreate((s) => !s)}>{showCreate ? "Close" : "Onboard distributor"}</Button>
       </div>
 
+      {notice && <div role="status" className="mt-5 rounded-xl border border-primary/20 bg-primary/5 px-4 py-3 text-sm text-on-surface">{notice}</div>}
       <div className="mt-5 grid grid-cols-2 gap-4 lg:grid-cols-4"><AccountMetric label="Total accounts" value={accounts.length} /><AccountMetric label="Distributors" value={accounts.filter((a) => a.role === "DISTRIBUTOR").length} /><AccountMetric label="Customers" value={accounts.filter((a) => a.role === "CUSTOMER").length} /><AccountMetric label="Pending review" value={accounts.filter((a) => a.status === "PENDING").length} /></div>
 
       {showCreate && (
         <div className="mt-5">
-          <CreateDistributorForm onDone={() => setShowCreate(false)} />
+          <CreateDistributorForm onDone={(message) => { setNotice(message); setShowCreate(false); }} />
         </div>
       )}
 
@@ -189,7 +191,7 @@ function AccountMetric({ label, value }: { label: string; value: number }) {
   );
 }
 
-function CreateDistributorForm({ onDone }: { onDone: () => void }) {
+function CreateDistributorForm({ onDone }: { onDone: (message: string) => void }) {
   const create = useCreateDistributor();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -204,7 +206,7 @@ function CreateDistributorForm({ onDone }: { onDone: () => void }) {
     e.preventDefault();
     setError(null);
     try {
-      await create.mutateAsync({
+      const result = await create.mutateAsync({
         name, email: email.trim().toLowerCase(), phone, businessName, territory: territory || undefined,
         credit: creditEnabled ? { enabled: true, limit: creditLimit } : undefined,
       });
@@ -215,7 +217,11 @@ function CreateDistributorForm({ onDone }: { onDone: () => void }) {
       setTerritory("");
       setCreditEnabled(false);
       setCreditLimit("");
-      onDone();
+      onDone(result.account.status !== "ACTIVE"
+        ? "Distributor created as pending. A welcome link will be sent when the account is activated."
+        : result.welcomeEmailSent
+          ? `Distributor created. A welcome email with a password link was sent to ${result.account.email}.`
+          : "Distributor created, but the welcome email could not be sent. Open the account and resend it.");
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Could not onboard this distributor");
     }
@@ -225,7 +231,7 @@ function CreateDistributorForm({ onDone }: { onDone: () => void }) {
     <Card className="space-y-4 p-5">
       <p className="text-sm font-medium">Onboard a distributor</p>
       <p className="text-xs text-on-surface-variant">
-        Assign the distributor&apos;s email here. They can set their password using the reset link on the distributor login page.
+        Assign a login email. We&apos;ll send a welcome message with a secure link to set their password.
       </p>
       <form onSubmit={submit} className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div>
@@ -268,22 +274,46 @@ function AccountDetail({ account, onClose }: { account: AccountSummary; onClose:
   const { account: currentAdmin } = useAuth();
   const isSelf = currentAdmin?.id === account.id;
   const update = useUpdateAccount(account.id);
+  const resendWelcome = useResendWelcomeEmail(account.id);
   const [status, setStatus] = useState<AccountStatus>(account.status);
   const [email, setEmail] = useState(account.email ?? "");
   const [territory, setTerritory] = useState(account.distributor?.territory ?? "");
   const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
 
   async function save(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+    setNotice(null);
     try {
-      await update.mutateAsync({
+      const emailChanged = account.role === "DISTRIBUTOR" && email.trim().toLowerCase() !== account.email;
+      const result = await update.mutateAsync({
         status: !isSelf && status !== account.status ? status : undefined,
-        email: account.role === "DISTRIBUTOR" && email.trim().toLowerCase() !== account.email ? email.trim().toLowerCase() : undefined,
+        email: emailChanged ? email.trim().toLowerCase() : undefined,
         territory: account.role === "DISTRIBUTOR" ? territory || undefined : undefined,
       });
+      const activated = account.role === "DISTRIBUTOR" && account.status !== "ACTIVE" && result.account.status === "ACTIVE";
+      if (activated && !result.account.email) {
+        setNotice("Account activated. Assign a login email to send the welcome link.");
+      } else if (emailChanged && result.account.status !== "ACTIVE") {
+        setNotice("Login email saved. A welcome link will be sent when the account is activated.");
+      } else if (emailChanged || activated) setNotice(result.welcomeEmailSent
+        ? "Account saved. A new welcome link was sent."
+        : "Account saved, but the welcome email could not be sent. Use Resend welcome email below.");
+      else setNotice("Changes saved.");
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Could not save changes");
+    }
+  }
+
+  async function resend() {
+    setError(null);
+    setNotice(null);
+    try {
+      await resendWelcome.mutateAsync();
+      setNotice("Welcome email sent to the saved login address.");
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Could not resend the welcome email");
     }
   }
 
@@ -329,7 +359,7 @@ function AccountDetail({ account, onClose }: { account: AccountSummary; onClose:
           <div>
             <Label>Login email</Label>
             <Input type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-            <p className="mt-1 text-xs text-on-surface-variant">Changing this email signs the distributor out. Ask them to use the reset link to set a password.</p>
+            <p className="mt-1 text-xs text-on-surface-variant">Changing this email signs the distributor out and sends a new welcome link.</p>
           </div>
         )}
         {account.role === "DISTRIBUTOR" && (
@@ -338,11 +368,17 @@ function AccountDetail({ account, onClose }: { account: AccountSummary; onClose:
             <Input value={territory} onChange={(e) => setTerritory(e.target.value)} />
           </div>
         )}
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && <p role="alert" className="text-sm text-red-600">{error}</p>}
+        {notice && <p role="status" className="text-sm text-primary">{notice}</p>}
         <Button type="submit" size="sm" disabled={update.isPending}>
           {update.isPending ? "Saving…" : "Save changes"}
         </Button>
       </form>
+      {account.role === "DISTRIBUTOR" && account.email && account.status === "ACTIVE" && (
+        <Button type="button" variant="secondary" size="sm" onClick={resend} disabled={resendWelcome.isPending || update.isPending || email.trim().toLowerCase() !== account.email}>
+          {resendWelcome.isPending ? "Sending…" : "Resend welcome email"}
+        </Button>
+      )}
     </Card>
   );
 }
