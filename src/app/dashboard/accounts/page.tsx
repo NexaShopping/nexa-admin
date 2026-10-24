@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useAccounts, useCreateDistributor, useUpdateAccount, type AccountFilters } from "@/features/accounts/api";
@@ -27,17 +27,14 @@ function AccountsPageInner() {
   const [qInput, setQInput] = useState("");
   const [cursors, setCursors] = useState<string[]>([]);
   const cursor = cursors.at(-1);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null | undefined>(undefined);
   const [showCreate, setShowCreate] = useState(false);
 
   const { data, isLoading, isError, error, refetch, isFetching } = useAccounts(filters, cursor);
   const accounts = data?.data.accounts ?? [];
   const meta = data?.meta;
-  const selected = accounts.find((a) => a.id === selectedId) ?? null;
-
-  useEffect(() => {
-    if (selectedId === null && accounts.length > 0) setSelectedId(accounts[0].id);
-  }, [accounts, selectedId]);
+  const visibleSelectedId = selectedId === undefined ? accounts[0]?.id : selectedId;
+  const selected = accounts.find((a) => a.id === visibleSelectedId) ?? null;
 
   function updateFilters(next: Partial<AccountFilters>) {
     setCursors([]);
@@ -123,7 +120,7 @@ function AccountsPageInner() {
                     <tr
                       key={a.id}
                       onClick={() => setSelectedId(a.id)}
-                      className={`cursor-pointer transition-colors hover:bg-surface-container-high ${selectedId === a.id ? "bg-primary/5" : ""}`}
+                      className={`cursor-pointer transition-colors hover:bg-surface-container-high ${visibleSelectedId === a.id ? "bg-primary/5" : ""}`}
                     >
                       <td className="px-4 py-2.5">
                         <p className="font-medium text-on-surface">{a.name ?? "—"}</p>
@@ -139,7 +136,7 @@ function AccountsPageInner() {
                 </tbody>
               </table>
             </div>
-            <div className="flex flex-col gap-3 sm:hidden">{accounts.map((a) => <button type="button" key={a.id} onClick={() => setSelectedId(a.id)} className={`rounded-xl border p-3 text-left ${selectedId === a.id ? "border-primary bg-primary/5" : "border-outline-variant bg-surface-container-lowest"}`}><div className="flex items-center justify-between gap-2"><span className="min-w-0 flex-1 truncate font-medium text-on-surface">{a.name ?? "—"}</span><StatusPill status={a.status} /></div><p className="mt-0.5 text-xs text-on-surface-variant">{a.email ?? a.phone ?? "—"}</p><div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-on-surface-variant"><span>Role <b className="text-on-surface">{a.role.toLowerCase()}</b></span><span>{a.distributor?.businessName ?? "Account"}</span></div></button>)}</div>
+            <div className="flex flex-col gap-3 sm:hidden">{accounts.map((a) => <button type="button" key={a.id} onClick={() => setSelectedId(a.id)} className={`rounded-xl border p-3 text-left ${visibleSelectedId === a.id ? "border-primary bg-primary/5" : "border-outline-variant bg-surface-container-lowest"}`}><div className="flex items-center justify-between gap-2"><span className="min-w-0 flex-1 truncate font-medium text-on-surface">{a.name ?? "—"}</span><StatusPill status={a.status} /></div><p className="mt-0.5 text-xs text-on-surface-variant">{a.email ?? a.phone ?? "—"}</p><div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-on-surface-variant"><span>Role <b className="text-on-surface">{a.role.toLowerCase()}</b></span><span>{a.distributor?.businessName ?? "Account"}</span></div></button>)}</div>
             </>
           )}
 
@@ -161,7 +158,7 @@ function AccountsPageInner() {
 
         <div>
           {selected ? (
-            <AccountDetail account={selected} onClose={() => setSelectedId(null)} />
+            <AccountDetail key={selected.id} account={selected} onClose={() => setSelectedId(null)} />
           ) : (
             <div className="rounded-xl border border-dashed border-outline-variant p-6 text-center text-sm text-on-surface-variant">
               Select a row to view or edit an account.
@@ -195,6 +192,7 @@ function AccountMetric({ label, value }: { label: string; value: number }) {
 function CreateDistributorForm({ onDone }: { onDone: () => void }) {
   const create = useCreateDistributor();
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [businessName, setBusinessName] = useState("");
   const [territory, setTerritory] = useState("");
@@ -207,10 +205,11 @@ function CreateDistributorForm({ onDone }: { onDone: () => void }) {
     setError(null);
     try {
       await create.mutateAsync({
-        name, phone, businessName, territory: territory || undefined,
+        name, email: email.trim().toLowerCase(), phone, businessName, territory: territory || undefined,
         credit: creditEnabled ? { enabled: true, limit: creditLimit } : undefined,
       });
       setName("");
+      setEmail("");
       setPhone("");
       setBusinessName("");
       setTerritory("");
@@ -226,7 +225,7 @@ function CreateDistributorForm({ onDone }: { onDone: () => void }) {
     <Card className="space-y-4 p-5">
       <p className="text-sm font-medium">Onboard a distributor</p>
       <p className="text-xs text-on-surface-variant">
-        Manual onboarding — self sign-up by phone OTP is still blocked on DLT verification.
+        Assign the distributor&apos;s email here. They can set their password using the reset link on the distributor login page.
       </p>
       <form onSubmit={submit} className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div>
@@ -236,6 +235,10 @@ function CreateDistributorForm({ onDone }: { onDone: () => void }) {
         <div>
           <Label>Phone (E.164)</Label>
           <Input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+919812345678" required />
+        </div>
+        <div>
+          <Label>Login email</Label>
+          <Input type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="owner@example.com" required />
         </div>
         <div>
           <Label>Business name</Label>
@@ -252,7 +255,7 @@ function CreateDistributorForm({ onDone }: { onDone: () => void }) {
         {creditEnabled && <div><Label>Credit limit</Label><Input value={creditLimit} onChange={(e) => setCreditLimit(e.target.value)} inputMode="decimal" placeholder="50000.00" required /></div>}
         {error && <p className="text-sm text-red-600 sm:col-span-2">{error}</p>}
         <div className="sm:col-span-2">
-          <Button type="submit" size="sm" disabled={create.isPending || !name || !phone || !businessName || (creditEnabled && !creditLimit)}>
+          <Button type="submit" size="sm" disabled={create.isPending || !name || !email || !phone || !businessName || (creditEnabled && !creditLimit)}>
             {create.isPending ? "Onboarding…" : "Onboard distributor"}
           </Button>
         </div>
@@ -266,6 +269,7 @@ function AccountDetail({ account, onClose }: { account: AccountSummary; onClose:
   const isSelf = currentAdmin?.id === account.id;
   const update = useUpdateAccount(account.id);
   const [status, setStatus] = useState<AccountStatus>(account.status);
+  const [email, setEmail] = useState(account.email ?? "");
   const [territory, setTerritory] = useState(account.distributor?.territory ?? "");
   const [error, setError] = useState<string | null>(null);
 
@@ -275,6 +279,7 @@ function AccountDetail({ account, onClose }: { account: AccountSummary; onClose:
     try {
       await update.mutateAsync({
         status: !isSelf && status !== account.status ? status : undefined,
+        email: account.role === "DISTRIBUTOR" && email.trim().toLowerCase() !== account.email ? email.trim().toLowerCase() : undefined,
         territory: account.role === "DISTRIBUTOR" ? territory || undefined : undefined,
       });
     } catch (err) {
@@ -320,6 +325,13 @@ function AccountDetail({ account, onClose }: { account: AccountSummary; onClose:
             </p>
           )}
         </div>
+        {account.role === "DISTRIBUTOR" && (
+          <div>
+            <Label>Login email</Label>
+            <Input type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            <p className="mt-1 text-xs text-on-surface-variant">Changing this email signs the distributor out. Ask them to use the reset link to set a password.</p>
+          </div>
+        )}
         {account.role === "DISTRIBUTOR" && (
           <div>
             <Label>Territory</Label>

@@ -322,6 +322,7 @@ export interface AccountSummary {
 
 export interface CreateDistributorBody {
   name: string;
+  email: string;
   phone: string;
   businessName: string;
   territory?: string;
@@ -360,6 +361,7 @@ export interface DistributorPayout {
 
 export interface UpdateAccountBody {
   name?: string;
+  email?: string;
   avatarUrl?: string;
   status?: AccountStatus;
   businessName?: string;
